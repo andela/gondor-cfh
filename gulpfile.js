@@ -18,9 +18,9 @@ var del = require ('del');
 
 dotenv.config();
 
-const reload = browserSync.reload;
+var reload = browserSync.reload;
 
-const copyFiles = function (src, dest){
+var copyFiles = function (src, dest){
   return gulp.src(src).pipe(gulp.dest(dest))};
 
 gulp.task('install', function(){
@@ -88,13 +88,13 @@ gulp.task('sass', function() {
 
 gulp.task('build', gulpSequence('clean', 'babel', 'moveFiles'));
 
-gulp.task('moveFiles', ['move-appViews', 'move-config', 'move-public']);
+gulp.task('moveFiles', ['moveViews', 'moveConfig', 'movePublic']);
 
-gulp.task('move-appViews', function() {return copyFiles('app/views/**/*', './dist/app/views')});
+gulp.task('moveViews', function() {return copyFiles('app/views/**/*', './dist/app/views')});
 
-gulp.task('move-config',function (){copyFiles('config/env/**/*', './dist/config/env')});
+gulp.task('moveConfig',function (){copyFiles('config/env/**/*', './dist/config/env')});
 
-gulp.task('move-public', function()
+gulp.task('movePublic', function()
 {
   return copyFiles(['public/**/*', '!public/js/**'], './dist/public')});
 
