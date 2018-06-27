@@ -1,5 +1,4 @@
 
-
 import { config } from 'dotenv';
 import path from 'path';
 import gulp from 'gulp';
@@ -95,7 +94,7 @@ gulp.task('copyConfig', (
 gulp.task('copyPublic',
   () => copyFiles(['public/**/*', '!public/js/**'], './dist/public'));
 
-gulp.task('server-test', () => gulp.src(['test/**/*.js'])
+gulp.task('server-test', () => gulp.src(['backend_test/**/*.js'])
   .pipe(mocha({
     reporter: 'spec',
     exit: true,
@@ -105,12 +104,12 @@ gulp.task('server-test', () => gulp.src(['test/**/*.js'])
 
 gulp.task('front-end-test', (done) => {
   new Server({
-    configFile: path.join(__dirname, 'test/karma.conf.js'),
+    configFile: path.join(__dirname, 'karma.conf.js'),
     singleRun: true
   }, done).start();
 });
 
-gulp.task('test', gulpSequence('server-test', 'front-end-test'));
+gulp.task('test', ['server-test', 'front-end-test']);
 
 /**
  * Run test once and exit
