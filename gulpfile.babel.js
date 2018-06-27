@@ -110,7 +110,7 @@ gulp.task('front-end-test', (done) => {
   }, done).start();
 });
 
-gulp.task('test', gulpSequence('server-test', 'front-end-test'));
+gulp.task('test', ['server-test', 'front-end-test']);
 
 /**
  * Run test once and exit
