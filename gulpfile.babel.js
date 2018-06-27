@@ -1,5 +1,6 @@
-'use strict';
-import {config} from 'dotenv';
+
+
+import { config } from 'dotenv';
 import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
 import mocha from 'gulp-mocha';
@@ -14,11 +15,12 @@ import browserSync from 'browser-sync';
 import exit from 'gulp-exit';
 import gulpSequence from 'gulp-sequence';
 import del from 'del';
+
 config();
 
-const {reload} = browserSync;
+const { reload } = browserSync;
 
-const copyFiles =  (src, dest) => gulp.src(src).pipe(gulp.dest(dest));
+const copyFiles = (src, dest) => gulp.src(src).pipe(gulp.dest(dest));
 
 gulp.task('install', () => {
   if (process.env.NODE_ENV !== 'production') {
@@ -44,7 +46,7 @@ gulp.task('default', ['nodemon', 'watch']);
 gulp.task('nodemon', () => nodemon({
   verbose: true,
   script: 'server.js',
-  tasks: ['lint'] ,
+  tasks: ['lint'],
   ext: 'js html jade scss css',
   ignore: ['README.md', 'node_modules/**', 'public/lib/**', '.DS_Store'],
   watch: ['app', 'config', 'public', 'server.js'],
@@ -54,34 +56,29 @@ gulp.task('nodemon', () => nodemon({
   }
 }));
 
-gulp.task('lint', () =>
-  gulp.src(['**/*.js', '!node_modules/**', '!public/lib'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError()));
+gulp.task('lint', () => gulp.src(['**/*.js', '!node_modules/**', '!public/lib'])
+  .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(eslint.failAfterError()));
 
 gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], { dot: true }));
 
-gulp.task('babel', () => 
-  gulp.src([
-    './**/*.js',
-    '!node_modules/**',
-    '!public/lib/**',
-    '!gulpfile.babel.js',
-    '!bower_components/**/*'
-  ])
+gulp.task('babel', () => gulp.src([
+  './**/*.js',
+  '!node_modules/**',
+  '!public/lib/**',
+  '!gulpfile.babel.js',
+  '!bower_components/**/*'
+])
   .pipe(sourcemaps.init())
-    .pipe(babel())
-    .pipe(concat('all.js'))
-        .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist'))
-);
+  .pipe(babel())
+  .pipe(concat('all.js'))
+  .pipe(sourcemaps.write('.'))
+  .pipe(gulp.dest('./dist')));
 
-gulp.task('sass', () =>
-  gulp.src('public/css/common.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('public/css/'))
-);
+gulp.task('sass', () => gulp.src('public/css/common.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('public/css/')));
 
 gulp.task('build', gulpSequence('clean', 'babel', 'copyAll'));
 
@@ -89,17 +86,17 @@ gulp.task('copyAll', ['copyViews', 'copyConfig', 'copyPublic']);
 
 gulp.task('copyViews', () => copyFiles('app/views/**/*', './dist/app/views'));
 
-gulp.task('copyConfig', () => copyFiles('config/env/**/*', './dist/config/env'));
+gulp.task('copyConfig', (
 
-gulp.task('copyPublic', () =>
- copyFiles(['public/**/*', '!public/js/**'], './dist/public'));
+) => copyFiles('config/env/**/*', './dist/config/env'));
 
-gulp.task('test', () =>
-  gulp.src(['test/**/*.js'])
-    .pipe(mocha({
-      reporter: 'spec',
-      exit: true,
-      compilers: 'babel-core/register'
-    }))
-    .pipe(exit())
-);
+gulp.task('copyPublic',
+  () => copyFiles(['public/**/*', '!public/js/**'], './dist/public'));
+
+gulp.task('test', () => gulp.src(['test/**/*.js'])
+  .pipe(mocha({
+    reporter: 'spec',
+    exit: true,
+    compilers: 'babel-core/register'
+  }))
+  .pipe(exit()));

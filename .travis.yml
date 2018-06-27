@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "10"
+
+env:
+  - NODE_ENV=test
+
+services: mongodb
+
+script: 
+  - npm run test

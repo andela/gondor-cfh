@@ -1,7 +1,7 @@
-{
+module.exports = {
     "port": 3001,
     "app": {
-        "name": "Cards for Humanity - Test"
+        "name": "Cards for Humanity - Test on travis"
     },
     "facebook": {
         "clientID": "APP_ID",

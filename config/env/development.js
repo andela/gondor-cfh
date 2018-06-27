@@ -1,4 +1,4 @@
-{
+module.exports = {
     "app": {
         "name": "Cards for Humanity - Development"
     },
