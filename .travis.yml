@@ -4,8 +4,13 @@ node_js:
 
 env:
   - NODE_ENV=test
+  global:
+   - COVERALLS_REPO_TOKEN=2dT2jYOgAO5u8sGRQAvdnhuqVSoC678Lq
 
 services: mongodb
 
 script: 
   - npm run test
+
+after_success:
+  - npm run coverage

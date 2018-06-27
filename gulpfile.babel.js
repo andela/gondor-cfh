@@ -1,5 +1,3 @@
-
-
 import { config } from 'dotenv';
 import path from 'path';
 import gulp from 'gulp';
@@ -9,7 +7,7 @@ import babel from 'gulp-babel';
 import concat from 'gulp-concat';
 import sourcemaps from 'gulp-sourcemaps';
 import karma from 'karma';
-
+import istanbul from 'gulp-istanbul';
 import eslint from 'gulp-eslint';
 import sass from 'gulp-sass';
 import bower from 'gulp-bower';
@@ -45,6 +43,7 @@ gulp.task('watch', () => {
 });
 
 gulp.task('default', ['nodemon', 'watch']);
+
 gulp.task('nodemon', () => nodemon({
   verbose: true,
   script: 'server.js',
@@ -86,7 +85,8 @@ gulp.task('build', gulpSequence('clean', 'babel', 'copyAll'));
 
 gulp.task('copyAll', ['copyViews', 'copyConfig', 'copyPublic']);
 
-gulp.task('copyViews', () => copyFiles('app/views/**/*', './dist/app/views'));
+gulp.task('copyViews',
+  () => copyFiles('app/views/**/*', './dist/app/views'));
 
 gulp.task('copyConfig', (
 
@@ -95,22 +95,42 @@ gulp.task('copyConfig', (
 gulp.task('copyPublic',
   () => copyFiles(['public/**/*', '!public/js/**'], './dist/public'));
 
-gulp.task('server-test', () => gulp.src(['test/**/*.js'])
+
+gulp.task('backendTestCoverage:instrument',
+  () => gulp.src(['app/**/*.js'])
+    .pipe(istanbul())
+    .pipe(istanbul.hookRequire()));
+
+gulp.task('backendMainTest', () => gulp.src(['test/backend/**/*.js'])
   .pipe(mocha({
     reporter: 'spec',
     exit: true,
-    compilers: 'babel-core/register'
+    compilers: '@babel/register',
+    timeout: 5000
+  })));
+
+gulp.task('backendTestCoverage:cover', () => gulp.src(['test/backend/**/*.js'])
+  .pipe(istanbul.writeReports({
+    dir: './coverage/backend',
+    reporters: ['lcov', 'json', 'text', 'text-summary'],
   }))
   .pipe(exit()));
 
-gulp.task('front-end-test', (done) => {
+gulp.task('backendTest',
+  gulpSequence(
+    'backendTestCoverage:instrument',
+    'backendMainTest',
+    'backendTestCoverage:cover'
+  ));
+
+gulp.task('frontendTest', (done) => {
   new Server({
-    configFile: path.join(__dirname, 'test/karma.conf.js'),
+    configFile: path.join(__dirname, 'karma.conf.js'),
     singleRun: true
   }, done).start();
 });
 
-gulp.task('test', gulpSequence('server-test', 'front-end-test'));
+gulp.task('test', ['backendTest', 'frontendTest']);
 
 /**
  * Run test once and exit

@@ -5,3 +5,5 @@ public/lib
 c4h_keys.txt
 .idea
 .env
+coverage
+.coveralls.yml

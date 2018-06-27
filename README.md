@@ -6,7 +6,7 @@ Cards for Humanity is a fast-paced online version of the popular card game, Card
 
 Badges
 --------
-[![Build Status](https://travis-ci.org/andela/gondor-cfh.svg?branch=staging)](https://travis-ci.org/andela/gondor-cfh)
+[![Build Status](https://travis-ci.org/andela/gondor-cfh.svg?branch=staging)](https://travis-ci.org/andela/gondor-cfh) [![Coverage Status](https://coveralls.io/repos/github/andela/gondor-cfh/badge.svg?branch=chore%2F158487960%2Fintegrate-coveralls)](https://coveralls.io/github/andela/gondor-cfh?branch=chore%2F158487960%2Fintegrate-coveralls)
 
 Our Team
 --------
