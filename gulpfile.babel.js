@@ -1,12 +1,14 @@
 
 
 import { config } from 'dotenv';
+import path from 'path';
 import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
 import mocha from 'gulp-mocha';
 import babel from 'gulp-babel';
 import concat from 'gulp-concat';
 import sourcemaps from 'gulp-sourcemaps';
+import karma from 'karma';
 
 import eslint from 'gulp-eslint';
 import sass from 'gulp-sass';
@@ -17,7 +19,7 @@ import gulpSequence from 'gulp-sequence';
 import del from 'del';
 
 config();
-
+const { Server } = karma;
 const { reload } = browserSync;
 
 const copyFiles = (src, dest) => gulp.src(src).pipe(gulp.dest(dest));
@@ -93,10 +95,23 @@ gulp.task('copyConfig', (
 gulp.task('copyPublic',
   () => copyFiles(['public/**/*', '!public/js/**'], './dist/public'));
 
-gulp.task('test', () => gulp.src(['test/**/*.js'])
+gulp.task('server-test', () => gulp.src(['test/**/*.js'])
   .pipe(mocha({
     reporter: 'spec',
     exit: true,
     compilers: 'babel-core/register'
   }))
   .pipe(exit()));
+
+gulp.task('front-end-test', (done) => {
+  new Server({
+    configFile: path.join(__dirname, 'test/karma.conf.js'),
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('test', gulpSequence('server-test', 'front-end-test'));
+
+/**
+ * Run test once and exit
+ */
