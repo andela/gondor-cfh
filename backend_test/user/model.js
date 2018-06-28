@@ -3,6 +3,7 @@
  */
 const should = require('should'),
   mongoose = require('mongoose'),
+  app = require('../../server'),
   User = mongoose.model('User');
 
 // Globals

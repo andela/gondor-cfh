@@ -3,19 +3,17 @@ import { config } from 'dotenv';
 import path from 'path';
 import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
-import mocha from 'gulp-mocha';
 import babel from 'gulp-babel';
-import concat from 'gulp-concat';
-import sourcemaps from 'gulp-sourcemaps';
-import karma from 'karma';
-
+import mocha from 'gulp-mocha';
 import eslint from 'gulp-eslint';
-import sass from 'gulp-sass';
+import karma from 'karma';
 import bower from 'gulp-bower';
-import browserSync from 'browser-sync';
+import sass from 'gulp-sass';
 import exit from 'gulp-exit';
 import gulpSequence from 'gulp-sequence';
 import del from 'del';
+import browserSync from 'browser-sync';
+import cache from 'gulp-cached';
 
 config();
 const { Server } = karma;
@@ -34,6 +32,10 @@ gulp.task('install', () => {
   });
 });
 
+gulp.task('sass', () => gulp.src('public/css/common.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('public/css/')));
+
 gulp.task('watch', () => {
   gulp.watch('app/views/**', reload);
   gulp.watch('public/js/**', reload);
@@ -43,26 +45,29 @@ gulp.task('watch', () => {
   gulp.watch('public/css/**', reload);
 });
 
-gulp.task('default', ['nodemon', 'watch']);
+gulp.task('lint', () => gulp.src(['**/*.js', '!node_modules/**', '!public/lib'])
+  .pipe(cache('lint'))
+  .pipe(eslint())
+  .pipe(eslint.format()));
+
 gulp.task('nodemon', () => nodemon({
   verbose: true,
   script: 'server.js',
   tasks: ['lint'],
   ext: 'js html jade scss css',
-  ignore: ['README.md', 'node_modules/**', 'public/lib/**', '.DS_Store'],
+  nodeArgs: ['-r', 'esm'],
   watch: ['app', 'config', 'public', 'server.js'],
+  ignore: ['README.md', 'node_modules/**', 'public/lib/**', '.DS_Store'],
   env: {
     PORT: 3000,
-    NODE_ENV: process.env.NODE_ENV,
   }
 }));
 
-gulp.task('lint', () => gulp.src(['**/*.js', '!node_modules/**', '!public/lib'])
-  .pipe(eslint())
-  .pipe(eslint.format())
-  .pipe(eslint.failAfterError()));
+gulp.task('default', ['nodemon', 'watch']);
 
-gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], { dot: true }));
+
+gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git']));
+
 
 gulp.task('babel', () => gulp.src([
   './**/*.js',
@@ -71,34 +76,24 @@ gulp.task('babel', () => gulp.src([
   '!gulpfile.babel.js',
   '!bower_components/**/*'
 ])
-  .pipe(sourcemaps.init())
+  .pipe(cache('babel'))
   .pipe(babel())
-  .pipe(concat('all.js'))
-  .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest('./dist')));
-
-gulp.task('sass', () => gulp.src('public/css/common.scss')
-  .pipe(sass().on('error', sass.logError))
-  .pipe(gulp.dest('public/css/')));
-
-gulp.task('build', gulpSequence('clean', 'babel', 'copyAll'));
-
-gulp.task('copyAll', ['copyViews', 'copyConfig', 'copyPublic']);
 
 gulp.task('copyViews', () => copyFiles('app/views/**/*', './dist/app/views'));
 
-gulp.task('copyConfig', (
-
-) => copyFiles('config/env/**/*', './dist/config/env'));
-
 gulp.task('copyPublic',
   () => copyFiles(['public/**/*', '!public/js/**'], './dist/public'));
+
+gulp.task('copyAll', ['copyViews', 'copyPublic']);
+
+gulp.task('build', gulpSequence('clean', 'babel', 'copyAll', 'install'));
 
 gulp.task('server-test', () => gulp.src(['backend_test/**/*.js'])
   .pipe(mocha({
     reporter: 'spec',
     exit: true,
-    compilers: '@babel/register'
+    compilers: 'babel-core/register'
   }))
   .pipe(exit()));
 
@@ -110,7 +105,3 @@ gulp.task('front-end-test', (done) => {
 });
 
 gulp.task('test', ['server-test', 'front-end-test']);
-
-/**
- * Run test once and exit
- */

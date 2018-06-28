@@ -1,11 +1,11 @@
 /**
  * Module dependencies.
  */
-let express = require('express'),
-  fs = require('fs'),
-  passport = require('passport'),
-  logger = require('mean-logger'),
-  io = require('socket.io');
+import express from 'express';
+import fs from 'fs';
+import passport from 'passport';
+import logger from 'mean-logger';
+import io from 'socket.io';
 
 require('dotenv').config();
 
