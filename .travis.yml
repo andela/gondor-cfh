@@ -2,10 +2,27 @@ language: node_js
 node_js:
   - "10"
 
+dist: trusty
+
+sudo: required
+
+addons:
+  chrome: stable
+
 env:
   - NODE_ENV=test
 
 services: mongodb
 
-script: 
+cache:
+  directories:
+    - 'node_modules'
+
+script:
   - npm run test
+
+after_success:
+  - npm run coverage
+
+after_failure:
+  - npm run coverage

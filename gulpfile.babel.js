@@ -1,12 +1,12 @@
-
 import { config } from 'dotenv';
 import path from 'path';
 import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
 import babel from 'gulp-babel';
+import karma from 'karma';
+import istanbul from 'gulp-istanbul';
 import mocha from 'gulp-mocha';
 import eslint from 'gulp-eslint';
-import karma from 'karma';
 import bower from 'gulp-bower';
 import sass from 'gulp-sass';
 import exit from 'gulp-exit';
@@ -44,11 +44,11 @@ gulp.task('watch', () => {
   gulp.watch('public/css/common.scss', ['sass']);
   gulp.watch('public/css/**', reload);
 });
-
 gulp.task('lint', () => gulp.src(['**/*.js', '!node_modules/**', '!public/lib'])
   .pipe(cache('lint'))
   .pipe(eslint())
   .pipe(eslint.format()));
+gulp.task('default', ['nodemon', 'watch']);
 
 gulp.task('nodemon', () => nodemon({
   verbose: true,
@@ -80,28 +80,54 @@ gulp.task('babel', () => gulp.src([
   .pipe(babel())
   .pipe(gulp.dest('./dist')));
 
-gulp.task('copyViews', () => copyFiles('app/views/**/*', './dist/app/views'));
+gulp.task('sass', () => gulp.src('public/css/common.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('public/css/')));
+
+gulp.task('build', gulpSequence('clean', 'babel', 'copyAll'));
+
+gulp.task('copyAll', ['copyViews', 'copyPublic']);
+
+gulp.task('copyViews',
+  () => copyFiles('app/views/**/*', './dist/app/views'));
 
 gulp.task('copyPublic',
   () => copyFiles(['public/**/*', '!public/js/**'], './dist/public'));
 
-gulp.task('copyAll', ['copyViews', 'copyPublic']);
 
-gulp.task('build', gulpSequence('clean', 'babel', 'copyAll', 'install'));
+gulp.task('backendTestCoverage:instrument',
+  () => gulp.src(['app/**/*.js'])
+    .pipe(istanbul())
+    .pipe(istanbul.hookRequire()));
 
-gulp.task('server-test', () => gulp.src(['backend_test/**/*.js'])
+gulp.task('backendMainTest', () => gulp.src(['test/backend/**/*.js'])
   .pipe(mocha({
     reporter: 'spec',
     exit: true,
-    compilers: 'babel-core/register'
+    compilers: 'babel-core/register',
+    timeout: 5000
+  })));
+
+gulp.task('backendTestCoverage:cover', () => gulp.src(['test/backend/**/*.js'])
+  .pipe(istanbul.writeReports({
+    dir: './coverage/backend',
+    reporters: ['lcov', 'json', 'text', 'text-summary'],
   }))
   .pipe(exit()));
 
-gulp.task('front-end-test', (done) => {
+gulp.task('backendTest',
+  gulpSequence(
+    'backendTestCoverage:instrument',
+    'backendMainTest',
+    'backendTestCoverage:cover'
+  ));
+
+gulp.task('frontendTest', (done) => {
   new Server({
     configFile: path.join(__dirname, 'karma.conf.js'),
     singleRun: true
   }, done).start();
 });
 
-gulp.task('test', ['server-test', 'front-end-test']);
+gulp.task('test', ['backendTest', 'frontendTest']);
+

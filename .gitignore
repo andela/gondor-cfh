@@ -6,3 +6,5 @@ c4h_keys.txt
 .idea
 .env
 dist
+coverage
+.coveralls.yml
