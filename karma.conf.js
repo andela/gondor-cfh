@@ -1,15 +1,18 @@
 module.exports = (config) => {
   config.set({
     files: [
-      'public/lib/angular/angular.js',
-      'public/js/**/*.js',
-      'test/frontend/**/*.js'
+      'client/lib/angular/angular.js',
+      'client/js/**/*.js',
+      'client/test/**/*.js',
     ],
     basePath: '',
     frameworks: ['jasmine'],
-    exclude: [],
+    exclude: [''],
     preprocessors: {
-      'public/js/**/*.js': ['coverage']
+      'client/js/**/*.js': ['coverage'],
+    },
+    coveragePreprocessor: {
+      exclude: ['server/**/*']
     },
     reporters: ['progress', 'coverage'],
     coverageReporter: {
@@ -27,7 +30,7 @@ module.exports = (config) => {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'ChromeHeadless', 'ChromeHeadlessNoSandbox'],
+    browsers: ['PhantomJS'],
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
