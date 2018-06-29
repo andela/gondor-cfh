@@ -1,6 +1,7 @@
-describe('Testing AngularJS Test Suite', () => {
-  describe('Testing Angular Karma.conf', () => {
-    it('should return true', () => {
+/* eslint-disable */
+describe('Testing AngularJS Test Suite', function() {
+  describe('Testing Angular Karma.conf', function() {
+    it('should return true', function() {
       expect(true).toBeTruthy();
     });
   });
