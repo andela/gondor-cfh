@@ -1,6 +1,8 @@
 import AnswerController from '../controllers/answers';
 import UsersController from '../controllers/users';
+import UsersApiController from '../controllers/api/users';
 import QuestionsController from '../controllers/questions';
+import ErrorHandler from '../middlewares/errorHandler';
 
 export default (app, passport) => {
   // User Routes
@@ -12,6 +14,7 @@ export default (app, passport) => {
   // Setting up the users api
   app.post('/users', UsersController.create);
   app.post('/users/avatars', UsersController.avatars);
+  app.post('/api/auth/signup', UsersApiController.signup, ErrorHandler);
 
   // Donation Routes
   app.post('/donations', UsersController.addDonation);
@@ -84,7 +87,7 @@ export default (app, passport) => {
   const avatars = require('../controllers/avatars');
   app.get('/avatars', avatars.allJSON);
 
-  // Home route
+  // Home route;
   const index = require('../controllers/index');
   app.get('/play', index.play);
   app.get('/', index.render);

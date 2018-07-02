@@ -1,26 +1,41 @@
+/* eslint camelcase: 0 */
+/* eslint no-unused-vars: 0 func-names: 0 */
+
 /**
  * Module dependencies.
  */
-const mongoose = require('mongoose');
-const _ = require('underscore');
-const bcrypt = require('bcryptjs');
+import mongoose from 'mongoose';
+import _ from 'underscore';
+import bcrypt from 'bcryptjs';
+import validator from 'validator';
+import uniqueFieldValidator from 'mongoose-unique-validator';
 
-const { Schema } = mongoose;
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
-
+const { Schema } = mongoose;
 
 /**
  * User Schema
  */
 const UserSchema = new Schema({
-  name: String,
-  email: String,
-  username: String,
+  name: { type: String, required: [true, 'Name cannot be blank'] },
+  email: {
+    type: String,
+    unique: true,
+    required: [true, 'Email cannot be blank']
+  },
+  username: {
+    type: String,
+    unique: true,
+    required: [true, 'Username cannot be blank']
+  },
   provider: String,
   avatar: String,
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)
   donations: [],
-  hashed_password: String,
+  hashed_password: {
+    type: String,
+    required: [true, 'Password is required']
+  },
   facebook: {},
   twitter: {},
   github: {},
@@ -39,6 +54,9 @@ UserSchema.virtual('password').set(function (password) {
 
 /**
  * Validations
+ *
+ * @param {string} value - string to validate
+ * @returns {undefined} - undefined
  */
 const validatePresenceOf = value => value && value.length;
 
@@ -46,20 +64,30 @@ const validatePresenceOf = value => value && value.length;
 UserSchema.path('name').validate(function (name) {
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) return true;
-  return name.length;
+  name = name.trim();
+  this.name = name;
+  return !validator.isEmpty(name);
 }, 'Name cannot be blank');
 
 UserSchema.path('email').validate(function (email) {
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) return true;
-  return email.length;
-}, 'Email cannot be blank');
+  email = email.trim().toLowerCase();
+  this.email = email;
+  return !validator.isEmpty(email) && validator.isEmail(email);
+}, 'Email is incorrect');
 
 UserSchema.path('username').validate(function (username) {
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) return true;
-  return username.length;
-}, 'Username cannot be blank');
+  username = username.trim().toLowerCase();
+  this.username = username;
+  return (
+    !validator.isEmpty(username)
+    && !validator.isInt(username)
+    && validator.isAlphanumeric(username)
+  );
+}, 'Username is incorrect');
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
   // if you are authenticating by any of the oauth strategies, don't validate
@@ -74,7 +102,12 @@ UserSchema.path('hashed_password').validate(function (hashed_password) {
 UserSchema.pre('save', function (next) {
   if (!this.isNew) return next();
 
-  if (!validatePresenceOf(this.password) && authTypes.indexOf(this.provider) === -1) { next(new Error('Invalid password')); } else { next(); }
+  if (
+    !validatePresenceOf(this.password)
+    && authTypes.indexOf(this.provider) === -1
+  ) {
+    next(new Error('Invalid password'));
+  } else { next(); }
 });
 
 /**
@@ -85,8 +118,8 @@ UserSchema.methods = {
      * Authenticate - check if the passwords are the same
      *
      * @param {String} plainText
-     * @return {Boolean}
      * @api public
+     *@returns {Boolean} -
      */
   authenticate(plainText) {
     if (!plainText || !this.hashed_password) {
@@ -99,7 +132,7 @@ UserSchema.methods = {
    * Encrypt password
    *
    * @param {String} password
-   * @return {String}
+   * @return {String} - returns hashed password
    * @api public
   */
   encryptPassword(password) {
@@ -107,5 +140,8 @@ UserSchema.methods = {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   }
 };
+
+// Add unique field validation plugin
+UserSchema.plugin(uniqueFieldValidator, { message: '{PATH} already exist!' });
 
 export default mongoose.model('User', UserSchema);
