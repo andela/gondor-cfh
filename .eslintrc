@@ -3,13 +3,15 @@
   "extends": "airbnb-base",
   "env": {
     "node": true,
-    "es6": true,
     "mocha": true
   },
   "globals": {
     "expect": true
   },
+  "parser": "babel-eslint",
   "rules": {
+    "no-underscore-dangle": 0,
+    "import/prefer-default-export": 0,
     "one-var": 0,
     "max-len": [
       2,

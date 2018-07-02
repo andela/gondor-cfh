@@ -1,9 +1,10 @@
 node_modules
-public/lib
 .sass-cache/
 .DS_store
 c4h_keys.txt
 .idea
 .env
+dist
+**/dist
 coverage
 .coveralls.yml
