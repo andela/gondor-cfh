@@ -28,11 +28,12 @@
       "multi-line"
     ],
     "import/no-unresolved": [
-      2,
+      0,
       {
         "commonjs": true
       }
     ],
+    "import/extensions": "off",
     "no-shadow": [
       "error",
       {

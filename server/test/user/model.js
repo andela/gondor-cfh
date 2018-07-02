@@ -1,5 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-len: 0 */
+/* eslint no-unused-vars: 0 import/no-extraneous-dependencies: 0 */
 import should from 'should';
 import { expect } from 'chai';
 import mongoose from 'mongoose';
@@ -134,7 +135,7 @@ describe('<Unit Test User Model>', () => {
 
   after(done => done());
 
-  describe('Model User:', () => {
+  describe('Method Save', () => {
     before((done) => {
       user = new User({
         name: 'Full name',
@@ -146,7 +147,7 @@ describe('<Unit Test User Model>', () => {
       done();
     });
 
-    describe('Method Save', () => {
+    describe('Save User', () => {
       it('should be able to save whithout problems', () => user.save((err) => {
         should.not.exist(err);
       }));

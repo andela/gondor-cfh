@@ -10,7 +10,7 @@ dotenv.config();
  * @exports
  * @class UserApiController
  */
-const UsersApiController = {
+class UsersApiController {
   /**
    *
    * Creates user
@@ -21,7 +21,7 @@ const UsersApiController = {
    * @param {object} next Express next object
    * @returns {object} returns token
    */
-  signup(req, res, next) {
+  static signup(req, res, next) {
     const newUser = new User(req.body);
     newUser.save((err, response) => {
       if (err) return next(err);
@@ -48,6 +48,6 @@ const UsersApiController = {
       }
     });
   }
-};
+}
 
 export default UsersApiController;
