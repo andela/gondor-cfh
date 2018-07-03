@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 import expressSetup from './setup/expressSetup';
 import passportSetup from './setup/passportSetup';
 import config from './config';
-import pageRoutes from './routes/pages';
+import routes from './routes/index';
 import auth from './middlewares/authorization';
 
 dotenv.config();
@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 expressSetup(app, passport, mongoose);
 
 // Bootstrap route
-pageRoutes(app, passport, auth);
+routes(app, passport, auth);
 
 // Start the app by listening on <port>
 const { port } = config;
