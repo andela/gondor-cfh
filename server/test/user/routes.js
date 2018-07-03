@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 describe('Users API Routes', () => {
   const newUser = {
-    name: 'myName',
+    name: 'myName ',
     email: 'test@test.com',
     username: 'myName006',
     password: 'password'
