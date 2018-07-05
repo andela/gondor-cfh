@@ -12,7 +12,7 @@ angular.module('mean.system')
     $scope.makeAWishFact = makeAWishFacts.pop();
 
     $scope.searchUsers = function () {
-      let _timeout;
+      var _timeout;
       if (_timeout) {
         $timeout.cancel(_timeout);
       }
@@ -38,23 +38,18 @@ angular.module('mean.system')
     $scope.inviteUsers = function (receiver) {
       var link = document.URL;
       var httpMessage =   '<h2> Join the game' + link + '</h2>';
-      $scope.loading = false;
-      $scope.send = function () {
-        $scope.loading = true;
+      
         $http.post('/api/mail', {
-          receiver,
+          receiver: receiver,
           subject: 'Game Invitation',
           html: httpMessage
         })
         .success(function(data) {
-            $scope.loading = false;
             $scope.inviteMessage = data.message;
         })
         .error(function(data) {
-          console.log('error:', data);
+          console.log( data);
       });
-      };
-      $scope.send();
     };
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {

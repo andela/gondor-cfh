@@ -189,7 +189,7 @@ angular.module('mean.system')
   };
   var playersMin = function () {
          game.errorPlayerMin = 'To play the game, there must be at least 3 players';
-         $timeout(() => { game.errorPlayerMin = ''; }, 3000);
+         $timeout(function() { game.errorPlayerMin = ''; }, 3000);
        };
   var playersMax = function () {
     game.errorPlayerMax = 'A maximum of 12 players have already joined this game';
