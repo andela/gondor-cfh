@@ -1,6 +1,7 @@
 import AnswerController from '../controllers/answers';
 import UsersController from '../controllers/users';
 import UsersApiController from '../controllers/api/users';
+import MailController from '../controllers/api/mail';
 import QuestionsController from '../controllers/questions';
 import ErrorHandler from '../middlewares/errorHandler';
 import { authenticate as Authenticate } from '../middlewares/authorization';
@@ -101,4 +102,10 @@ export default (app, passport) => {
   // Home route;
   app.get('/play', index.play);
   app.get('/', index.render);
+
+  // Search Users
+  app.get('/api/search/users', UsersController.userSearch);
+
+  // Email Users
+  app.post('/api/mail', MailController.sendMail);
 };

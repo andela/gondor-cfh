@@ -67,6 +67,25 @@ exports.user = {
       return res.send(401, 'User is not authorized');
     }
     next();
+  },
+  isAuthorized(req, res, next) {
+    const bearerHeader = req.headers.authorization;
+    if (typeof bearerHeader === 'undefined') {
+      return res.status(401).send({
+        message: 'No token provided.'
+      });
+    }
+    const bearer = bearerHeader.split(' ');
+    const token = bearer[1];
+    jwt.verify(token, process.env.TOKEN_PASSWORD, (err, decoded) => {
+      if (err) {
+        return res.status(403).json({
+          message: err.message
+        });
+      }
+      req.decoded = decoded;
+    });
+    return next();
   }
 };
 
