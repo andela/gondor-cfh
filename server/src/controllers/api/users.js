@@ -40,6 +40,7 @@ class UsersApiController {
             if (err) return next(err);
             res.status(201).json({
               success: true,
+              errors: {},
               message: 'user created successfully!',
               token
             });
@@ -93,6 +94,7 @@ class UsersApiController {
 
                 res.status(200).json({
                   success: true,
+                  errors: {},
                   message: 'Login successful!',
                   token
                 });
@@ -101,20 +103,20 @@ class UsersApiController {
           }
 
           if (!pswdMatch) {
-            error = new Error('Password incorrect!');
+            error = new Error('Email or Password is incorrect!');
             error.status = 400;
             return next(error);
           }
         }
 
         if (!found) {
-          error = new Error('User not found!');
-          error.status = 404;
+          error = new Error('Email or Password is incorrect!');
+          error.status = 400;
           return next(error);
         }
       });
     } else {
-      error = new Error('You must fill all fields!');
+      error = new Error('Email and Password are required!');
       error.status = 400;
       return next(error);
     }

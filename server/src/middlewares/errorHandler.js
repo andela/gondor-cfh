@@ -21,14 +21,14 @@ const errorHandler = (
 ) => {
   // check if unique constraint error
   if (err.name === 'ValidationError') {
-    const message = [];
+    const customErrors = {};
     Object.keys(err.errors).forEach((error) => {
-      message.push(`${err.errors[error].message}`);
+      customErrors[error] = err.errors[error].message;
     });
-    return res.status(409).json({
+    return res.status(400).json({
       success: false,
-      error: err.name,
-      message
+      message: err.name,
+      errors: customErrors
     });
   }
 
@@ -42,7 +42,7 @@ const errorHandler = (
   return res.status(err.status || 500).json({
     success: false,
     message: err.message,
-    error: err.errors
+    errors: err.errors
   });
 };
 

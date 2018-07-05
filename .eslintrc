@@ -28,8 +28,8 @@
       "error",
       "multi-line"
     ],
-    "import/no-unresolved": "off",
-    "import/extensions": "off",
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
     "no-shadow": [
       "error",
       {
