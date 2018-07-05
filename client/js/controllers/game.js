@@ -1,14 +1,55 @@
 angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', '$http', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog, $http) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
     $scope.modalShown = false;
     $scope.game = game;
     $scope.pickedCards = [];
+    $scope.search = '';
+    $scope.match = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
 
+    $scope.searchUsers = function () {
+      let _timeout;
+      if (_timeout) { 
+        $timeout.cancel(_timeout);
+      }
+      _timeout = $timeout(() => {
+        $http({
+          url: '/api/search/users',
+          method: 'GET',
+          params: { search: $scope.search }
+        })
+          .then((response) => {
+            if (response.data.message === 'No matching user') {
+              $scope.match = [];
+            }
+            $scope.match = response.data.users;
+          },
+          (err) => {
+            console.log('error:', err);
+            $scope.match = [];
+          }); _timeout = null;
+      }, 1000);
+    };
+    $scope.inviteUsers = function (receiver) {
+      var link = document.URL;
+      var httpMessage =   '<h2> Join the game' + link + '</h2>';
+      $scope.loading = false;
+      $scope.send = function () {
+        $scope.loading = true;
+        $http.post('/api/mail', {
+          receiver,
+          subject: 'Game Invitation',
+          html: httpMessage
+        }).then((res) => {
+          $scope.loading = false;
+          $scope.inviteMessage = res.data.message;
+        });
+      };
+    };
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
