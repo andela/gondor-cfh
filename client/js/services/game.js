@@ -12,7 +12,7 @@ angular.module('mean.system')
     table: [],
     czar: null,
     playerMinLimit: 3,
-    playerMaxLimit: 6,
+    playerMaxLimit: 12,
     pointLimit: null,
     state: null,
     round: 0,
@@ -178,7 +178,7 @@ angular.module('mean.system')
   });
   socket.on('playerFilled', function () {
         addToNotificationQueue('A maximum of 12 players have already joined this game');      
-        game.playersMax();
+        playersMax();
          })
   game.joinGame = function(mode,room,createPrivate) {
     mode = mode || 'joinGame';
@@ -187,23 +187,19 @@ angular.module('mean.system')
     var userID = !!window.user ? user._id : 'unauthenticated';
     socket.emit(mode,{userID: userID, room: room, createPrivate: createPrivate});
   };
-  game.playersMin = function () {
-         this.errorPlayerMin = 'To play the game, there must be at least 3 players';
+  var playersMin = function () {
+         game.errorPlayerMin = 'To play the game, there must be at least 3 players';
          $timeout(() => { game.errorPlayerMin = ''; }, 3000);
        };
-  game.playersMax = function () {
-    this.errorPlayerMax = 'A maximum of 12 players have already joined this game';
+  var playersMax = function () {
+    game.errorPlayerMax = 'A maximum of 12 players have already joined this game';
     console.log(game.errorPlayerMax);
   };
   game.startGame = function () {
     if (game.players.length < 3) {
       addToNotificationQueue('To play the game, there must be at least 3 players');
-      game.playersMin();
+      playersMin();
     }
-    socket.emit('startGame');
-  };
-    
-  game.startGame = function() {
     socket.emit('startGame');
   };
 

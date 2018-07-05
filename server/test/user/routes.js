@@ -5,6 +5,7 @@ import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
 import server from '../../src/index';
 import { tokens } from '../setup';
+import User from '../../src/models/user';
 
 chai.use(chaiHttp);
 
