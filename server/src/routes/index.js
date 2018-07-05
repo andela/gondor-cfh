@@ -16,6 +16,7 @@ export default (app, passport) => {
   app.post('/users', UsersController.create);
   app.post('/users/avatars', UsersController.avatars);
   app.post('/api/auth/signup', UsersApiController.signup, ErrorHandler);
+  app.post('/api/auth/login', UsersApiController.login, ErrorHandler);
 
   // Donation Routes
   app.post('/donations', UsersController.addDonation);
