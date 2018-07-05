@@ -273,10 +273,12 @@ class UsersController {
         if (users.length === 0) {
           return res.status(404).json({
             message: 'No matching user',
-            users: [{
-              name: 'No matching user',
-              email: 'No matching user',
-            }]
+            errors: {
+              users: {
+                name: 'No matching user',
+                email: 'No matching user'
+              }
+            }
           });
         }
         const matchedUsers = users.map(user => ({

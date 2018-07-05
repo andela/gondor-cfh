@@ -4,6 +4,7 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
 import server from '../../src/index';
+import User from '../../src/models/user';
 
 chai.use(chaiHttp);
 
