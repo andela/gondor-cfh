@@ -20,7 +20,10 @@ angular.module('mean.system')
     curQuestion: null,
     notification: null,
     timeLimits: {},
-    joinOverride: false
+    joinOverride: false,
+    inviteMessage: '',
+    errorPlayerMax: '',
+    errorPlayerMin: ''
   };
 
   var notificationQueue = [];
@@ -193,8 +196,15 @@ angular.module('mean.system')
        };
   var playersMax = function () {
     game.errorPlayerMax = 'A maximum of 12 players have already joined this game';
-    console.log(game.errorPlayerMax);
+    $timeout(function() { game.errorPlayerMin = ''; }, 3000);
   };
+  game.successMailNotify = function(){
+    addToNotificationQueue(game.inviteMessage);    
+  }
+  game.notifyMaxUsers = function(){
+    addToNotificationQueue('A maximum of 12 players have already joined this game');          
+    playersMax();
+  }
   game.startGame = function () {
     if (game.players.length < 3) {
       addToNotificationQueue('To play the game, there must be at least 3 players');
