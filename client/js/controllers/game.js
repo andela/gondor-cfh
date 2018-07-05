@@ -11,30 +11,33 @@ angular.module('mean.system')
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
 
-    $scope.searchUsers = function () {
-      var _timeout;
-      if (_timeout) {
-        $timeout.cancel(_timeout);
-      }
-      _timeout = $timeout(function() {
-         $http({
-          url: '/api/search/users',
-          method: 'GET',
-          params: { search: $scope.search }
-        })
-          .success(function(data){
-            if (data.message === 'No matching user') {
-              $scope.match = [];
-            }
-            $scope.match = data.users;
-          })
-          .error( function(data) {
-            console.log('error:', data);
-            $scope.match = [];
-          });
-           _timeout = null;
-      }, 1000);
-    };
+
+    (function (timer, delay) {
+      $scope.searchUsers= function () {
+          if(timer){
+              $timeout.cancel(timer)
+          }
+          timer = $timeout(function(){
+
+            $http({
+              url: '/api/search/users',
+              method: 'GET',
+              params: { search: $scope.search }
+            })
+              .success(function(data){
+                if (data.message === 'No matching user') {
+                  $scope.match = [];
+                }
+                $scope.match = data.users;
+              })
+              .error( function(data) {
+                console.log('error:', data);
+                $scope.match = [];
+              });
+          }, delay)
+      };
+  })(false, 1000);
+
     $scope.inviteUsers = function (receiver) {
       var link = document.URL;
       var httpMessage =   '<h2> Join the game' + link + '</h2>';
