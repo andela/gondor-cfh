@@ -8,3 +8,4 @@ dist
 **/dist
 coverage
 .coveralls.yml
+public/lib
