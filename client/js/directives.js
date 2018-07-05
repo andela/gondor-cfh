@@ -76,4 +76,19 @@ angular.module('mean.directives', [])
         }
       }
     };
+  }).directive('comparePassword', function() {
+    return {
+      restrict: 'EA',
+      require: 'ngModel',
+      link: function(scope, element, attribute, modelController) {
+        // function to compare passwords
+        function compare(password, $scope) {
+          const confirmPassword = scope.signupForm.password.$viewValue;
+          const samePassword = password === confirmPassword;
+          modelController.$setValidity('samePassword', samePassword);
+        }
+        // adds function to the list of functions that are called when input value changes.
+        modelController.$parsers.push(compare);
+      }
+    }
   });
