@@ -38,18 +38,22 @@ angular.module('mean.system')
     $scope.inviteUsers = function (receiver) {
       var link = document.URL;
       var httpMessage =   '<h2> Join the game' + link + '</h2>';
-      
-        $http.post('/api/mail', {
+      if(game.players.length < 12) {
+        return $http.post('/api/mail', {
           receiver: receiver,
           subject: 'Game Invitation',
           html: httpMessage
         })
         .success(function(data) {
-            $scope.inviteMessage = data.message;
+          game.inviteMessage = data.message;
+          game.successMailNotify ();
+            $timeout(function() { game.inviteMessage = ''; }, 3000);
         })
         .error(function(data) {
           console.log( data);
       });
+    }
+    game.notifyMaxUsers();
     };
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
