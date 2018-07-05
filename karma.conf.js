@@ -2,6 +2,8 @@ module.exports = (config) => {
   config.set({
     files: [
       'client/lib/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'client/js/app.js',
       'client/js/**/*.js',
       'client/test/**/*.js',
     ],
