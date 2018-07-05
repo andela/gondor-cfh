@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Rakkas|Sail');
+
  .clear {
    clear:both;
  }
@@ -1255,3 +1257,132 @@
       margin: 0 0 0 4px;
    }
  }
+
+/* New style created by Stephen on 2018-07-03 starts */
+
+/*Import Font Starts*/
+
+/*Import Font End*/
+body {
+  margin: 0 !important;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+}
+h1, h2, h3, h4, h5, h6, p {
+  margin:0;
+}
+a:hover {
+  color: #EDAE49;
+}
+main {
+  flex: 1 0 auto;
+}
+.page-footer {
+  background-color: transparent !important;
+  padding: 30px !important;
+}
+.titleFont {
+  font-family: 'Rakkas', cursive !important;
+  color: white;
+}
+
+.logoFont {
+  font-family: 'Sail', cursive !important;
+  color: white;
+}
+
+/* Color codes Starts */
+.primaryBgColor {
+  background-color: #006989;
+}
+.secondaryBgColor {
+  background-color: #EDAE49;
+}
+.primaryColor {
+  color: #006989;
+}
+.secondaryColor {
+  color: #EDAE49;
+}
+.alternateColor {
+  color: #66A182;
+}
+.redColor {
+  color: rgb(194, 7, 7);
+}
+/* Color codes Ends */
+
+/* buttons starts */
+.btnPrimary {
+  background-color: #006989;
+  border-radius: 5px;
+}
+.btnPrimary:hover {
+  background-color: #0393be;
+  border-radius: 5px;
+}
+.btnSecondary {
+  background-color: #EDAE49;
+  border-radius: 5px;
+}
+.btnSecondary:hover {
+  background-color: rgb(241, 195, 121);
+  border-radius: 5px;
+}
+.btnSecondary:focus {
+  background-color: #EDAE49;
+}
+/* buttons ends */
+
+/* form controls start */
+/* label focus color */
+.input-field input:focus + label {
+  color: #EDAE49 !important;
+}
+/* label underline focus color */
+.input-field input:focus {
+  border-bottom: 1px solid #EDAE49 !important;
+  box-shadow: 0 1px 0 0 #EDAE49 !important;
+}
+/* valid color */
+.input-field input.valid {
+  border-bottom: 1px solid #EDAE49 !important;
+  box-shadow: 0 1px 0 0 #EDAE49 !important;
+}
+/* form control ends */
+
+/* social icons start */
+.googleIcon {
+  background-color:transparent;
+  border: none;
+  background-image: url('../img/icons/google-new.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 45px;
+  height: 45px;
+}
+.googleIcon:hover {
+  cursor: pointer;
+}
+.facebookIcon {
+  background-color:transparent;
+  border: none;
+  background-image: url('../img/icons/facebook-new.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 45px;
+  height: 45px;
+}
+.facebookIcon:hover {
+  cursor: pointer;
+}
+/* social icons ends */
+
+
+/* New style created by Stephen on 2018-07-03 ends */
+
+
