@@ -13,25 +13,26 @@ angular.module('mean.system')
 
     $scope.searchUsers = function () {
       let _timeout;
-      if (_timeout) { 
+      if (_timeout) {
         $timeout.cancel(_timeout);
       }
-      _timeout = $timeout(() => {
-        $http({
+      _timeout = $timeout(function() {
+         $http({
           url: '/api/search/users',
           method: 'GET',
           params: { search: $scope.search }
         })
-          .then((response) => {
-            if (response.data.message === 'No matching user') {
+          .success(function(data){
+            if (data.message === 'No matching user') {
               $scope.match = [];
             }
-            $scope.match = response.data.users;
-          },
-          (err) => {
-            console.log('error:', err);
+            $scope.match = data.users;
+          })
+          .error( function(data) {
+            console.log('error:', data);
             $scope.match = [];
-          }); _timeout = null;
+          });
+           _timeout = null;
       }, 1000);
     };
     $scope.inviteUsers = function (receiver) {
@@ -44,11 +45,16 @@ angular.module('mean.system')
           receiver,
           subject: 'Game Invitation',
           html: httpMessage
-        }).then((res) => {
-          $scope.loading = false;
-          $scope.inviteMessage = res.data.message;
-        });
+        })
+        .success(function(data) {
+            $scope.loading = false;
+            $scope.inviteMessage = data.message;
+        })
+        .error(function(data) {
+          console.log('error:', data);
+      });
       };
+      $scope.send();
     };
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
