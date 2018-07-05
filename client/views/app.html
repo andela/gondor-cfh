@@ -13,6 +13,23 @@
       <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </span>
+      <div id="invite-container" ng-show="game.state === 'awaiting players'" >
+            <div id="search-players">
+                <input type="search" style="
+                  padding: 6px;
+                  border: none;
+                  margin-top: 8px;
+                  margin-right: 16px;
+                  font-size: 17px;" placeholder="Search for users"  name="search" ng-model="search" ng-change="searchUsers()" >
+            </div>
+            <div id="invite-player" ng-show="game.state === 'awaiting players'" >
+                    <div ng-repeat="player in match">
+                      <span> {{ player.name }}</span>
+                      <span> {{ player.email }}</span>
+              <span><button class= "" ng-click="inviteUsers(player.email)">Invite</button></span>
+                    </div>
+            </div>
+          </div>
   </div>
   <div id="gameplay-container">
     <div id="upper-gameplay-container">
@@ -29,5 +46,32 @@
       </div>
     </div>
     <answers></answers>
+  </div>
+      <!-- Maximum Player Notification Modal-->
+  <div id="modal" ng-show="game.errorPlayerMax">
+    <div id="modal-content">
+      <div class="modal-body" ng-if="game.errorPlayerMax">
+          <h6>{{game.errorPlayerMax}}</h6>
+      </div>
+      <div class="button-div">
+        <span><button class= "" ><a href="/play?custom" id="startanewgame">New game</a></button></span>
+        <span><button class= "" ng-click="abandonGame()">Go back</button></span>
+      </div>
+    </div>
+  </div>
+  <!-- Invite User Modal-->
+  <div id="modal" ng-show="game.inviteMessage">
+      <div id="modal-content">
+        <button type="button" ng-click="closeModal()">&times;</button>
+        <div class="modal-body" ng-if="game.inviteMessage">
+          <h6>{{game.inviteMessage}}</h6>
+        </div>
+        <div ng-repeat="player in match">
+            <span> {{ player.name }}</span>
+            <span> {{ player.email }}</span>
+    <span><button class= "" ng-click="inviteUsers(player.email)">Invite</button></span>
+          </div>
+      </div>
+    </div>
   </div>
 </div>
