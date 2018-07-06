@@ -8,23 +8,23 @@
   background-attachment: fixed;
   background-image: linear-gradient(rgba(0, 105, 137, 0.8), rgba(0, 105, 137, 0.8)), url("../img/charity.jpg"); }
 
-.top {
+#signin-container .top {
   padding: 20px; }
 
-.card {
+#signin-container .card {
   margin-left: auto;
   margin-right: auto; }
 
-.padding {
+#signin-container .padding {
   padding: 10px; }
 
-.left-signin-card {
+#signin-container .left-signin-card {
   background-color: white;
   min-height: 75vh !important;
   background-size: cover;
   background-image: linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)), url("../img/playing-cards-2.jpeg"); }
 
-.right-signin-card {
+#signin-container .right-signin-card {
   background-color: black;
   min-height: 75vh !important;
   background-size: cover;
