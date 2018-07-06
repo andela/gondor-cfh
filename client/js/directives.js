@@ -83,9 +83,11 @@ angular.module('mean.directives', [])
       link: function(scope, element, attribute, modelController) {
         // function to compare passwords
         function compare(password, $scope) {
-          const confirmPassword = scope.signupForm.password.$viewValue;
-          const samePassword = password === confirmPassword;
-          modelController.$setValidity('samePassword', samePassword);
+          const actualPassword = scope.signupForm.password.$viewValue;
+          const confirmPassword = scope.signupForm.confirmPassword.$viewValue;
+          const samePassword = actualPassword === confirmPassword;
+          scope.signupForm.confirmPassword.$setValidity('samePassword', samePassword);
+          return password;
         }
         // adds function to the list of functions that are called when input value changes.
         modelController.$parsers.push(compare);
