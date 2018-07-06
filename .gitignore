@@ -8,3 +8,5 @@ dist
 **/dist
 coverage
 .coveralls.yml
+bower_components
+public

@@ -1,85 +1,157 @@
-<div id="main-bod">
-  <!-- Fixed Logo & Menu Bar Start -->
-  <div id="top-part">
-    <div class="wpb-top-bar">
-      <div class="mod-contain" id="navver">
-        <div class="row">
-          <!-- Logo -->
-          <div class="wpb-logo-container">
-            <div id="landing-logo"> 
-              <span id="first-word">Cards</span>
-              <span id="second-word"> for</span> 
-              <span id="third-word">Humanity</span> 
-            </div> 
-            <div class="col-md-9 wpb-menu-container">
-              <ul class="wpb-main-menu">
-                <li><a href="/">Home</a></li>
-              </ul>
+
+      <main class="ignore-css">
+        <!--Sign in container starts-->
+        <div id="signup-container">
+          <br />
+          <!--Top section starts-->
+          <div class="top">
+              <h4 class="center-align titleFont">
+                <span class="secondaryColor">Cards</span>
+                <span class="alternateColor">for</span>
+                <span class="redColor">Humanity</span>
+              </h4>
+          </div>
+          <!--Top section ends-->
+          <br />
+          <!--Middle section starts-->
+            <div ng-controller="AuthController" ng-init="signupError=''" class="row">
+              <div class="col hide-on-small-only m2 l2"></div>
+              <div class="col s12 m8 l8">
+                  <div class="center card row middleContainer">
+                      <!--Left hand of middle card starts-->
+                      <div class="left-signup-card col m6 s12">
+                        <div>
+                        <br /><br />
+                        <h5 class="center-align padding secondaryColor"> <strong>SIGN UP</strong></h5>
+                        <div class="padding">
+                            <form name="signupForm" class="col s12">
+                                <h6 class="red-text" ng-show="signupError">
+                                    {{signupError}}
+                                  </h6>
+                                <div class="row">
+                                    <div class="input-field signup-input-field col s12">
+                                      <input ng-model="email" name="email" id="email" type="email" required class="validate">
+                                      <label for="email">EMAIL ADDRESS</label>
+                                      <span class="red-text" ng-show="signupForm.email.$dirty && signupForm.email.$invalid">
+                                        <span ng-show="signupForm.email.$error.email">Invalid email address.</span>
+                                      </span>
+                                      <span class="red-text" ng-show="emailError">
+                                          {{emailError}}
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="input-field signup-input-field col s12">
+                                      <input name="username" ng-model="username" id="username" type="text" class="validate" required>
+                                      <label for="username">USERNAME</label>
+                                      <span class="red-text" ng-show="usernameError">
+                                          {{usernameError}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="input-field signup-input-field col s12">
+                                    <input name="password" ng-model="password" id="password" type="password"
+                                      class="validate" required ng-minlength="8" ng-maxlength="15">
+                                    <label for="password">PASSWORD</label>
+                                    <span class="red-text" ng-show="
+                                    (!signupForm.password.$error.required && signupForm.password.$dirty) && 
+                                    (signupForm.password.$error.minlength || signupForm.password.$error.maxlength)">
+                                      Passwords must be atleast 8 and 15 characters.
+                                    </span>
+                                    <span class="red-text" ng-show="passwordError">
+                                        {{passwordError}}
+                                      </span>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field signup-input-field col s12">
+                                      <input name="confirmPassword" ng-model="confirmpassword" id="confirmPassword"
+                                        type="password" class="validate" required compare-password>
+                                      <label for="confirmPassword">CONFIRM PASSWORD</label>
+                                      <span class="red-text" ng-show="signupForm.confirmPassword.$dirty &&
+                                        signupForm.confirmPassword.$error.required">
+                                        Please confirm your password.
+                                      </span>
+                                      <span class="red-text" ng-show="signupForm.confirmPassword.$error.samePassword">
+                                        Passwords dont match.
+                                      </span>
+                                    </div>
+                                  </div>
+                                <div class="row">
+                                    <div class="file-field input-field signup-input-field col s12">
+                                        <div class="btn upload-button">
+                                          Choose
+                                          <input type="file" />
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                          <input placeholder="CHOOSE PROFILE IMAGE" id="uploadImage" class="file-path validate" type="text">
+                                        </div>
+                                      </div>
+                                </div>
+                                <div class="center">
+                                  <button ng-click="signup()" class="btn btn-large btnSecondary waves-effect waves-light"
+                                    type="button" name="signup" ng-disabled="signupForm.$invalid">
+                                    SIGN UP
+                                  </button>
+                                </div>
+                                <br />
+                              </form>
+                              <p>you can also sign up with your social accounts</p>
+                              <br />
+                              <div>
+                                <button class="googleIcon"></button>
+                                &nbsp;
+                                <button class="facebookIcon"></button>
+                              </div>
+                        </div>
+                        <a href="#!/signin" class="secondaryColor">Have an account? Sign in</a>
+                        <br/><br />
+                      </div>
+                      </div>
+                      <!--Left hand of middle card ends-->
+                      <!--Right hand of middle card starts-->
+                      <div class="right-signup-card col m6 hide-on-small-only">
+                        <br /><br /><br /><br /><br />
+                        <div>
+                          <h1 class="center-align logoFont">
+                            <span class="secondaryColor">C</span>
+                            <span class="alternateColor">F</span>
+                            <span class="redColor">H</span>
+                          </h1>
+                        </div>
+                        <br /><br /><br /><br />
+                        <div>
+                          <h5 class="white-text"><strong>A game for horrible people <span class="redColor">desperately</span>
+                            trying to do good.</strong></h5>
+                        </div>
+                        <br /><br /><br /><br /><br />
+                        <div>
+                          <small class="white-text"><span class="redColor">Warning!</span> This game contains offensive, profane, explicit content
+                            created by <span class="secondaryColor">Cards Against Humanity</span> and provided here,
+                            uncensored and complete in digital form. The People Team made us say that.
+                          </small>
+                        </div>
+                        <br /><br /><br />
+          
+                      </div>
+                      <!--Right hand of middle card ends-->
+                    </div>
+              </div>
+              <div class="col hide-on-small-only m2 l2"></div>
+
             </div>
-          </div>      
+          <!--Middle section ends-->
+        <br /><br />
+          <!--Bottom section starts-->
+          <div class="center page-footer">
+            <strong class="center-align white-text">
+              This game is based on the <span class="secondaryColor">Cards Against Humanity</span> card game,
+              which is CC licensed (BY-NC-SA). Cards For Humanity is not affiliated with Cards Against Humanity.
+            </strong>
+          </div>
+          <!--Bottom section ends-->
         </div>
-      </div>
-    </div>
-  </div>
-<!-- Fixed Logo & Menu Bar End -->
-
-<!-- Landing Start -->
-<div class="wpb-teaser parallax-background" id="homer">
-  <div class="background-opacity"></div> 
-  <div class="modified-container">
-    <div class="row" id="main-text"> 
-    <!-- Teaser Text Start -->
-    <div id="landing-logo">
-      <h2 id="slogan">Sign Up with:</h2>
-      <div id="login-buttons">
-        <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
-        <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
-        <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
-        <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
-      </div>
-      <p id="create">Or create a username/password and select an avatar:</p>
-
-      <div class="sign-body">
-        <div class="more-sign">
-          <form class="signup form-horizontal" action="/users" method="post">
-            <div class="control-group">
-              <label for="name" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="name" type="text" name="name" placeholder="Full name" required novalidate />
-              </div>
-            </div>
-            <div class="control-group">
-              <label for="email" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="email" type="email" name="email" placeholder="Email" required novalidate />
-              </div>
-            </div>
-            <div class="control-group">
-              <label for="password" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="password" type="password" name="password" placeholder="Password" required novalidate />
-              </div>
-            </div>
-            <div id="contain-avatars">
-              <ul ng-controller="IndexController" class="avatar-list">
-                <li ng-repeat="avatar in avatars" class="avatars ng-scope">
-                  <input name="avatar" type='radio' value="{{$index}}">
-                    <img ng-src="{{avatar}}">
-                  </input>
-                </li>
-              </ul>
-            </div>
-            <div class="form-actions">
-              <button id="sign-up-btn-other" type='submit'>Sign Up</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    </div>
-    </div>
-  </div>
-</div>
-
-
-
+        <!--Sign in container ends-->
+      </main>

@@ -1,71 +1,116 @@
-<div id="main-bod" ng-controller="IndexController">
-  <!-- Fixed Logo & Menu Bar Start -->
-  <div id="top-part">
-    <div class="wpb-top-bar">
-      <div class="mod-contain" id="navver">
-        <div class="row">
-          <!-- Logo -->
-          <div class="wpb-logo-container">
-            <div id="landing-logo"> 
-              <span id="first-word">Cards</span>
-              <span id="second-word"> for</span> 
-              <span id="third-word">Humanity</span> 
-            </div> 
-            <div class="col-md-9 wpb-menu-container">
-              <ul class="wpb-main-menu">
-                <li><a href="/">Home</a></li>
-              </ul>
-            </div>
-          </div>      
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- Fixed Logo & Menu Bar End -->
 
-<!-- Landing Start -->
-<div class="wpb-teaser parallax-background" id="homer">
-  <div class="background-opacity"></div> 
-  <div class="modified-container">
-    <div class="row" id="main-text"> 
-    <!-- Teaser Text Start -->
-    <div id="landing-logo">
-      <h2 id="slogan">Sign in with:</h2>
-      <div id="login-buttons">
-        <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
-        <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
-        <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
-        <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
-      </div>
-      <p id="create">Or log in below:</p>
-
-      <div class="sign-body">
-        <div class="more-sign">
-          <div class="sign-error" ng-show="showError() === 'invalid'">
-            Please check your username/password and try again.
+      <main>
+        <!--Sign in container starts-->
+        <div id="signin-container">
+          <br />
+          <!--Top section starts-->
+          <div class="top">
+              <h4 class="center-align titleFont">
+                <span class="secondaryColor">Cards</span>
+                <span class="alternateColor">for</span>
+                <span class="redColor">Humanity</span>
+              </h4>
           </div>
-          <form class="signup form-horizontal" action="/users/session" method="post">
-            <div class="control-group">
-              <label for="email" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="email" type="text" name="email" placeholder="Email" required novalidate />
+          <!--Top section ends-->
+          <br />
+          <!--Middle section starts-->
+            <div ng-controller="AuthController" ng-init="signinError=''" class="row">
+              <div class="col hide-on-small-only m2 l2"></div>
+              <div class="col s12 m8 l8">
+                  <div class="center card row middleContainer">
+                      <!--Left hand of middle card starts-->
+                      <div class="left-signin-card col m6 s12">
+                        <div>
+                        <br /><br />
+                        <h5 class="center-align padding secondaryColor"> <strong>SIGN IN</strong></h5>
+                        <div class="padding">
+                            <form name="signinForm" class="col s12">
+                              <h6 class="red-text" ng-show="signinError">
+                                {{signinError}}
+                              </h6>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                      <input id="email" name="email" ng-model="email" type="text"
+                                      class="validate" required>
+                                      <label for="email">EMAIL ADDRESS</label>
+                                      <span class="red-text" ng-show="signinForm.email.$dirty &&
+                                      signinForm.email.$error.required">
+                                          Email is required.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="input-field col s12">
+                                    <input id="password" name="password" ng-model="password" type="password"
+                                    class="validate" required>
+                                    <label for="password">PASSWORD</label>
+                                    <span class="red-text" ng-show="signinForm.password.$dirty &&
+                                      signinForm.password.$error.required">
+                                          Password is required.
+                                        </span>
+                                  </div>
+                                </div>
+                                <div class="center">
+                                  <button ng-click="signin()" class="btn btn-large btnSecondary waves-effect waves-light" type="button" name="signin">
+                                    SIGN IN
+                                  </button>
+                                </div>
+                                <br /><br />
+                              </form>
+                              <p>you can also sign in with your social accounts</p>
+                              <br />
+                              <div>
+                                <button class="googleIcon"></button>
+                                &nbsp;
+                                <button class="facebookIcon"></button>
+                              </div>
+                        </div>
+                        <a href="#!/signup" class="secondaryColor">Don't have an account? Sign up</a>
+                        <br/><br />
+                      </div>
+                      </div>
+                      <!--Left hand of middle card ends-->
+                      <!--Right hand of middle card starts-->
+                      <div class="right-signin-card col m6 hide-on-small-only">
+                        <br /><br /><br /><br /><br />
+                        <div>
+                          <h1 class="center-align logoFont">
+                            <span class="secondaryColor">C</span>
+                            <span class="alternateColor">F</span>
+                            <span class="redColor">H</span>
+                          </h1>
+                        </div>
+                        <br /><br /><br /><br />
+                        <div>
+                          <h5 class="white-text"><strong>A game for horrible people <span class="redColor">desperately</span>
+                            trying to do good.</strong></h5>
+                        </div>
+                        <br /><br /><br /><br /><br />
+                        <div>
+                          <small class="white-text"><span class="redColor">Warning!</span> This game contains offensive, profane, explicit content
+                            created by <span class="secondaryColor">Cards Against Humanity</span> and provided here,
+                            uncensored and complete in digital form. The People Team made us say that.
+                          </small>
+                        </div>
+                        <br /><br /><br />
+          
+                      </div>
+                      <!--Right hand of middle card ends-->
+                    </div>
               </div>
-            </div>
-            <div class="control-group">
-              <label for="password" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="password" type="password" name="password" placeholder="Password" required novalidate />
-              </div>
-            </div>
-            <div class="form-actions top-margin">
-              <button id="sign-up-btn-other" type='submit'>Sign In</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    </div>
-    </div>
-  </div>
-</div>
+              <div class="col hide-on-small-only m2 l2"></div>
 
+            </div>
+          <!--Middle section ends-->
+        <br /><br />
+          <!--Bottom section starts-->
+          <div class="center page-footer">
+            <strong class="center-align white-text">
+              This game is based on the <span class="secondaryColor">Cards Against Humanity</span> card game,
+              which is CC licensed (BY-NC-SA). Cards For Humanity is not affiliated with Cards Against Humanity.
+            </strong>
+          </div>
+          <!--Bottom section ends-->
+        </div>
+        <!--Sign in container ends-->
+      </main>
