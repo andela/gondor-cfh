@@ -49,8 +49,8 @@ angular.module('mean.system')
         })
         .success(function(data) {
           game.inviteMessage = data.message;
-          game.successMailNotify ();
-            $timeout(function() { game.inviteMessage = ''; }, 3000);
+          game.successMailNotify();
+          $timeout(function() { game.inviteMessage = ''; }, 3000);
         })
         .error(function(data) {
           console.log( data);
