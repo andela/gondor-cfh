@@ -1,5 +1,5 @@
 
-<div class="main-container">
+<div id="landing-page" class="main-container">
     
   <div class="top-section">
     <!-- <div class="slider-container"></div> -->
@@ -21,12 +21,12 @@
         <h1 class="center-align title-txt"><span style="color:#E4D019" >Card</span> <span style="color:#66A182">For</span> <span style="color:#EDAE49">Humanity</span>  </h1>
         <p class="center-align title-info">A game for horrible people <span style="color:#EDAE49">desperately</span> trying to do good </p>
       </div>
-      <div class="top-btn row">
-        <div class="col s2"></div>
-        <button class="waves-effect btn  col l4 s12 main-btn signin-btn"><span class="btn-text">Sign In</span></button>
-        <button class="waves-effect btn col l4 s12 main-btn play-btn"><span class="btn-text">Play As Guest</span></button>
-        <div class="col s2"></div>
-      </div>
+      <div class="top-btn center row">
+        <div class="col l3"></div>
+        <button class="waves-effect col l3 s5 main-btn signin-btn"><a href="#!/signin" class="btn-text">Sign In</a></button>
+        <button class="waves-effect  col l3 s5 main-btn play-btn"><a href="#!/app" class="btn-text">Play As Guest</a></button>
+        <div class="col l3"></div>
+      </div> 
     </div>
   </div>
   <nav>
@@ -37,7 +37,7 @@
               <div id="nav-mobile" class="right hide-on-med-and-down">
                 <ul>
                   <li><a href="#!/app">Join Game</a></li>
-                  <li><a href="/signout">Sign Out</a></li>
+                  <li><a href="/signup">Sign Up</a></li>
                   <li><a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="waves-effect waves-light btn donate-btn">Donate Now</a></li>
                 </ul>
               </div>
@@ -58,7 +58,7 @@
             </div>
           </li>
           <li><a href="#!/app">Join Game</a></li>
-          <li><a href="/signout">Sign Out</a></li>
+          <li><a href="#!/signup">Sign Out</a></li>
           <li class="donate-btn-li"><a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="waves-effect waves-light btn donate-btn">Donate Now</a></li>
       </ul>
   </nav>
@@ -96,13 +96,14 @@
     <div class="info">
       <div class="info-txt">
         <h1 class="head-title live-txt center">We Improve Human Lives </h1>
-        <p class="center flow-text">cards for humanity strives to achieve a better state of life for all humans. To meet this goal,
+        <p class="center flow-text">Cards for humanity strives to achieve a better state of life for all humans. To meet this goal,
            donations are used to provide people in slums and poverty prone areas with necessary resources to give them 
            a better life. These resources include education, health care, food, 
           clothing and anything that improves the lives of the people we are able to reach.
         </p>
       </div>
-      <button class="btn-large">Donate </button>
+      <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="waves-effect waves-light btn-large donate-btn">Donate</a>
+      <!-- <button class="btn-large">Donate </button> -->
     </div>
     <div class="team">
       <h1 class="center head-title">Meet The Gordon Team </h1>
@@ -142,8 +143,8 @@
 
       </div>
     </div>
-    <footer class=""><span class="red-text">Legal</span>: This game is based on the Cards Against Humanity card game, 
-      which is CC licensed (BY-Andela). </footer>
+    <footer class=""><p class="text-center">This game is based on the <span class="footer-text">Card Against Humanity</span>
+       card game, which is CC licensed (BY-NC-SA). Cards For Humanity is not affiliated with Cards Against Humanity.</p></footer>
   </div>
   
 </div>
