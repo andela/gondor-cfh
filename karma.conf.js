@@ -1,6 +1,7 @@
 module.exports = (config) => {
   config.set({
     files: [
+      'client/lib/jquery/jquery.js',
       'client/lib/angular/angular.js',
       'client/lib/angular-mocks/angular-mocks.js',
       'client/js/**/*.js',

@@ -148,11 +148,11 @@ describe('<Unit Test User Model>', () => {
     });
 
     describe('Save User', () => {
-      it('should be able to save whithout problems', () => user.save((err) => {
+      it('should be able to save without problems', () => user.save((err) => {
         should.not.exist(err);
       }));
 
-      it('should be able to show an error when try to save witout name', () => {
+      it('should be able to show an error when try to save without name', () => {
         user.name = '';
         user.save((err) => {
           should.exist(err);

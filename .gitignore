@@ -10,4 +10,7 @@ coverage
 .coveralls.yml
 bower_components
 public
+template
+.vscode
+.editorconfig
 client/lib

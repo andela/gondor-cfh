@@ -7,7 +7,10 @@
     "es6": true
   },
   "globals": {
-    "expect": true
+    "expect": true,
+    "angular": true,
+    "$": true,
+    "window": true
   },
   "parser": "babel-eslint",
   "rules": {
@@ -58,6 +61,7 @@
           "ClassDeclaration": true
         }
       }
-    ]
+    ],
+    "linebreak-style": 0
   }
 }
