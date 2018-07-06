@@ -4,7 +4,7 @@ $(document).ready(function() {
   var ChroMo = '(Chrome)/(\d+)\.(\d+)\.(\d+)\.(\d+) Mobile';
 
   // if (/Android|webOS|CriOs|ChroMo|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false && location.href !== "http://localhost:3000/#!/app") {
-  //  $('body').append('<a href="http://hackreactor.com"><img style="z-index: 10000; position: absolute; top: 0; right: 0; width: 125px; height: 125px; border: 0;" src="http://i.imgur.com/x86kKmF.png" alt="Built at Hack Reactor"></a>');
+  //   $('body').append('<a href="http://hackreactor.com"><img style="z-index: 10000; position: absolute; top: 0; right: 0; width: 125px; height: 125px; border: 0;" src="http://i.imgur.com/x86kKmF.png" alt="Built at Hack Reactor"></a>');
   // }
 
   //Twitter buttons
@@ -14,7 +14,7 @@ $(document).ready(function() {
 </script>
 
 <script></script>
-<div landing id="main-bod">
+<div landing id="main-bod" ng-controller="IndexController">
   <!-- Fixed Logo & Menu Bar Start -->
   <div id="top-part">
     <div class="wpb-top-bar">
@@ -38,7 +38,8 @@ $(document).ready(function() {
                   <li><a href="#!/signin">Sign In</a></li>
                 </span>
                 <span ng-hide="showOptions">
-                  <li><a href="/signout">Sign Out</a></li>
+                  <li><a href="#!/profile">Profile</a></li>
+                  <li><a ng-click="signout()">Sign Out</a></li>
                 </span>
               </ul>
             </div>
@@ -54,7 +55,7 @@ $(document).ready(function() {
     <div class="background-opacity"></div>
     <div class="container">
       <div class="row" id="main-text">
-        <div class="col-md-12" id="avatars" ng-controller="IndexController">
+        <div class="col-md-12" id="avatars">
           <img ng-repeat="avatar in avatars" ng-src="{{avatar}}" id="avatar-face">
         </div>
         <!-- Teaser Slogan Start -->

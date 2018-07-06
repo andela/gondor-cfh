@@ -3,6 +3,11 @@ import UsersController from '../controllers/users';
 import UsersApiController from '../controllers/api/users';
 import QuestionsController from '../controllers/questions';
 import ErrorHandler from '../middlewares/errorHandler';
+import { authenticate as Authenticate } from '../middlewares/authorization';
+import GamesController from '../controllers/api/games';
+
+const avatars = require('../controllers/avatars');
+const index = require('../controllers/index');
 
 export default (app, passport) => {
   // User Routes
@@ -16,8 +21,12 @@ export default (app, passport) => {
   app.post('/users/avatars', UsersController.avatars);
   app.post('/api/auth/signup', UsersApiController.signup, ErrorHandler);
   app.post('/api/auth/login', UsersApiController.login, ErrorHandler);
+  app.get('/api/profile',
+    Authenticate, UsersApiController.profile, ErrorHandler);
+  app.get('/api/leaderboard', GamesController.leaderboard, ErrorHandler);
 
   // Donation Routes
+  app.post('/api/donations', Authenticate, UsersApiController.addDonation);
   app.post('/donations', UsersController.addDonation);
 
   app.post('/users/session', passport.authenticate('local', {
@@ -85,11 +94,9 @@ export default (app, passport) => {
   app.param('questionId', QuestionsController.question);
 
   // Avatar Routes
-  const avatars = require('../controllers/avatars');
   app.get('/avatars', avatars.allJSON);
 
   // Home route;
-  const index = require('../controllers/index');
   app.get('/play', index.play);
   app.get('/', index.render);
 };

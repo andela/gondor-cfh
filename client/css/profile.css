@@ -1,0 +1,282 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400|Roboto:300,400,500|Sail");
+.header {
+  margin: 0;
+  height: 64px; }
+  .header nav {
+    background-color: #006989;
+    height: 64px;
+    position: fixed;
+    width: 100%; }
+    .header nav .nav-wrapper a:hover {
+      color: #EDAE49;
+      transition: color .3s;
+    }
+    .header nav .nav-wrapper .donate-btn:hover,
+    .header nav .nav-wrapper .donate-btn:active,
+    .header nav .nav-wrapper .donate-btn.active {
+      background-color: #eaa12c;
+      color: white;
+      transition: background-color .3s;
+    }
+    .header nav .nav-wrapper a:not(.brand-logo) {
+      font-size: 1.1em;
+      font-weight: 300; }
+    .header nav .nav-wrapper .donate-btn {
+      background-color: #EDAE49;
+      border-radius: 2px;
+      text-transform: initial;
+      padding: 0 25px;
+      font-weight: 400 !important;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
+    .header nav .nav-wrapper .brand-logo {
+      margin-left: 15px;
+      font-family: 'Sail', cursive; }
+    .header nav .nav-wrapper ul li:last-child {
+      margin-right: 15px; }
+    .header nav .nav-wrapper .nav-img-li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 7px;
+      max-height: 64px;
+      box-sizing: border-box; }
+      .header nav .nav-wrapper .nav-img-li .nav-user-img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background-color: white; }
+  @media only screen and (max-width: 992px) {
+    .header nav .brand-logo {
+      left: 90%;
+      transform: translateX(-90%); } }
+
+.user-hero {
+  height: 400px;
+  background-color: #006989;
+  background: linear-gradient(rgba(0, 105, 137, 0.8), rgba(0, 105, 137, 0.8)), url("../img/charity.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .user-hero p {
+    margin-top: 10px;
+  }
+  .user-hero .user-hero-img {
+    margin-top: 60px;
+    border: 2px solid white;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .user-hero .user-hero-img img {
+      height: 147px;
+      width: 147px;
+      border-radius: 50%; }
+  .user-hero .username, .user-hero .extra-details {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: 300; }
+  .user-hero .username {
+    padding-top: 20px;
+    color: white; }
+  .user-hero .extra-details {
+    padding-top: 30px;
+    width: 100%;
+    color: #EDAE49;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-around; }
+    .user-hero .extra-details div {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .user-hero .extra-details div p {
+        margin: 0;
+        font-size: 20px; }
+        .user-hero .extra-details div p i {
+          font-size: 30px;
+          margin-bottom: -2px; }
+      .user-hero .extra-details div p:first-child {
+        font-size: 20px; }
+
+.nav-tab {
+  display: flex;
+  flex-direction: column; }
+  .nav-tab i {
+    display: none; }
+    @media (max-width: 750.98px) {
+      .nav-tab i {
+        display: initial; } }
+  .nav-tab .nav-tab-col {
+    padding: 0;
+    height: 70px;
+    box-sizing: border-box;
+    background-color: white;
+    flex: 1; }
+    .nav-tab .nav-tab-col li:not(.indicator) {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    .nav-tab .nav-tab-col .tabs {
+      height: 70px;
+      display: flex;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.1); }
+      .nav-tab .nav-tab-col .tabs .indicator {
+        display: none;
+        background-color: #006989;
+        height: 3px; }
+      .nav-tab .nav-tab-col .tabs a {
+        font-weight: 300;
+        font-size: 18px;
+        height: 70px;
+        width: 60%;
+        color: rgba(0, 105, 137, 0.8);
+        padding: 10px 24px;
+        box-sizing: border-box;
+        cursor: pointer; }
+        @media (min-width: 751px) and (max-width: 900px) {
+          .nav-tab .nav-tab-col .tabs a {
+            width: 75%; } }
+        .nav-tab .nav-tab-col .tabs a.active {
+          border-bottom: 3px solid #006989;
+          transition: border-bottom 0.1s; }
+        .nav-tab .nav-tab-col .tabs a:focus.active {
+          background-color: rgba(0, 105, 137, 0); }
+      @media (max-width: 750.98px) {
+        .nav-tab .nav-tab-col .tabs .show-tab {
+          display: none; } }
+  .nav-tab .tab-content {
+    flex-grow: 11; }
+
+.tab-content > div {
+  margin: 50px 0; }
+  .tab-content > div table {
+    font-size: 1.2em; }
+    .tab-content > div table th {
+      font-weight: 500; }
+
+.sidenav {
+  background-color: #006989;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 300; }
+  .sidenav li:not(.donate-btn-li) {
+    border-bottom: 1px solid white;
+    width: 85%; }
+    .sidenav li:not(.donate-btn-li):hover, .sidenav li:not(.donate-btn-li).active {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: white; }
+    .sidenav li:not(.donate-btn-li) a:hover, .sidenav li:not(.donate-btn-li) a.active {
+      background-color: initial; }
+  .sidenav .donate-btn-li {
+    width: 95%; }
+  .sidenav li:first-child {
+    border-bottom: 0px solid white;
+    margin-top: 30px; }
+    .sidenav li:first-child .sidenav-close-div {
+      text-align: end; }
+      .sidenav li:first-child .sidenav-close-div i {
+        color: white;
+        font-size: 2em; }
+  .sidenav li > a {
+    color: white;
+    font-size: 1.3em;
+    text-align: center;
+    margin: 15px 0;
+    font-weight: 300;
+    cursor: pointer;
+  }
+  .sidenav li > a.btn {
+    background-color: #EDAE49;
+    margin-top: 35px;
+    font-weight: 500; }
+    .sidenav li > a.btn:hover,
+    .sidenav li > a.btn:active,
+    .sidenav li > a.btn.active {
+      background-color: #eaa12c;
+      color: white;
+      transition: background-color .3s;
+    }
+  .sidenav .nav-img-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    margin-top: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+    height: 130px;
+    width: 130px;
+    box-sizing: border-box; }
+    .sidenav .nav-img-div img {
+      height: 130px;
+      width: 130px;
+      border-radius: 50%; }
+  .sidenav .user-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .sidenav .user-view p, .sidenav .user-view p > a {
+      color: white; }
+    .sidenav .user-view p {
+      font-size: 1.8em;
+      margin-bottom: 0; }
+    .sidenav .user-view p:last-child {
+      font-size: 1.3em;
+      margin-top: 0;
+      margin-bottom: 30px; }
+
+.footer {
+  background-color: #006989;
+  min-height: 70px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .footer p {
+    padding: 0 20px;
+    font-size: 15px;
+    margin-bottom: 0;
+    font-weight: 300; }
+  .footer .footer-text {
+    color: #EDAE49; }
+
+body {
+  margin: 0;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+.text-center {
+  text-align: center; }
+
+.games-won {
+  color: #eaa12c;
+  font-family: 'Montserrat', 'sans-serif';
+}
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #FAFAFA; }
+  .main .profile-content {
+    flex-grow: 10;
+    display: flex;
+    flex-direction: column; }
+    .main .profile-content .main-content {
+      height: 100%; }
