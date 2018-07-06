@@ -10,3 +10,4 @@ coverage
 .coveralls.yml
 bower_components
 public
+client/lib
