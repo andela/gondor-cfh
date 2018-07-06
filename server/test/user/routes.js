@@ -250,23 +250,3 @@ describe('Search users <GET /api/search/users>', () => {
     done();
   });
 });
-
-describe('Send Email users <POST /api/mail>', () => {
-  it('should send an email', (done) => {
-    const receiver = 'gondor_cfh_test@mailinator.com';
-    const messageOptions = {
-      receiver,
-      html: '<h2>You are invited to Gondor</h2>',
-      subject: 'Game Invite Message'
-    };
-    chai.request(server)
-      .post('/api/mail')
-      .send(messageOptions)
-      .end((err, res) => {
-        if (err) { return done(err); }
-        expect(res).to.have.status(200);
-        expect(res.body.message).to.include(`Message sent successfully to ${receiver} with id`);
-        done();
-      });
-  });
-});
