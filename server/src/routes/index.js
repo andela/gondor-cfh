@@ -2,7 +2,9 @@ import AnswerController from '../controllers/answers';
 import UsersController from '../controllers/users';
 import UsersApiController from '../controllers/api/users';
 import QuestionsController from '../controllers/questions';
+import GameController from '../controllers/api/game';
 import ErrorHandler from '../middlewares/errorHandler';
+import { authenticate } from '../middlewares/authorization';
 
 export default (app, passport) => {
   // User Routes
@@ -16,6 +18,9 @@ export default (app, passport) => {
   app.post('/users/avatars', UsersController.avatars);
   app.post('/api/auth/signup', UsersApiController.signup, ErrorHandler);
   app.post('/api/auth/login', UsersApiController.login, ErrorHandler);
+
+  // Game routes
+  app.post('/api/games/save', authenticate, GameController.saveGame);
 
   // Donation Routes
   app.post('/donations', UsersController.addDonation);
