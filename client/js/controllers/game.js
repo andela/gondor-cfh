@@ -1,14 +1,63 @@
 angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', '$http', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog, $http) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
     $scope.modalShown = false;
     $scope.game = game;
     $scope.pickedCards = [];
+    $scope.search = '';
+    $scope.match = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
 
+
+    (function (timer, delay) {
+      $scope.searchUsers= function () {
+          if(timer){
+              $timeout.cancel(timer)
+          }
+          timer = $timeout(function(){
+
+            $http({
+              url: '/api/search/users',
+              method: 'GET',
+              params: { search: $scope.search }
+            })
+              .success(function(data){
+                if (data.message === 'No matching user') {
+                  $scope.match = [];
+                }
+                $scope.match = data.users;
+              })
+              .error( function(data) {
+                console.log('error:', data);
+                $scope.match = [];
+              });
+          }, delay)
+      };
+  })(false, 1000);
+
+    $scope.inviteUsers = function (receiver) {
+      var link = document.URL;
+      var httpMessage =   '<h2> Join the game' + link + '</h2>';
+      if(game.players.length < 12) {
+        return $http.post('/api/mail', {
+          receiver: receiver,
+          subject: 'Game Invitation',
+          html: httpMessage
+        })
+        .success(function(data) {
+          game.inviteMessage = data.message;
+          game.successMailNotify();
+          $timeout(function() { game.inviteMessage = ''; }, 3000);
+        })
+        .error(function(data) {
+          console.log( data);
+      });
+    }
+    game.notifyMaxUsers();
+    };
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
