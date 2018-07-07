@@ -1,10 +1,48 @@
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+
+dotenv.config();
+const secret = process.env.SECRET;
+
 /**
- * Generic require login routing middleware
- *
- * @param {object} req - Express request object
- * @param {object} res - Express response object
- * @param {Function} next - Express middlware next function
- * @returns {undefined} - undefined
+* Generic authenticate user middleware
+*
+* @param {object} req - Express request object
+* @param {object} res - Express response object
+* @param {Function} next - Express middlware next function
+* @returns {object|func} - Error Object or next()
+*/
+export const authenticate = (req, res, next) => {
+  const token = req.body.token || req.query.token
+ || req.headers['x-access-token'];
+
+  if (!token) {
+    return res.status(403).json({
+      success: false,
+      message: 'Token not provided'
+    });
+  }
+
+  jwt.verify(token, secret, (error, decoded) => {
+    if (error) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid authorization token'
+      });
+    }
+
+    req.decoded = decoded;
+    return next();
+  });
+};
+
+/**
+* Generic require login routing middleware
+*
+* @param {object} req - Express request object
+* @param {object} res - Express response object
+* @param {Function} next - Express middlware next function
+* @returns {undefined} - undefined
 */
 exports.requiresLogin = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -14,8 +52,8 @@ exports.requiresLogin = (req, res, next) => {
 };
 
 /**
- * User authorizations routing middleware
- */
+* User authorizations routing middleware
+*/
 exports.user = {
   hasAuthorization(req, res, next) {
     if (req.profile.id !== req.user.id) {
@@ -26,8 +64,8 @@ exports.user = {
 };
 
 /**
- * Article authorizations routing middleware
- */
+* Article authorizations routing middleware
+*/
 // exports.article = {
 //     hasAuthorization: function(req, res, next) {
 //         if (req.article.user.id != req.user.id) {

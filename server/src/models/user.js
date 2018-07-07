@@ -43,7 +43,11 @@ const UserSchema = new Schema({
   facebook: {},
   twitter: {},
   github: {},
-  google: {}
+  google: {},
+  gamesWon: {
+    type: Number,
+    default: 0
+  },
 });
 
 /**
