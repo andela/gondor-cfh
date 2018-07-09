@@ -81,7 +81,7 @@ body {
   border-radius: 5px; }
 
 #landing-page .waves-effect:active {
-  background-color: #fff; }
+  background-color: #ffffff; }
 
 #landing-page .signin-btn {
   background-color: #EDAE49;
@@ -157,7 +157,7 @@ body {
 
 #landing-page .donate {
   background: #EDAE49;
-  color: #fff;
+  color: #ffffff;
   font-style: normal;
   font-weight: normal;
   line-height: normal;
@@ -176,7 +176,7 @@ body {
   margin: 0; }
 
 #landing-page .card-content {
-  color: #fff; }
+  color: #ffffff; }
 
 #landing-page .card-content > p {
   font-size: 1.2rem; }
@@ -254,7 +254,7 @@ body {
 
 #landing-page .btn-large:hover {
   background: #EDAE49;
-  color: #fff; }
+  color: #ffffff; }
 
 #landing-page .live-txt {
   margin: 0; }
@@ -343,6 +343,6 @@ body {
     font-weight: bold;
     line-height: normal;
     font-size: 20px;
-    color: #ffffff; }
-  #landing-page footer > p {
+    color: white-text; }
+  #landing-page .foot-text {
     font-size: 11px; } }

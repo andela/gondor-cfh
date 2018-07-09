@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
-  let elems = document.querySelectorAll('.slider');
-  let instances = M.Slider.init(elems, {
+  const elems = document.querySelectorAll('.slider');
+  const instances = M.Slider.init(elems, {
     indicators: false
   });
 });
