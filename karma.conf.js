@@ -4,8 +4,11 @@ module.exports = (config) => {
     files: [
       'client/lib/jquery/jquery.js',
       'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js',
+      'client/lib/lodash/lodash.js',
+      'client/lib/cloudinary-core/cloudinary-core.js',
       'client/lib/angular/angular.js',
       'client/lib/angular-mocks/angular-mocks.js',
+      'client/lib/cloudinary_ng/js/angular.cloudinary.js',
       'client/js/**/*.js',
       'client/test/**/*.js',
     ],
@@ -34,7 +37,7 @@ module.exports = (config) => {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
