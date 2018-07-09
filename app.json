@@ -35,6 +35,9 @@
     },
     "GOOGLE_APP_SECRET":{
       "required": true
+    },
+    "SECRET":{
+      "required": true
     }
   },
   "formation": {
