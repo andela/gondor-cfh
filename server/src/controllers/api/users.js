@@ -73,19 +73,19 @@ class UsersApiController {
         email: email.trim().toLowerCase()
       });
 
-      query.exec((err, found) => {
+      query.exec((err, userFound) => {
         if (err) return next(err);
 
-        if (found) {
+        if (userFound) {
           // compare password and get token
-          const pswdMatch = found.authenticate(password);
+          const pswdMatch = userFound.authenticate(password);
 
           if (pswdMatch) {
             jwt.sign(
               {
-                id: found._id,
-                email: found.email,
-                username: found.username
+                id: userFound._id,
+                email: userFound.email,
+                username: userFound.username
               },
               process.env.SECRET,
               { expiresIn: '48h' },
@@ -109,7 +109,7 @@ class UsersApiController {
           }
         }
 
-        if (!found) {
+        if (!userFound) {
           error = new Error('Email or Password is incorrect!');
           error.status = 400;
           return next(error);
