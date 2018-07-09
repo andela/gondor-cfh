@@ -1,9 +1,9 @@
 <div id="question-container-inner">
     <!-- Minimum Player Required Popup-->
-     <div class="btn btn-danger" ng-show="game.errorPlayerMin">{{game.errorPlayerMin}}</div>
+     <div style="background-color: teal; height: 40px; width: 400px" ng-show="game.errorPlayerMin">{{game.errorPlayerMin}}</div>
      <!-- Player Invite Success Popup-->
      <span>
-         <div style="background-color: teal" ng-show="game.inviteMessage">{{game.inviteMessage}}</div>
+         <div style="background-color: teal; height: 40px; width: 400px" ng-show="game.inviteMessage">{{game.inviteMessage}}</div>
        </span>
   <div class="card longBlack">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>

@@ -1,8 +1,8 @@
 /* eslint prefer-arrow-callback: 0, func-names: 0, no-undef: 0 wrap-iife: 0 */
 /* eslint vars-on-top: 0, no-var: 0, object-shorthand: 0, no-plusplus: 0 */
-/* eslint prefer-template: 0, quote-props: 0, no-else-return: 0 */
+/* eslint prefer-template: 0, quote-props: 0, no-else-return: 0 no-console: 0 */
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', '$location', 
+  .controller('GameController', ['$scope', 'game', '$timeout', '$location',
     'MakeAWishFactsService', '$dialog', '$http',
     function ($scope, game, $timeout, $location, MakeAWishFactsService,
       $dialog, $http) {
@@ -58,7 +58,7 @@ angular.module('mean.system')
               $timeout(function () { game.inviteMessage = ''; }, 3000);
             })
             .error(function (data) {
-              console.log( data);
+              console.log(data);
             });
         }
         game.notifyMaxUsers();
@@ -147,7 +147,7 @@ angular.module('mean.system')
       };
 
       $scope.isCustomGame = function () {
-        return !(/^\d+$/).test(game.gameID) 
+        return !(/^\d+$/).test(game.gameID)
         && game.state === 'awaiting players';
       };
 
@@ -202,7 +202,7 @@ angular.module('mean.system')
 
       // In case player doesn't pick a card in time, show the table
       $scope.$watch('game.state', function () {
-        if (game.state === 'waiting for czar to decide' 
+        if (game.state === 'waiting for czar to decide'
         && $scope.showTable === false) {
           $scope.showTable = true;
         }
@@ -222,10 +222,14 @@ angular.module('mean.system')
             if (!$scope.modalShown) {
               setTimeout(function () {
                 var link = document.URL;
+                // eslint-disable-next-line
                 var txt = 'Give the following link to your friends so they can join your game: ';
                 $('#lobby-how-to-play').text(txt);
                 $('#oh-el').css({
-                  'text-align': 'center', 'font-size': '22px', 'background': 'white', 'color': 'black'
+                  'text-align': 'center',
+                  'font-size': '22px',
+                  'background': 'white',
+                  'color': 'black'
                 }).text(link);
               }, 200);
               $scope.modalShown = true;
