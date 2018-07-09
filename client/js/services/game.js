@@ -1,4 +1,3 @@
-
 angular.module('mean.system')
   .factory('game', ['socket', '$timeout', '$http', function (socket, $timeout, $http) {
 
@@ -190,6 +189,7 @@ angular.module('mean.system')
         .error(function(error) { return error; });
     }
   });
+
 
   game.joinGame = function(mode,room,createPrivate) {
     mode = mode || 'joinGame';
