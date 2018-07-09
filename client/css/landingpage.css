@@ -12,272 +12,337 @@ body {
   width: 100%;
   font-family: 'Roboto', sans-serif; }
 
-#landing-page {
-  /* .row .col.s12 {
-    margin-top: 50px;
-  } */ }
-  #landing-page .top-section {
-    width: 100%;
-    height: 90vh;
-    background-color: #006989; }
-  #landing-page .fullscreen {
-    height: 90%; }
-  #landing-page .overlay-content {
-    z-index: 10;
-    position: absolute;
-    background-color: rgba(0, 105, 137, 0.8);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 90%; }
-  #landing-page .web-title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap; }
-  #landing-page .title-txt {
-    font-family: 'Sail', cursive;
+#landing-page .top-section {
+  width: 100%;
+  height: 90vh;
+  background-color: #006989; }
+
+#landing-page .fullscreen {
+  height: 90%; }
+
+#landing-page .overlay-content {
+  z-index: 10;
+  position: absolute;
+  background-color: rgba(0, 105, 137, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 90%; }
+
+#landing-page .web-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; }
+
+#landing-page .title-txt {
+  /* height: 70px; */
+  font-family: 'Sail', cursive;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  font-size: 72px;
+  animation: text 3s 1; }
+
+@keyframes text {
+  0% {
+    color: #006989;
+    margin-bottom: -20px; }
+  30% {
+    letter-spacing: 25px;
+    margin-bottom: -20px; }
+  85% {
+    letter-spacing: 8px;
+    margin-bottom: -20px; } }
+
+#landing-page .title-info {
+  margin-top: 0;
+  height: 64px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 36px;
+  color: #ffffff; }
+
+#landing-page .top-btn {
+  width: 97%;
+  margin-top: 7rem; }
+
+#landing-page .main-btn {
+  height: 4rem; }
+
+#landing-page .main-btn:hover {
+  z-index: 10; }
+
+#landing-page .waves-effect {
+  border-radius: 5px; }
+
+#landing-page .waves-effect:active {
+  background-color: #fff; }
+
+#landing-page .signin-btn {
+  background-color: #EDAE49;
+  margin-right: 5px; }
+
+#landing-page .signin-btn > a {
+  color: #ffffff; }
+
+#landing-page .play-btn {
+  margin-left: 5px;
+  background: #ffffff; }
+
+#landing-page .play-btn a {
+  color: #EDAE49; }
+
+#landing-page .btn-text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 24px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+#landing-page .btn:hover {
+  background: none; }
+
+#landing-page nav {
+  position: sticky;
+  top: 0;
+  background: #006989;
+  z-index: 10;
+  height: 64px; }
+
+#landing-page .nav-wrapper a:not(.brand-logo) {
+  font-size: 1.1em;
+  font-weight: 300; }
+
+#landing-page .donate-btn {
+  background-color: #EDAE49;
+  border-radius: 2px;
+  text-transform: initial;
+  padding: 0 25px;
+  font-weight: 400 !important;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
+
+#landing-page .brand-logo {
+  margin-left: 15px;
+  font-family: 'Sail', cursive; }
+
+#landing-page ul li:last-child {
+  margin-right: 15px; }
+
+#landing-page .nav-txt {
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  margin-right: 2rem;
+  font-size: 30px; }
+
+#landing-page .logo {
+  font-family: Sail; }
+
+#landing-page .nav-btns {
+  width: 100%;
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; }
+
+#landing-page .donate {
+  background: #EDAE49;
+  color: #fff;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  font-size: 24px;
+  text-align: center; }
+
+#landing-page .bottom-section {
+  height: auto;
+  background: url(/img/playing-cards.jpg);
+  background-size: cover; }
+
+#landing-page .steps {
+  height: auto;
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 0; }
+
+#landing-page .card-content {
+  color: #fff; }
+
+#landing-page .card-content > p {
+  font-size: 1.2rem; }
+
+#landing-page .card-title {
+  font-size: 3rem;
+  margin-bottom: 2rem; }
+
+#landing-page .steps > h1 {
+  color: #EDAE49; }
+
+#landing-page .head-title {
+  font-family: Rakkas;
+  font-size: 46px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  margin: 2rem 0; }
+
+#landing-page .step2 {
+  background: #EDAE49; }
+
+#landing-page .step3 {
+  background: #006989; }
+
+#landing-page .step4 {
+  background: black; }
+
+#landing-page .card-collection {
+  width: 100%;
+  padding: 0 4rem 4rem 4rem;
+  box-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: row; }
+
+#landing-page .card {
+  height: auto;
+  width: 20rem;
+  border-radius: 7px;
+  margin: 0 5px 5px 5px;
+  flex: 1 0 12rem;
+  margin: 5px 20px; }
+
+#landing-page .info {
+  margin: 0;
+  padding: 0;
+  height: 490px;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center; }
+
+#landing-page .info-txt {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+#landing-page .info p {
+  font-size: 22px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 40px;
+  width: 100%;
+  padding: 0 4rem;
+  text-align: center; }
+
+#landing-page .btn-large {
+  background: #EDAE49;
+  width: 20rem;
+  font-size: 30px;
+  font-weight: normal; }
+
+#landing-page .btn-large:hover {
+  background: #EDAE49;
+  color: #fff; }
+
+#landing-page .live-txt {
+  margin: 0; }
+
+#landing-page .team {
+  height: auto;
+  background-color: rgba(8, 6, 6, 0.7);
+  padding: 10px; }
+
+#landing-page .team > h1 {
+  color: #EF9708; }
+
+#landing-page .imgSize {
+  width: 20rem; }
+
+#landing-page .team-member > h3 {
+  font-size: 24px; }
+
+#landing-page .team-member {
+  width: 12rem;
+  height: auto;
+  /* flex: 0 0 8rem; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+#landing-page .team-members {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem; }
+
+#landing-page .team1 {
+  display: flex;
+  width: 80%;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row; }
+
+#landing-page .team2 {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row; }
+
+#landing-page .team-img {
+  width: 8rem; }
+
+#landing-page footer {
+  height: 80px;
+  color: #ffffff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background: #006989; }
+
+@media only screen and (max-width: 800px) {
+  #landing-page .head-title {
+    font-family: Rakkas;
+    font-size: 29px;
     font-style: normal;
     font-weight: normal;
-    line-height: normal;
-    font-size: 72px; }
+    line-height: normal; }
+  #landing-page .info p {
+    font-style: normal;
+    width: 100%;
+    padding: 0 4rem;
+    font-weight: lighter;
+    line-height: 1.1;
+    font-size: 21px;
+    text-align: center; }
+  #landing-page .btn-text {
+    font-size: 16px; }
+  #landing-page .title-txt {
+    font-size: 50px; }
   #landing-page .title-info {
-    margin-top: 0px;
+    margin-top: 0;
     height: 64px;
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
-    font-size: 36px;
-    color: #FFFFFF; }
-  #landing-page .top-btn {
-    width: 97%;
-    margin-top: 7rem; }
-  #landing-page .main-btn {
-    height: 4rem;
-    /* font-size: 36px; */ }
-  #landing-page .waves-effect {
-    border-radius: 5px; }
-  #landing-page .waves-effect:active {
-    background-color: #fff; }
-  #landing-page .signin-btn {
-    background-color: #EDAE49;
-    margin-right: 5px; }
-  #landing-page .signin-btn > a {
+    font-size: 20px;
     color: #ffffff; }
-  #landing-page .play-btn {
-    margin-left: 5px;
-    background: #ffffff; }
-  #landing-page .play-btn a {
-    color: #EDAE49; }
-  #landing-page .btn-text {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    line-height: normal;
-    font-size: 24px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-  #landing-page .btn:hover {
-    background: none; }
-  #landing-page nav {
-    position: sticky;
-    top: 0;
-    background: #006989;
-    z-index: 10;
-    height: 64px; }
-  #landing-page .nav-wrapper a:not(.brand-logo) {
-    font-size: 1.1em;
-    font-weight: 300; }
-  #landing-page .donate-btn {
-    background-color: #EDAE49;
-    border-radius: 2px;
-    text-transform: initial;
-    padding: 0 25px;
-    font-weight: 400 !important;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
-  #landing-page .brand-logo {
-    margin-left: 15px;
-    font-family: 'Sail', cursive; }
-  #landing-page ul li:last-child {
-    margin-right: 15px; }
-  #landing-page .nav-txt {
-    font-style: normal;
-    font-weight: normal;
-    line-height: normal;
-    margin-right: 2rem;
-    font-size: 30px; }
-  #landing-page .logo {
-    font-family: Sail; }
-  #landing-page .nav-btns {
-    width: 100%;
-    display: flex;
-    /* flex-wrap: wrap; */
-    flex-direction: row;
-    align-items: center;
-    justify-content: center; }
-  #landing-page .donate {
-    background: #EDAE49;
-    color: #fff;
-    font-style: normal;
-    font-weight: normal;
-    line-height: normal;
-    font-size: 24px;
-    text-align: center; }
-  #landing-page .bottom-section {
-    height: auto;
-    background: url(/img/playing-cards.jpg);
-    background-size: cover; }
-  #landing-page .steps {
-    height: auto;
-    background-color: #ffffff;
-    padding: 5px;
-    margin: 0; }
-  #landing-page .card-content {
-    color: #fff; }
-  #landing-page .card-content > p {
-    font-size: 1.2rem; }
-  #landing-page .card-title {
-    font-size: 3rem;
-    margin-bottom: 2rem; }
-  #landing-page .steps > h1 {
-    color: #EDAE49; }
-  #landing-page .head-title {
-    font-family: Rakkas;
-    font-style: normal;
-    font-weight: normal;
-    line-height: normal;
-    margin: 2rem 0;
-    font-size: 46px; }
-  #landing-page .step2 {
-    background: #EDAE49; }
-  #landing-page .step3 {
-    background: #006989; }
-  #landing-page .step4 {
-    background: black; }
-  #landing-page .card-collection {
-    width: 100%;
-    padding: 0 4rem 4rem 4rem;
-    box-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    flex-direction: row; }
-  #landing-page .card {
-    height: auto;
-    width: 20rem;
-    border-radius: 7px;
-    margin: 0 5px 5px 5px;
-    flex: 1 0 12rem;
-    margin: 5px 20px; }
-  #landing-page .info {
-    margin: 0;
-    padding: 0px;
-    height: 490px;
-    background-color: rgba(255, 255, 255, 0.7);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center; }
-  #landing-page .info-txt {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; }
-  #landing-page .info p {
-    font-style: normal;
-    width: 100%;
-    padding: 0 4rem;
-    font-weight: normal;
-    line-height: 40px;
-    font-size: 22px;
-    text-align: center; }
-  #landing-page .btn-large {
-    background: #EDAE49;
-    width: 20rem;
-    font-size: 30px;
-    font-weight: normal; }
-  #landing-page .btn-large:hover {
-    background: #EDAE49;
-    color: #fff; }
-  #landing-page .live-txt {
-    margin: 0; }
-  #landing-page .team {
-    height: auto;
-    background-color: rgba(8, 6, 6, 0.7);
-    padding: 10px; }
-  #landing-page .team > h1 {
-    color: #EF9708; }
-  #landing-page .imgSize {
-    width: 20rem; }
-  #landing-page .team-member > h3 {
-    font-size: 24px; }
-  #landing-page .team-member {
-    width: 12rem;
-    height: auto;
-    /* flex: 0 0 8rem; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; }
-  #landing-page .team-members {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; }
-  #landing-page .team1 {
-    display: flex;
-    width: 80%;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-direction: row; }
-  #landing-page .team2 {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-direction: row; }
-  #landing-page .team-img {
-    width: 8rem; }
-  #landing-page footer {
-    height: 80px;
-    color: #ffffff;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    background: #006989; }
-  @media only screen and (max-width: 800px) {
-    #landing-page .head-title {
-      font-family: Rakkas;
-      font-style: normal;
-      font-weight: normal;
-      line-height: normal;
-      font-size: 29px; }
-    #landing-page .info p {
-      font-style: normal;
-      width: 100%;
-      padding: 0 4rem;
-      font-weight: lighter;
-      line-height: 1.1;
-      font-size: 21px;
-      text-align: center; }
-    #landing-page .btn-text {
-      font-size: 16px; }
-    #landing-page .title-txt {
-      font-size: 50px; }
-    #landing-page .title-info {
-      margin-top: 0px;
-      height: 64px;
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: bold;
-      line-height: normal;
-      font-size: 20px;
-      color: #FFFFFF; }
-    #landing-page footer > p {
-      font-size: 11px; } }
+  #landing-page footer > p {
+    font-size: 11px; } }

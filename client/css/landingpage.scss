@@ -21,7 +21,6 @@ body{
   .fullscreen {  
     height: 90%;
   }
-  
   .overlay-content {
     z-index: 10;
     position: absolute;
@@ -39,9 +38,6 @@ body{
     align-items: center;
     flex-wrap: wrap;
   }
-  /* .row .col.s12 {
-    margin-top: 50px;
-  } */
   .title-txt {
     /* height: 70px; */
     font-family: 'Sail', cursive;
@@ -49,16 +45,32 @@ body{
     font-weight: normal;
     line-height: normal;
     font-size: 72px;
+    animation: text 3s 1;
+  }
+  @keyframes text {
+    0% {
+      color: #006989;
+      margin-bottom: -20px
+    }
+    30% {
+      letter-spacing: 25px;
+      margin-bottom: -20px;
+
+    }
+    85% {
+      letter-spacing: 8px;
+      margin-bottom: -20px;
+    }
   }
   .title-info {
-    margin-top: 0px;
+    margin-top: 0;
     height: 64px;
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
     font-size: 36px;
-  color: #FFFFFF;
+  color: #ffffff;
   }
   .top-btn {
     width: 97%;
@@ -66,7 +78,9 @@ body{
   }
   .main-btn {
     height: 4rem;
-    /* font-size: 36px; */
+  }
+  .main-btn:hover {
+    z-index: 10;
   }
   .waves-effect {
     border-radius: 5px;
@@ -77,15 +91,13 @@ body{
   .signin-btn {
     background-color: #EDAE49;
     margin-right: 5px;
-    
   }
   .signin-btn>a {
     color: #ffffff;
   }
   .play-btn {
     margin-left: 5px;
-    background: #ffffff;
-    
+    background: #ffffff;  
   }
   .play-btn a{
     color: #EDAE49
@@ -184,11 +196,11 @@ body{
   }
   .head-title{
     font-family: Rakkas;
+    font-size: 46px;
     font-style: normal;
     font-weight: normal;
     line-height: normal;
     margin: 2rem 0;
-    font-size: 46px;
   }
   .step2 {
     background: #EDAE49;
@@ -207,20 +219,18 @@ body{
     flex-wrap: wrap;
     justify-content: space-around;
     flex-direction: row;
-    
   }
   .card {
     height: auto;
     width: 20rem;
     border-radius: 7px;
     margin: 0 5px 5px 5px;
-    flex: 1 0 12rem;
-    
+    flex: 1 0 12rem;  
     margin: 5px 20px;
   }
   .info {
     margin: 0;
-    padding: 0px;
+    padding: 0;
     height: 490px;
     background-color: rgba(255, 255, 255, 0.7);
     display: flex;
@@ -234,13 +244,13 @@ body{
     justify-content: space-between;
   }
   .info p {
+    font-size: 22px;
     font-style: normal;
+    font-weight: normal;
+    line-height: 40px;
     width: 100%;
     padding:0 4rem;
-  font-weight: normal;
-  line-height: 40px;
-  font-size: 22px;
-  text-align: center;
+    text-align: center;
   }
   .btn-large{
     background: #EDAE49;
@@ -276,14 +286,14 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center
-    
+    align-items: center;  
   }
   .team-members {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 2rem;
   }
   .team1 {
     display: flex;
@@ -313,12 +323,12 @@ body{
     background: #006989;
   }
   @media only screen and (max-width: 800px) {
-    .head-title{
+    .head-title {
       font-family: Rakkas;
+      font-size: 29px;
       font-style: normal;
       font-weight: normal;
       line-height: normal;
-      font-size: 29px;
     }
     .info p {
       font-style: normal;
@@ -337,14 +347,14 @@ body{
       font-size: 50px;
     }
     .title-info {
-      margin-top: 0px;
+      margin-top: 0;
       height: 64px;
       font-family: Roboto;
       font-style: normal;
       font-weight: bold;
       line-height: normal;
       font-size: 20px;
-      color: #FFFFFF;
+      color:#ffffff;
     }
     footer>p {
       font-size: 11px;
