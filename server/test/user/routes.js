@@ -4,6 +4,7 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
 import server from '../../src/index';
+import User from '../../src/models/user';
 
 chai.use(chaiHttp);
 
@@ -141,5 +142,63 @@ describe('Users API Routes', () => {
           done();
         });
     });
+  });
+});
+
+describe('Search users <GET /api/search/users>', () => {
+  const searchTerm = 'ozim';
+  const user1 = {
+    name: `Full AB${searchTerm}YZ`,
+    email: `AB${searchTerm}YZ@test.com`,
+    username: `AB${searchTerm}YZ`,
+    password: 'password'
+  };
+  const user2 = {
+    name: `Full CD${searchTerm}WX`,
+    email: `CD${searchTerm}WX@test.com`,
+    username: `CD${searchTerm}WX`,
+    password: 'password'
+  };
+  const user3 = {
+    name: 'Full name2',
+    email: 'test2@test.com',
+    username: 'user2',
+    password: 'password'
+  };
+  before((done) => {
+    mongoose.connection.collections.users.drop((err) => {
+      if (err) return done(err);
+    });
+    User.insertMany([user1, user2, user3], (err) => {
+      if (err) return done(err);
+    });
+    done();
+  });
+  it('should return all users that match the search term', (done) => {
+    const userResponse1 = {
+      name: user1.name,
+      email: user1.email.toLowerCase(),
+    };
+    const userResponse2 = {
+      name: user2.name,
+      email: user2.email.toLowerCase(),
+    };
+    const userResponse3 = {
+      name: user3.name,
+      email: user3.email.toLowerCase(),
+    };
+    chai.request(server)
+      .get(`/api/search/users?search=${searchTerm}`)
+      .end((err, res) => {
+        if (err) { return done(err); }
+        expect(res).to.have.status(200);
+        expect(res.body.users).to.deep.include(userResponse1);
+        expect(res.body.users).to.deep.include(userResponse2);
+        expect(res.body.users).to.not.deep.include(userResponse3);
+        done();
+      });
+  });
+  after((done) => {
+    done();
   });
 });
