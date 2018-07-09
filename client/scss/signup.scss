@@ -1,15 +1,4 @@
-/* Variables Start */
-
-$primary-color: #006989;
-$secondary-color: #EDAE49;
-$left-card-gradient: rgba(255,255,255, 0.93);
-$right-card-gradient: rgba(0,0,0, 0.7);
-$background-gradient: rgba(0, 105, 137, 0.8);
-$left-card-background-image: linear-gradient($left-card-gradient, $left-card-gradient), url("../img/playing-cards-2.jpeg");
-$right-card-background-image: linear-gradient($right-card-gradient, $right-card-gradient), url("../img/playing-cards.jpg");
-$background-image: linear-gradient($background-gradient, $background-gradient), url("../img/charity.jpg");
-
-/* Variables Ends */
+@import '_variables';
 
 .signup-input-field {
   margin-bottom: 0;
@@ -57,4 +46,8 @@ $background-image: linear-gradient($background-gradient, $background-gradient), 
   min-height: 90vh !important;
   background-size: cover;
   background-image: $right-card-background-image;
+}
+
+.middleContainer{
+  display: flex;
 }

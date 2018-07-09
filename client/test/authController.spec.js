@@ -1,50 +1,82 @@
+/* eslint prefer-arrow-callback: 0, func-names: 0, no-undef: 0 */
+
 // mock localStorage
-window.localStorage = function() {
-  var localStorage;
+window.localStorage = function () {
+  let localStorage;
   return {
-    setItem: function(key, value) {
-      return localStorage[key] = value;
+    setItem(key, value) {
+      localStorage[key] = value;
     },
-    getItem: function(key) {
+    getItem(key) {
       return localStorage[key];
     },
-    removeItem: function(key) {
+    removeItem(key) {
       delete localStorage[key];
     },
-    clear: function() {
+    clear() {
       localStorage = {};
     }
   };
-}
+};
 
-describe('AuthController Test Suite', function() {
+const uploadMock = {
+  upload() {
+    return {
+      success(successCallback) {
+        successCallback({ url: 'test' });
+        return {
+          error(errorCallback) {
+            errorCallback({ error: { message: 'fake error' } });
+          }
+        };
+      },
+
+    };
+  }
+};
+
+const cloudinaryMock = {
+  config() {
+    return {
+      cloud_name: 'defxlxmvc',
+      secure: true,
+      upload_preset: 'omt58t2n'
+    };
+  }
+};
+
+describe('AuthController Test Suite', () => {
   beforeEach(module('mean.system'));
-  describe('Signup Method Test Suite', function() {
-    var $scope, $location, createController, httpBackend;
+  describe('Signup Method Test Suite', () => {
+    let $scope, $location, createController, httpBackend;
 
     // inject controller
-    beforeEach(inject(function($rootScope, $controller, _$location_, $httpBackend, $http) {
+    beforeEach(inject((
+      $rootScope, $controller, _$location_, $httpBackend, $http
+    ) => {
       $location = _$location_;
       httpBackend = $httpBackend;
       $scope = $rootScope.$new();
 
-      createController = function() {
+      createController = function () {
         return $controller('AuthController', {
-          '$scope': $scope,
-          '$http': $http,
-          '$location': $location
+          $scope,
+          $http,
+          $location,
+          Upload: uploadMock,
+          cloudinary: cloudinaryMock
         });
       };
     }));
 
-    afterEach(function() {
+    afterEach(() => {
       // clean up httpBackend mock after each function
       httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('should return error if signup failed', function() {
-      var authController = createController();
-      var response = {
+    it('should return error if signup failed', () => {
+      const authController = createController();
+      const response = {
         errors: {
           username: 'Username already exists',
           email: 'Email already exists',
@@ -54,11 +86,11 @@ describe('AuthController Test Suite', function() {
 
       // mock http call
       httpBackend.whenPOST('/api/auth/signup').respond(400, response, {});
-      
+
       $scope.email = 'stephen@yahoo.com';
       $scope.username = 'stephen';
       $scope.password = 'qwertyuiop';
-      $scope.confirmpassword = 'qwertyuiop';
+      $scope.confirmPassword = 'qwertyuiop';
 
       $scope.signup();
       httpBackend.flush();
@@ -69,9 +101,9 @@ describe('AuthController Test Suite', function() {
       expect($scope.passwordError).toBe(response.errors.hashedPassword);
     });
 
-    it('should signup successfully, save token in localStorage and redirect to home page', function() {
-      var authController = createController();
-      var response = {
+    it('should signup successfully, save token in ls and redirect', () => {
+      const authController = createController();
+      const response = {
         token: '1234567890qwertyuiop'
       };
 
@@ -81,7 +113,7 @@ describe('AuthController Test Suite', function() {
       $scope.email = 'stephen@yahoo.com';
       $scope.username = 'stephen';
       $scope.password = 'qwertyuiop';
-      $scope.confirmpassword = 'qwertyuiop';
+      $scope.confirmPassword = 'qwertyuiop';
 
       $scope.signup();
       httpBackend.flush();
@@ -92,39 +124,43 @@ describe('AuthController Test Suite', function() {
     });
   });
 
-  describe('Signin Method Test Suite', function() {
-    var $scope, $location, createController, httpBackend;
+  describe('Signin Method Test Suite', () => {
+    let $scope, $location, createController, httpBackend;
 
     // inject controller
-    beforeEach(inject(function($rootScope, $controller, _$location_, $httpBackend, $http) {
+    beforeEach(inject((
+      $rootScope, $controller, _$location_, $httpBackend, $http
+    ) => {
       $location = _$location_;
       httpBackend = $httpBackend;
       $scope = $rootScope.$new();
 
-      createController = function() {
+      createController = function () {
         return $controller('AuthController', {
-          '$scope': $scope,
-          '$http': $http,
-          '$location': $location
+          $scope,
+          $http,
+          $location,
+          Upload: uploadMock,
+          cloudinary: cloudinaryMock
         });
       };
     }));
 
-    afterEach(function() {
+    afterEach(() => {
       // clean up httpBackend mock after each function
       httpBackend.verifyNoOutstandingExpectation();
       httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('should return error if signin request fails', function() {
-      var authController = createController();
-      var response = {
+    it('should return error if signin request fails', () => {
+      const authController = createController();
+      const response = {
         message: 'Email or password is incorrect'
       };
 
       // mock http call
       httpBackend.whenPOST('/api/auth/login').respond(400, response, {});
-      
+
       $scope.email = 'stephen@yahoo.com';
       $scope.password = 'qwertyuiop';
 
@@ -135,9 +171,9 @@ describe('AuthController Test Suite', function() {
       expect($scope.signinError).toBe(response.message);
     });
 
-    it('should return token, save token in local storage and redirect to home page if signin passes', function() {
-      var authController = createController();
-      var response = {
+    it('should return token, save token in ls and redirect on signin', () => {
+      const authController = createController();
+      const response = {
         token: '1234567890qwertyuiop'
       };
 

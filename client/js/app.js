@@ -1,12 +1,11 @@
-/* eslint prefer-arrow-callback: 0,
-func-names: 0, no-undef: 0, no-unused-vars: 0, no-var: 0,
-object-shorthand: 0, vars-on-top: 0, prefer-template: 0 */
+/* eslint prefer-arrow-callback: 0, func-names: 0, no-undef: 0 */
 
-angular.module(
-  'mean',
-  ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route',
-    'mean.system', 'mean.directives']
-)
+angular.module('mean',
+  [
+    'ngCookies', 'ngResource', 'ui.bootstrap',
+    'ui.route', 'mean.system', 'mean.directives',
+    'cloudinary', 'ngFileUpload'
+  ])
   .config(['$routeProvider',
     function ($routeProvider) {
       $routeProvider
@@ -42,10 +41,16 @@ angular.module(
     function ($locationProvider) {
       $locationProvider.hashPrefix('!');
     }
-  ]).run(['$rootScope', function ($rootScope) {
+  ]).config(['cloudinaryProvider', function (cloudinaryProvider) {
+    cloudinaryProvider
+      .set('cloud_name', 'defxlxmvc')
+      .set('secure', true)
+      .set('upload_preset', 'omt58t2n');
+  }])
+  .run(['$rootScope', function ($rootScope) {
     $rootScope.safeApply = function (fn) {
       const phase = this.$root.$$phase;
-      if (phase == '$apply' || phase == '$digest') { //eslint-disable-line
+      if (phase === '$apply' || phase === '$digest') {
         if (fn && (typeof (fn) === 'function')) {
           fn();
         }

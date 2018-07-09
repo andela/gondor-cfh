@@ -45,7 +45,7 @@ gulp.task('watch', () => {
 
 gulp.task('default', ['buildServer'], shell.task('node server/dist/index.js'));
 
-gulp.task('startDev', gulpSequence('buildServer', 'nodemon', 'sass'));
+gulp.task('startDev', gulpSequence('buildServer', 'compileSass', 'nodemon'));
 
 gulp.task('buildServerSetup', gulpSequence('clean', 'copyViews'));
 
@@ -59,8 +59,8 @@ gulp.task('buildServer', ['buildServerSetup'], () => gulp.src([
 gulp.task('nodemon', () => nodemon({
   verbose: true,
   script: 'server/dist/index.js',
-  tasks: ['buildServer'],
-  ext: 'js html jade scss css',
+  tasks: ['buildServer', 'compileSass'],
+  ext: 'js html jade scss',
   ignore: [
     'README.md',
     'node_modules/**',
@@ -96,7 +96,7 @@ gulp.task('babel', () => gulp.src([
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest('./dist')));
 
-gulp.task('sass', () => gulp.src(['client/css/*.scss'])
+gulp.task('compileSass', () => gulp.src(['client/scss/*.scss'])
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('client/css/')));
 
