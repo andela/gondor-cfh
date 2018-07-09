@@ -269,6 +269,14 @@ class Game {
     this.state = 'game ended';
     this.gameWinner = winner;
     this.sendUpdate();
+    const players = this.players.map(player => player.username);
+    const gameDetails = {
+      gameID: this.gameID,
+      players,
+      winner: this.players[winner].username,
+      rounds: this.round,
+    };
+    this.io.sockets.in(this.gameID).emit('saveGame', gameDetails);
   }
 
   stateDissolveGame() {
