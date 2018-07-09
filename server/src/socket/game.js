@@ -1,3 +1,9 @@
+/* eslint class-methods-use-this: 0 */
+/* eslint prefer-destructuring: 0 */
+/* eslint no-plusplus: 0 */
+/* eslint max-len: 0 */
+/* eslint no-console: 0 */
+/* eslint no-unused-vars: 0 */
 import answers from '../controllers/answers';
 import questions from '../controllers/questions';
 
@@ -51,7 +57,8 @@ class Game {
       stateResults: 6
     };
     // setTimeout ID that triggers the czar judging state
-    // Used to automatically run czar judging if players don't pick before time limit
+    // Used to automatically run czar judging if
+    // players don't pick before time limit
     // Gets cleared if players finish picking before time limit.
     this.choosingTimeout = 0;
     // setTimeout ID that triggers the result state
@@ -229,6 +236,12 @@ class Game {
     }
   }
 
+  /**
+   *
+   * @param {obect} self - instance of Game
+   *
+   * @returns {undefined} - undefined
+   */
   stateJudging(self) {
     self.state = 'waiting for czar to decide';
     // console.log(self.gameID,self.state);
@@ -245,6 +258,12 @@ class Game {
     }
   }
 
+  /**
+* Generic require login routing middleware
+*
+* @param {object} self - Express request object
+* @returns {undefined} - undefined
+*/
   stateResults(self) {
     self.state = 'winner has been chosen';
     console.log(self.state);
@@ -265,6 +284,11 @@ class Game {
     }, self.timeLimits.stateResults * 1000);
   }
 
+  /**
+*
+* @param {object} winner - Express request object
+* @returns {undefined} - undefined
+*/
   stateEndGame(winner) {
     this.state = 'game ended';
     this.gameWinner = winner;
@@ -279,23 +303,42 @@ class Game {
     this.io.sockets.in(this.gameID).emit('saveGame', gameDetails);
   }
 
+  /**
+   * @returns {undefined} - undefined
+   */
   stateDissolveGame() {
     this.state = 'game dissolved';
     this.sendUpdate();
   }
 
+  /**
+*
+* @param {object} cb - Express request object
+* @returns {undefined} - undefined
+*/
   getQuestions(cb) {
     questions.allQuestionsForGame((data) => {
       cb(null, data);
     });
   }
 
+  /**
+* Game end Method
+*
+* @param {object} cb - Express request object
+* @returns {undefined} - undefined
+*/
   getAnswers(cb) {
     answers.allAnswersForGame((data) => {
       cb(null, data);
     });
   }
 
+  /**
+*
+* @param {object} cards - Express request object
+* @returns {undefined} - undefined
+*/
   shuffleCards(cards) {
     let shuffleIndex = cards.length;
     let temp;
@@ -311,6 +354,11 @@ class Game {
     return cards;
   }
 
+  /**
+*
+* @param {object} maxAnswers - Express request object
+* @returns {undefined} - undefined
+*/
   dealAnswers(maxAnswers) {
     maxAnswers = maxAnswers || 10;
     const storeAnswers = (err, data) => {
@@ -326,6 +374,11 @@ class Game {
     }
   }
 
+  /**
+*
+* @param {object} thisPlayer - Express request object
+* @returns {undefined} - undefined
+*/
   _findPlayerIndexBySocket(thisPlayer) {
     let playerIndex = -1;
     _.each(this.players, (player, index) => {
@@ -336,6 +389,12 @@ class Game {
     return playerIndex;
   }
 
+  /**
+*
+* @param {object} thisCardArray - Express request object
+* @param {object} thisPlayer - Express request object
+* @returns {undefined} - undefined
+*/
   pickCards(thisCardArray, thisPlayer) {
   // Only accept cards when we expect players to pick a card
     if (this.state === 'waiting for players to pick') {
@@ -351,7 +410,8 @@ class Game {
           }
         });
         if (!previouslySubmitted) {
-        // Find the indices of the cards in the player's hand (given the card ids)
+        // Find the indices of the cards in the
+        // player's hand (given the card ids)
           const tableCard = [];
           for (let i = 0; i < thisCardArray.length; i++) {
             let cardIndex = null;
@@ -362,7 +422,8 @@ class Game {
             }
             console.log('card', i, 'is at index', cardIndex);
             if (cardIndex !== null) {
-              tableCard.push(this.players[playerIndex].hand.splice(cardIndex, 1)[0]);
+              tableCard.push(this.players[playerIndex]
+                .hand.splice(cardIndex, 1)[0]);
             }
             console.log('table object at', cardIndex, ':', tableCard);
           }
@@ -386,6 +447,11 @@ class Game {
     }
   }
 
+  /**
+*
+* @param {object} thisPlayer - Express request object
+* @returns {undefined} - undefined
+*/
   getPlayer(thisPlayer) {
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
     if (playerIndex > -1) {
@@ -394,6 +460,11 @@ class Game {
     return {};
   }
 
+  /**
+*
+* @param {object} thisPlayer - Express request object
+* @returns {undefined} - undefined
+*/
   removePlayer(thisPlayer) {
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
 
@@ -440,6 +511,13 @@ class Game {
     }
   }
 
+  /**
+*
+* @param {object} thisCard - Express request object
+* @param {object} thisPlayer - Express request object
+* @param {object} autopicked - Express request object
+* @returns {undefined} - undefined
+*/
   pickWinning(thisCard, thisPlayer, autopicked) {
     autopicked = autopicked || false;
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
@@ -468,6 +546,9 @@ class Game {
     }
   }
 
+  /**
+   * @returns {undefined} - undefined
+   */
   killGame() {
     console.log('Killing game', this.gameID);
     clearTimeout(this.resultsTimeout);
