@@ -16,6 +16,7 @@
   "rules": {
     "no-underscore-dangle": 0,
     "import/prefer-default-export": 0,
+    "function-paren-newline": 0,
     "one-var": 0,
     "max-len": [
       2,
