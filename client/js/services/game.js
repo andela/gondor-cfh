@@ -1,5 +1,6 @@
 /* eslint prefer-arrow-callback: 0, func-names: 0, no-undef: 0 */
 /* eslint vars-on-top: 0, no-var: 0, object-shorthand: 0, no-plusplus: 0 */
+/* eslint no-unused-vars: 0 */
 
 angular.module('mean.system')
   .factory('game', ['socket', '$timeout', function (socket, $timeout) {
@@ -33,12 +34,6 @@ angular.module('mean.system')
     var self = this;
     var joinOverrideTimeout = 0;
 
-    var addToNotificationQueue = function (msg) {
-      notificationQueue.push(msg);
-      if (!timeout) { // Start a cycle if there isn't one
-        setNotification();
-      }
-    };
     var setNotification = function () {
       // If notificationQueue is empty, stop
       if (notificationQueue.length === 0) {
@@ -51,7 +46,12 @@ angular.module('mean.system')
         timeout = $timeout(setNotification, 1300);
       }
     };
-
+    var addToNotificationQueue = function (msg) {
+      notificationQueue.push(msg);
+      if (!timeout) { // Start a cycle if there isn't one
+        setNotification();
+      }
+    };
     var timeSetViaUpdate = false;
     var decrementTime = function () {
       if (game.time > 0 && !timeSetViaUpdate) {
@@ -74,7 +74,6 @@ angular.module('mean.system')
     });
 
     socket.on('gameUpdate', function (data) {
-
       // Update gameID field only if it changed.
       // That way, we don't trigger the $scope.$watch too often
       if (game.gameID !== data.gameID) {
@@ -94,9 +93,9 @@ angular.module('mean.system')
 
       var newState = (data.state !== game.state);
 
-      //Handle updating game.time
-      if (data.round !== game.round && data.state !== 'awaiting players' &&
-        data.state !=='game ended' && data.state !== 'game dissolved') {
+      // Handle updating game.time
+      if (data.round !== game.round && data.state !== 'awaiting players'
+      && data.state !== 'game ended' && data.state !== 'game dissolved') {
         game.time = game.timeLimits.stateChoosing - 1;
         timeSetViaUpdate = true;
       } else if (newState && data.state === 'waiting for czar to decide') {
@@ -119,8 +118,10 @@ angular.module('mean.system')
       if (data.table.length === 0) {
         game.table = [];
       } else {
-        var added = _.difference(_.pluck(data.table, 'player'), _.pluck(game.table,'player'));
-        var removed = _.difference(_.pluck(game.table, 'player'), _.pluck(data.table,'player'));
+        var added = _.difference(_.pluck(data.table, 'player'),
+          _.pluck(game.table, 'player'));
+        var removed = _.difference(_.pluck(game.table, 'player'),
+          _.pluck(data.table, 'player'));
         for (i = 0; i < added.length; i++) {
           for (var j = 0; j < data.table.length; j++) {
             if (added[i] === data.table[j].player) {
@@ -131,13 +132,14 @@ angular.module('mean.system')
         for (i = 0; i < removed.length; i++) {
           for (var k = 0; k < game.table.length; k++) {
             if (removed[i] === game.table[k].player) {
-              game.table.splice(k,1);
+              game.table.splice(k, 1);
             }
           }
         }
       }
 
-      if (game.state !== 'waiting for players to pick' || game.players.length !== data.players.length) {
+      if (game.state !== 'waiting for players to pick'
+      || game.players.length !== data.players.length) {
         game.players = data.players;
       }
 
@@ -165,7 +167,7 @@ angular.module('mean.system')
         if (game.czar === game.playerIndex) {
           addToNotificationQueue("Everyone's done. Choose the winner!");
         } else {
-          addToNotificationQueue("The czar is contemplating...");
+          addToNotificationQueue('The czar is contemplating...');
         }
       } else if (data.state === 'winner has been chosen'
       && game.curQuestion.text.indexOf('<u></u>') > -1) {
@@ -174,7 +176,9 @@ angular.module('mean.system')
         joinOverrideTimeout = $timeout(function () {
           game.joinOverride = true;
         }, 15000);
-      } else if (data.state === 'game dissolved' || data.state === 'game ended') {
+      } else if (
+        data.state === 'game dissolved' || data.state === 'game ended'
+      ) {
         game.players[game.playerIndex].hand = [];
         game.time = 0;
       }
@@ -183,36 +187,43 @@ angular.module('mean.system')
     socket.on('notification', function (data) {
       addToNotificationQueue(data.notification);
     });
-    socket.on('playerFilled', function () {
-      addToNotificationQueue('A maximum of 12 players have already joined this game');      
-      playersMax();
-    });
     game.joinGame = function (mode, room, createPrivate) {
       mode = mode || 'joinGame';
       room = room || '';
       createPrivate = createPrivate || false;
-      var userID = !!window.user ? user._id : 'unauthenticated';
-      socket.emit(mode, 
+      var userID = window.user ? user._id : 'unauthenticated';
+      socket.emit(mode,
         { userID: userID, room: room, createPrivate: createPrivate });
     };
     var playersMin = function () {
+      // eslint-disable-next-line
       game.errorPlayerMin = 'To play the game, there must be at least 3 players';
       $timeout(function () { game.errorPlayerMin = ''; }, 3000);
     };
     var playersMax = function () {
+      // eslint-disable-next-line
       game.errorPlayerMax = 'A maximum of 12 players have already joined this game';
       $timeout(function () { game.errorPlayerMin = ''; }, 3000);
     };
+    socket.on('playerFilled', function () {
+      // eslint-disable-next-line
+      addToNotificationQueue('A maximum of 12 players have already joined this game');      
+      playersMax();
+    });
     game.successMailNotify = function () {
-      addToNotificationQueue(game.inviteMessage);    
+      addToNotificationQueue(game.inviteMessage);
     };
     game.notifyMaxUsers = function () {
-      addToNotificationQueue('A maximum of 12 players have already joined this game');          
+      addToNotificationQueue(
+        'A maximum of 12 players have already joined this game'
+      );
       playersMax();
     };
     game.startGame = function () {
       if (game.players.length < 3) {
-        addToNotificationQueue('To play the game, there must be at least 3 players');
+        addToNotificationQueue(
+          'To play the game, there must be at least 3 players'
+        );
         playersMin();
       }
       socket.emit('startGame');
@@ -225,11 +236,11 @@ angular.module('mean.system')
     };
 
     game.pickCards = function (cards) {
-      socket.emit('pickCards', { cards: cards});
+      socket.emit('pickCards', { cards: cards });
     };
 
     game.pickWinning = function (card) {
-      socket.emit('pickWinning', { card: card.id});
+      socket.emit('pickWinning', { card: card.id });
     };
 
     decrementTime();
