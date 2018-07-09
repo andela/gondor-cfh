@@ -53,7 +53,7 @@
                                 <div class="row">
                                   <div class="input-field signup-input-field col s12">
                                     <input name="password" ng-model="password" id="password" type="password"
-                                      class="validate" required ng-minlength="8" ng-maxlength="15">
+                                      class="validate" required ng-minlength="8" ng-maxlength="15" compare-password>
                                     <label for="password">PASSWORD</label>
                                     <span class="red-text" ng-show="
                                     (!signupForm.password.$error.required && signupForm.password.$dirty) && 

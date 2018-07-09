@@ -2,14 +2,13 @@ module.exports = (config) => {
   config.set({
     files: [
       'client/lib/angular/angular.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'client/js/app.js',
+      'client/lib/angular-mocks/angular-mocks.js',
       'client/js/**/*.js',
       'client/test/**/*.js',
     ],
     basePath: '',
     frameworks: ['jasmine'],
-    exclude: [''],
+    exclude: ['client/js/landingPage.js'],
     preprocessors: {
       'client/js/**/*.js': ['coverage'],
     },
