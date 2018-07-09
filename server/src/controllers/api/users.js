@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 import User from '../../models/user';
+import Game from '../../models/game';
 
 dotenv.config();
 
@@ -120,6 +121,75 @@ class UsersApiController {
       error.status = 400;
       return next(error);
     }
+  }
+
+  /**
+   *
+   * Gets User Profile with User Game Data
+   *
+   * @static
+   * @param {object} req Express request object
+   * @param {object} res Express response object
+   * @param {object} next Express next object
+   * @returns {object} User
+   */
+  static profile(req, res, next) {
+    const { email } = req.decoded;
+
+    User.findOne({
+      email: email.trim().toLowerCase()
+    }, '-_id -__v -hashedPassword').exec((err, foundUser) => {
+      if (err) return next(err);
+
+      if (!foundUser) {
+        const error = new Error('User does not exist!');
+        error.status = 404;
+        return next(error);
+      }
+
+      Game.find({
+        players: foundUser.username
+      }, '-_id').exec((err, games) => {
+        const user = {
+          ...foundUser._doc,
+          gamesPlayed: games
+        };
+
+        res.json({ success: true, user });
+      });
+    });
+  }
+
+  /**
+   *
+   * Adds User Donation
+   * req.body = {
+   *   date: 'YYYY-MM-DD'
+   * }
+   *
+   * @static
+   * @param {object} req Express request object
+   * @param {object} res Express response object
+   * @param {object} next Express next object
+   * @returns {object} success object
+   */
+  static addDonation(req, res, next) {
+    const { email } = req.decoded;
+
+    req.body.amount = 5;
+
+    User.findOneAndUpdate(
+      { email: email.trim().toLowerCase() },
+      { $push: { donations: req.body } },
+      (err) => {
+        if (err) return next(err);
+
+        res.json({
+          success: true,
+          message: 'Donation Successful'
+        });
+      }
+    );
   }
 }
 

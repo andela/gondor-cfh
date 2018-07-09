@@ -5,9 +5,10 @@
     "bootstrap": "~3.0.0",
     "angular-bootstrap": "~0.4.0",
     "angular-ui-utils": "0.0.4",
+    "angular-mocks": "latest",
     "jquery": "~1.9.1",
     "underscore": "~1.5.2",
-    "angular-mocks": "latest"
+    "angular-jwt": "^0.1.10"
   },
   "exportsOverride": {
     "bootstrap": {
