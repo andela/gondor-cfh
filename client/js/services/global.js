@@ -74,3 +74,4 @@ angular.module('mean.system')
       }
     };
   }]);
+  

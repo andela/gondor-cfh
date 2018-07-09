@@ -8,7 +8,7 @@ module.exports = (config) => {
     ],
     basePath: '',
     frameworks: ['jasmine'],
-    exclude: [''],
+    exclude: ['client/js/landingPage.js'],
     preprocessors: {
       'client/js/**/*.js': ['coverage'],
     },
