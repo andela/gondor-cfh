@@ -239,6 +239,60 @@ class UsersController {
         next();
       });
   }
+
+  /**
+   *
+   * @param {object} req - Express request object
+   * @param {object} res - Express response object
+   *
+   * @returns {undefined} - undefined
+   */
+  static userSearch(req, res) {
+    const { search } = req.query;
+    if (!search) {
+      return res.status(404).json({
+        message: 'No matching user',
+        errors: {
+          users: {
+            name: 'No matching user',
+            email: 'No matching user'
+          }
+        }
+      });
+    }
+    User.find()
+      .or([
+        { name: { $regex: search, $options: 'i' } },
+        { username: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ])
+      .exec((err, users) => {
+        if (err) {
+          return res.status(500).json({
+            message: 'Database Error'
+          });
+        }
+        if (users.length === 0) {
+          return res.status(404).json({
+            message: 'No matching user',
+            errors: {
+              users: {
+                name: 'No matching user',
+                email: 'No matching user'
+              }
+            }
+          });
+        }
+        const matchedUsers = users.map(user => ({
+          email: user.email,
+          name: user.name
+        }));
+        return res.status(200).json({
+          users: matchedUsers,
+          message: 'success'
+        });
+      });
+  }
 }
 
 export default UsersController;
