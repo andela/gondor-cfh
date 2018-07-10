@@ -1,0 +1,429 @@
+$white-text:#ffffff;
+$primary-color: #006989;
+
+html{
+	box-sizing: border-box;
+}
+
+*, 
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+#landing-page {
+  .top-section {
+    width: 100%;
+    height: 90vh; 
+    background-color: $primary-color;
+  }
+
+  .fullscreen {  
+    height: 90%;
+  }
+
+  .overlay-content {
+    z-index: 10;
+    position: absolute;
+    background-color: rgba(0, 105, 137, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 90%;
+  }
+  
+  .web-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .title-txt {
+    /* height: 70px; */
+    font-family: 'Sail', cursive;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 72px;
+    animation: text 3s 1;
+  }
+  
+  @keyframes text {
+    0% {
+      color: $primary-color;
+      margin-bottom: -20px
+    }
+
+    30% {
+      letter-spacing: 25px;
+      margin-bottom: -20px;
+
+    }
+    
+    85% {
+      letter-spacing: 8px;
+      margin-bottom: -20px;
+    }
+
+  }
+
+  .title-info {
+    margin-top: 0;
+    height: 64px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 36px;
+    color: #ffffff;
+  }
+
+  .top-btn {
+    width: 97%;
+    margin-top: 7rem;
+  }
+
+  .main-btn {
+    height: 4rem;
+  }
+
+  .main-btn:hover {
+    z-index: 10;
+  }
+
+  .waves-effect {
+    border-radius: 5px;
+  }
+
+  .waves-effect:active{
+    background-color: $white-text;
+  }
+  
+  .signin-btn {
+    background-color: #EDAE49;
+    margin-right: 5px;
+  }
+
+  .signin-btn>a {
+    color: $white-text;
+  }
+
+  .play-btn {
+    margin-left: 5px;
+    background: $white-text;  
+  }
+
+  .play-btn a{
+    color: #EDAE49
+  }
+  
+  .btn-text {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 24px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn:hover{
+    background: none;
+  }
+
+  nav{
+    position: sticky;
+    top: 0;
+    background: $primary-color;
+    z-index: 10;
+    height: 64px;
+  }
+
+  .nav-wrapper a:not(.brand-logo) {
+      font-size: 1.1em;
+      font-weight: 300;
+  }
+  
+  .donate-btn {
+    background-color: #EDAE49;
+    border-radius: 2px;
+    text-transform: initial;
+    padding: 0 25px;
+    font-weight: 400 !important;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)
+  }
+  
+  .brand-logo {
+    margin-left: 15px;
+    font-family: 'Sail', cursive;
+  }
+  
+  ul li:last-child {
+    margin-right: 15px;
+  }
+  
+  .nav-txt {
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    margin-right: 2rem;
+    font-size: 30px;
+  }
+
+  .logo {
+    font-family: Sail;
+  }
+
+  .nav-btns {
+    width: 100%;
+    display: flex;
+    /* flex-wrap: wrap; */
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .donate {
+    background: #EDAE49;
+    color: $white-text;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .bottom-section {
+    height: auto;
+    background: url(/img/playing-cards.jpg);
+    background-size: cover;
+  }
+
+  .steps {
+    height: auto;
+    background-color: $white-text;
+    padding: 5px;
+    margin: 0;
+  }
+
+  .card-content {
+    color: $white-text;
+  }
+  .card-content>p {
+    font-size: 1.2rem
+  }
+  .card-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  .steps>h1 {
+    color: #EDAE49
+  }
+
+  .head-title{
+    font-family: Rakkas;
+    font-size: 46px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    margin: 2rem 0;
+  }
+
+  .step2 {
+    background: #EDAE49;
+  }
+
+  .step3 {
+    background: $primary-color;
+  }
+
+  .step4{
+    background: black;
+  }
+
+  .card-collection {
+    width: 100%;
+    padding: 0 4rem 4rem 4rem;
+    box-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+  
+  .card {
+    height: auto;
+    width: 20rem;
+    border-radius: 7px;
+    margin: 0 5px 5px 5px;
+    flex: 1 0 12rem;  
+    margin: 5px 20px;
+  }
+  
+  .info {
+    margin: 0;
+    padding: 0;
+    height: 490px;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .info-txt{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .info p {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 40px;
+    width: 100%;
+    padding:0 4rem;
+    text-align: center;
+  }
+  
+  .btn-large{
+    background: #EDAE49;
+    width: 20rem;
+    font-size: 30px;
+    font-weight: normal
+  }
+
+  .btn-large:hover {
+    background: #EDAE49;
+    color: $white-text;
+  }
+
+  .live-txt {
+    margin: 0;
+  }
+
+  .team {
+    height: auto;
+    background-color: rgba(8, 6, 6, 0.7);
+    padding: 10px;
+  }
+
+  .team>h1{
+    color: #EF9708;
+  }
+
+  .imgSize {
+    width: 20rem
+  }
+
+  .team-member>h3 {
+    font-size: 24px;
+  }
+
+  .team-member {
+    width: 12rem;
+    height: auto;
+    /* flex: 0 0 8rem; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+  }
+  
+  .team-members {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .team1 {
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+  }
+  
+  .team2 {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+  }
+
+  .team-img{
+    width: 8rem
+  }
+
+  footer {
+    height: 80px;
+    color: $white-text;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: $primary-color;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .head-title {
+      font-family: Rakkas;
+      font-size: 29px;
+      font-style: normal;
+      font-weight: normal;
+      line-height: normal;
+    }
+    
+    .info p {
+      font-style: normal;
+      width: 100%;
+      padding: 0 4rem;
+      font-weight: lighter;
+      line-height: 1.1;
+      font-size: 21px;
+      text-align: center;
+    }
+    
+    .btn-text {
+      font-size: 16px;
+      
+    }
+
+    .title-txt {
+      font-size: 50px;
+    }
+
+    .title-info {
+      margin-top: 0;
+      height: 64px;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      line-height: normal;
+      font-size: 20px;
+      color: white-text;
+    }
+    
+    .foot-text {
+      font-size: 11px;      
+    }
+  }
+}
