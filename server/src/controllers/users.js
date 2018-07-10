@@ -252,10 +252,12 @@ class UsersController {
     if (!search) {
       return res.status(404).json({
         message: 'No matching user',
-        users: [{
-          name: 'No matching user',
-          email: 'No matching user',
-        }]
+        errors: {
+          users: {
+            name: 'No matching user',
+            email: 'No matching user'
+          }
+        }
       });
     }
     User.find()
