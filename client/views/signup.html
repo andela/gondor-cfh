@@ -56,7 +56,7 @@
                                       class="validate" required ng-minlength="8" ng-maxlength="15" compare-password>
                                     <label for="password">PASSWORD</label>
                                     <span class="red-text" ng-show="
-                                    (!signupForm.password.$error.required && signupForm.password.$dirty) && 
+                                    (!signupForm.password.$error.required && signupForm.password.$dirty) &&
                                     (signupForm.password.$error.minlength || signupForm.password.$error.maxlength)">
                                       Passwords must be atleast 8 and 15 characters.
                                     </span>
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="input-field signup-input-field col s12">
-                                      <input name="confirmPassword" ng-model="confirmpassword" id="confirmPassword"
+                                      <input name="confirmPassword" ng-model="confirmPassword" id="confirmPassword"
                                         type="password" class="validate" required compare-password>
                                       <label for="confirmPassword">CONFIRM PASSWORD</label>
                                       <span class="red-text" ng-show="signupForm.confirmPassword.$dirty &&
@@ -83,18 +83,22 @@
                                     <div class="file-field input-field signup-input-field col s12">
                                         <div class="btn upload-button">
                                           Choose
-                                          <input type="file" />
+                                          <input type="file" ngf-select ng-model="profilePic" name="profilePic" ngf-pattern="'image/*'"
+                                          ngf-accept="'image/*'" ngf-max-size="20MB" required />
                                         </div>
                                         <div class="file-path-wrapper">
-                                          <input placeholder="CHOOSE PROFILE IMAGE" id="uploadImage" class="file-path validate" type="text">
+                                          <input placeholder="profile image" id="uploadImage" class="file-path validate" type="text">
                                         </div>
                                       </div>
                                 </div>
                                 <div class="center">
-                                  <button ng-click="signup()" class="btn btn-large btnSecondary waves-effect waves-light"
-                                    type="button" name="signup" ng-disabled="signupForm.$invalid">
+                                  <button ng-click="signup()" class="btn btn-large btnSecondary waves-effect waves-light signupBtn"
+                                    type="button" name="signup" ng-disabled="signupForm.$invalid || submitting">
                                     SIGN UP
                                   </button>
+                                  <div ng-show="submitting">
+                                    <img src="/img/loaders/spinner.svg" width="50"/>
+                                  </div>
                                 </div>
                                 <br />
                               </form>
@@ -134,7 +138,7 @@
                           </small>
                         </div>
                         <br /><br /><br />
-          
+
                       </div>
                       <!--Right hand of middle card ends-->
                     </div>

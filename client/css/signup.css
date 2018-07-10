@@ -1,5 +1,3 @@
-/* Variables Start */
-/* Variables Ends */
 .signup-input-field {
   margin-bottom: 0; }
 
@@ -44,3 +42,6 @@
   min-height: 90vh !important;
   background-size: cover;
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/playing-cards.jpg"); }
+
+.middleContainer {
+  display: flex; }
