@@ -33,10 +33,12 @@ class Game {
    *
    * @param {number} gameID - game id
    * @param {object} io - socket.io object
+   * @param {object} region - player region
    */
-  constructor(gameID, io) {
+  constructor(gameID, io, region) {
     this.io = io;
     this.gameID = gameID;
+    this.region = region || null;
     this.players = []; // Contains array of player models
     this.table = []; // Contains array of {card: card, player: player.id}
     this.winningCard = -1; // Index in this.table
@@ -57,8 +59,8 @@ class Game {
       stateResults: 6
     };
     // setTimeout ID that triggers the czar judging state
-    // Used to automatically run czar judging if
-    // players don't pick before time limit
+    // Used to automatically run czar judging if players
+    // don't pick before time limit
     // Gets cleared if players finish picking before time limit.
     this.choosingTimeout = 0;
     // setTimeout ID that triggers the result state
@@ -130,7 +132,7 @@ class Game {
     this.players.forEach((player) => {
       if (player.username === 'Guest') {
         const randIndex = Math.floor(Math.random() * self.guestNames.length);
-        player.username = self.guestNames.splice(randIndex, 1)[0];
+        [player.username] = self.guestNames.splice(randIndex, 1);
         if (!self.guestNames.length) {
           self.guestNames = guestNames.slice();
         }
@@ -154,15 +156,11 @@ class Game {
 
     const self = this;
     async.parallel([
-      this.getQuestions,
-      this.getAnswers
+      this.getQuestions.bind(this),
+      this.getAnswers.bind(this)
     ],
     (err, results) => {
-      if (err) {
-        console.log(err);
-      }
-      self.questions = results[0];
-      self.answers = results[1];
+      [self.questions, self.answers] = results;
 
       self.startGame();
     });
@@ -172,7 +170,6 @@ class Game {
    * @returns {undefined} - undefined
    */
   startGame() {
-    console.log(this.gameID, this.state);
     this.shuffleCards(this.questions);
     this.shuffleCards(this.answers);
     this.stateChoosing(this);
@@ -192,7 +189,7 @@ class Game {
    * @returns {undefined} - undefined
    */
   stateChoosing(self) {
-    self.state = 'waiting for players to pick';
+    this.state = 'waiting for players to pick';
     // console.log(self.gameID,self.state);
     self.table = [];
     self.winningCard = -1;
@@ -237,13 +234,12 @@ class Game {
   }
 
   /**
-   *
-   * @param {obect} self - instance of Game
-   *
-   * @returns {undefined} - undefined
+   * Function to handle CZAR's winner card selection
+   * @param {object} self - instance of game
+   * @returns {null} - null value
    */
   stateJudging(self) {
-    self.state = 'waiting for czar to decide';
+    this.state = 'waiting for czar to decide';
     // console.log(self.gameID,self.state);
 
     if (self.table.length <= 1) {
@@ -259,14 +255,12 @@ class Game {
   }
 
   /**
-* Generic require login routing middleware
-*
-* @param {object} self - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to set winner and update player's point
+   * @param {object} self
+   * @return {null} - null
+   */
   stateResults(self) {
-    self.state = 'winner has been chosen';
-    console.log(self.state);
+    this.state = 'winner has been chosen';
     // TODO: do stuff
     let winner = -1;
     for (let i = 0; i < self.players.length; i++) {
@@ -285,10 +279,10 @@ class Game {
   }
 
   /**
-*
-* @param {object} winner - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to update game state when game ends
+   * @param {object} winner - Express request object
+   * @return {null} - null
+   */
   stateEndGame(winner) {
     this.state = 'game ended';
     this.gameWinner = winner;
@@ -304,7 +298,9 @@ class Game {
   }
 
   /**
-   * @returns {undefined} - undefined
+   * Function to update game state when game dissolves
+   * @param {null} - no args
+   * @returns {null} - no args
    */
   stateDissolveGame() {
     this.state = 'game dissolved';
@@ -312,33 +308,33 @@ class Game {
   }
 
   /**
-*
-* @param {object} cb - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to get questions from db using region
+   * @param {function} cb - callback function
+   * @returns {null} - null
+   */
   getQuestions(cb) {
     questions.allQuestionsForGame((data) => {
       cb(null, data);
-    });
+    }, this.region);
   }
 
   /**
-* Game end Method
-*
-* @param {object} cb - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to get answers from db using region
+   * @param {function} cb - callback function
+   * @returns {null} - null
+   */
   getAnswers(cb) {
     answers.allAnswersForGame((data) => {
       cb(null, data);
-    });
+    }, this.region);
   }
 
+  /* eslint-disable class-methods-use-this */
   /**
-*
-* @param {object} cards - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to shuffle cards
+   * @param {object} cards
+   * @returns {object} - shuffled cards
+   */
   shuffleCards(cards) {
     let shuffleIndex = cards.length;
     let temp;
@@ -355,30 +351,28 @@ class Game {
   }
 
   /**
-*
-* @param {object} maxAnswers - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to share
+   * @param {number} maxAnswers
+   * @return {null} - null
+   */
   dealAnswers(maxAnswers) {
+    let nAnswers = [...this.answers];
     maxAnswers = maxAnswers || 10;
-    const storeAnswers = (err, data) => {
-      this.answers = data;
-    };
     for (let i = 0; i < this.players.length; i++) {
       while (this.players[i].hand.length < maxAnswers) {
-        this.players[i].hand.push(this.answers.pop());
-        if (!this.answers.length) {
-          this.getAnswers(storeAnswers);
+        if (!nAnswers.length) {
+          nAnswers = [...this.answers];
         }
+        this.players[i].hand.push(nAnswers.pop());
       }
     }
   }
 
   /**
-*
-* @param {object} thisPlayer - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to find a player by socket id
+   * @param {object} thisPlayer
+   * @returns {number} - player index
+   */
   _findPlayerIndexBySocket(thisPlayer) {
     let playerIndex = -1;
     _.each(this.players, (player, index) => {
@@ -390,28 +384,29 @@ class Game {
   }
 
   /**
-*
-* @param {object} thisCardArray - Express request object
-* @param {object} thisPlayer - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to handle picking of cards by players
+   * @param {array} thisCardArray
+   * @param {object} thisPlayer
+   * @returns {null} - null
+   */
   pickCards(thisCardArray, thisPlayer) {
   // Only accept cards when we expect players to pick a card
     if (this.state === 'waiting for players to pick') {
     // Find the player's position in the players array
       const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
-      console.log('player is at index', playerIndex);
+      // console.log('player is at index', playerIndex);
       if (playerIndex !== -1) {
       // Verify that the player hasn't previously picked a card
         let previouslySubmitted = false;
+        /* eslint-disable no-unused-vars */
         _.each(this.table, (pickedSet, index) => {
           if (pickedSet.player === thisPlayer) {
             previouslySubmitted = true;
           }
         });
         if (!previouslySubmitted) {
-        // Find the indices of the cards in the
-        // player's hand (given the card ids)
+        // Find the indices of the cards in the player's
+        // hand (given the card ids)
           const tableCard = [];
           for (let i = 0; i < thisCardArray.length; i++) {
             let cardIndex = null;
@@ -420,12 +415,13 @@ class Game {
                 cardIndex = j;
               }
             }
-            console.log('card', i, 'is at index', cardIndex);
+            // console.log('card', i, 'is at index', cardIndex);
             if (cardIndex !== null) {
-              tableCard.push(this.players[playerIndex]
-                .hand.splice(cardIndex, 1)[0]);
+              tableCard.push(
+                this.players[playerIndex].hand.splice(cardIndex, 1)[0]
+              );
             }
-            console.log('table object at', cardIndex, ':', tableCard);
+            // console.log('table object at', cardIndex, ':', tableCard);
           }
           if (tableCard.length === this.curQuestion.numAnswers) {
             this.table.push({
@@ -433,7 +429,6 @@ class Game {
               player: this.players[playerIndex].socket.id
             });
           }
-          console.log('final table object', this.table);
           if (this.table.length === this.players.length - 1) {
             clearTimeout(this.choosingTimeout);
             this.stateJudging(this);
@@ -443,15 +438,15 @@ class Game {
         }
       }
     } else {
-      console.log('NOTE:', thisPlayer, 'picked a card during', this.state);
+      // console.log('NOTE:', thisPlayer, 'picked a card during', this.state);
     }
   }
 
   /**
-*
-* @param {object} thisPlayer - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to return a particular player
+   * @param {object} thisPlayer
+   * @returns {object} player
+   */
   getPlayer(thisPlayer) {
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
     if (playerIndex > -1) {
@@ -461,10 +456,10 @@ class Game {
   }
 
   /**
-*
-* @param {object} thisPlayer - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to remove a particular player
+   * @param {object} thisPlayer
+   * @returns {null} - null
+   */
   removePlayer(thisPlayer) {
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
 
@@ -492,15 +487,20 @@ class Game {
       // If players are currently picking a card, advance to a new round.
         if (this.state === 'waiting for players to pick') {
           clearTimeout(this.choosingTimeout);
-          this.sendNotification('The Czar left the game! Starting a new round.');
+          this.sendNotification(
+            'The Czar left the game! Starting a new round.'
+          );
           return this.stateChoosing(this);
         } if (this.state === 'waiting for czar to decide') {
         // If players are waiting on a czar to pick, auto pick.
-          this.sendNotification('The Czar left the game! First answer submitted wins!');
+          this.sendNotification(
+            'The Czar left the game! First answer submitted wins!'
+          );
           this.pickWinning(this.table[0].card[0].id, thisPlayer, true);
         }
       } else {
-      // Update the czar's position if the removed player is above the current czar
+      // Update the czar's position if the removed
+      // player is above the current czar
         if (playerIndex < this.czar) {
           this.czar--;
         }
@@ -512,16 +512,17 @@ class Game {
   }
 
   /**
-*
-* @param {object} thisCard - Express request object
-* @param {object} thisPlayer - Express request object
-* @param {object} autopicked - Express request object
-* @returns {undefined} - undefined
-*/
+   * Function to pick winner
+   * @param {object} thisCard
+   * @param {object} thisPlayer
+   * @param {boolean} autopicked
+   * @returns {null} - null
+   */
   pickWinning(thisCard, thisPlayer, autopicked) {
     autopicked = autopicked || false;
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
-    if ((playerIndex === this.czar || autopicked) && this.state === 'waiting for czar to decide') {
+    if ((playerIndex === this.czar || autopicked)
+      && this.state === 'waiting for czar to decide') {
       let cardIndex = -1;
       _.each(this.table, (winningSet, index) => {
         if (winningSet.card[0].id === thisCard) {
@@ -530,15 +531,17 @@ class Game {
       });
       if (cardIndex !== -1) {
         this.winningCard = cardIndex;
-        const winnerIndex = this._findPlayerIndexBySocket(this.table[cardIndex].player);
-        this.sendNotification(`${this.players[winnerIndex].username} has won the round!`);
+        const winnerIndex = this._findPlayerIndexBySocket(
+          this.table[cardIndex].player
+        );
+        this.sendNotification(
+          `${this.players[winnerIndex].username} has won the round!`
+        );
         this.winningCardPlayer = winnerIndex;
         this.players[winnerIndex].points++;
         clearTimeout(this.judgingTimeout);
         this.winnerAutopicked = autopicked;
         this.stateResults(this);
-      } else {
-        console.log('WARNING: czar', thisPlayer, 'picked a card that was not on the table.');
       }
     } else {
     // TODO: Do something?
@@ -547,10 +550,12 @@ class Game {
   }
 
   /**
-   * @returns {undefined} - undefined
+   * Function to kill the game
+   * @param {null} - null
+   * @returns {null} - null
    */
   killGame() {
-    console.log('Killing game', this.gameID);
+    // console.log('Killing game', this.gameID);
     clearTimeout(this.resultsTimeout);
     clearTimeout(this.choosingTimeout);
     clearTimeout(this.judgingTimeout);

@@ -15,6 +15,11 @@ const QuestionSchema = new Schema({
     default: '',
     trim: true
   },
+  region: {
+    type: String,
+    default: '',
+    trim: true
+  },
   numAnswers: {
     type: Number
   },

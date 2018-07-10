@@ -59,18 +59,25 @@ class QuestionsController {
    * List of Questions (for Game class)
    *
    * @param {Function} cb - Callback function
-   *
+   * @param {object} region
    * @returns {undefined} - undefined
    */
-  static allQuestionsForGame(cb) {
-    Question.find({ official: true, numAnswers: { $lt: 3 } })
-      .select('-_id').exec((err, questions) => {
-        if (err) {
-          console.log(err);
-        } else {
-          cb(questions);
-        }
-      });
+  static allQuestionsForGame(cb, region) {
+    if (region) {
+      Question.find({ official: true, numAnswers: { $lt: 3 }, region })
+        .select('-_id').exec((err, questions) => {
+          if (!err) {
+            cb(questions);
+          }
+        });
+    } else {
+      Question.find({ official: true, numAnswers: { $lt: 3 } })
+        .select('-_id').exec((err, questions) => {
+          if (!err) {
+            cb(questions);
+          }
+        });
+    }
   }
 }
 

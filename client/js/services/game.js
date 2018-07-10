@@ -27,7 +27,8 @@ angular.module('mean.system')
         joinOverride: false,
         inviteMessage: '',
         errorPlayerMax: '',
-        errorPlayerMin: ''
+        errorPlayerMin: '',
+        regions: []
       };
 
       var notificationQueue = [];
@@ -72,6 +73,13 @@ angular.module('mean.system')
         game.playerMaxLimit = data.playerMaxLimit;
         game.pointLimit = data.pointLimit;
         game.timeLimits = data.timeLimits;
+      });
+
+      /**
+     * Listen for getRegions emits and set data to game regions
+     */
+      socket.on('returnRegions', function (regionData) {
+        game.regions = regionData;
       });
 
       socket.on('gameUpdate', function (data) {
@@ -152,7 +160,8 @@ angular.module('mean.system')
           game.czar = data.czar;
           game.curQuestion = data.curQuestion;
           // Extending the underscore within the question
-          game.curQuestion.text = data.curQuestion.text.replace(/_/g, '<u></u>');
+          game.curQuestion.text = data.curQuestion.text
+            .replace(/_/g, '<u></u>');
 
           // Set notifications only when entering state
           if (newState) {
@@ -202,13 +211,20 @@ angular.module('mean.system')
         }
       });
 
-      game.joinGame = function (mode, room, createPrivate) {
+      game.joinGame = function (mode, room, createPrivate, region) {
         mode = mode || 'joinGame';
         room = room || '';
+        region = region || '';
         createPrivate = createPrivate || false;
         var userID = window.user ? user._id : 'unauthenticated';
         socket.emit(mode,
-          { userID: userID, room: room, createPrivate: createPrivate });
+          {
+            userID: userID,
+            room: room,
+            createPrivate: createPrivate,
+            region: region
+          }
+        );
       };
       var playersMin = function () {
       // eslint-disable-next-line
@@ -234,6 +250,10 @@ angular.module('mean.system')
         );
         playersMax();
       };
+      game.getRegions = function () {
+        socket.emit('getRegionsFromServer');
+      };
+
       game.startGame = function () {
         if (game.players.length < 3) {
           addToNotificationQueue(
