@@ -30,7 +30,7 @@ describe('Game Route test', () => {
   const invalidToken = jwt.sign(tokenDetails, secret, { expiresIn: '0001s' });
 
   describe('Post /api/games/save', () => {
-    it('should save gave successfully and return game details', (done) => {
+    it('should save game successfully and return game details', (done) => {
       chai.request(app.listen())
         .post('/api/games/save')
         .set({ 'x-access-token': validToken })

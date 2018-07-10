@@ -14,13 +14,6 @@ class GameController {
    */
   static saveGame(req, res) {
     const { winner } = req.body;
-    const now = new Date();
-    const monthList = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    const date = monthList[now.getMonth()]
-    + ' ' + now.getDate() + ', ' + now.getFullYear();
     User.findOneAndUpdate(
       { username: winner },
       {
@@ -29,7 +22,7 @@ class GameController {
         }
       }, (err, res) => res
     );
-    const gameDetails = new Game({ ...req.body, date });
+    const gameDetails = new Game(req.body);
     gameDetails.save()
       .then((game) => {
         res.status(201).json({

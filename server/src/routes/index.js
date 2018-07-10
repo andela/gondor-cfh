@@ -32,15 +32,6 @@ export default (app, passport) => {
   // Game routes
   app.post('/api/games/save', Authenticate, GameController.saveGame);
 
-  // Game routes
-  app.post('/api/games/save', Authenticate, GameController.saveGame);
-
-  // Game routes
-  app.post('/api/games/save', Authenticate, GameController.saveGame);
-
-  // Game routes
-  app.post('/api/games/save', Authenticate, GameController.saveGame);
-
   // Donation Routes
   app.post('/api/donations', Authenticate, UsersApiController.addDonation);
   app.post('/donations', UsersController.addDonation);
