@@ -16,14 +16,21 @@
       <div id="invite-container" ng-show="game.state === 'awaiting players'" >
                   
                   <div id="search-players" style="width: 350px;">
-                <input type="search" style="
-                border-radius: 5px;
-                  background: white;
-                padding: 6px;
-                  border: none;
-                  margin-top: 8px;
-                  margin-right: 16px;
-                  font-size: 17px;" placeholder="Search for users"  name="search" ng-model="search" ng-change="searchUsers()" >
+                <input 
+                  type="search" 
+                  style="
+                    border-radius: 5px;
+                    background: white;
+                    padding: 6px;
+                    border: none;
+                    margin-top: 8px;
+                    margin-right: 16px;
+                    font-size: 17px;" 
+                  placeholder="Search for users"  
+                  name="search" 
+                  ng-model="search" 
+                  ng-change="searchUsers()" 
+                >
             </div>
             <div id="invite-player" ng-show="game.state === 'awaiting players'" style="background-color: cyan; width: 350px;">
                     <div ng-repeat="player in match" style="display: flex">
