@@ -10,12 +10,12 @@ angular.module('mean.system')
       function ($scope, Global, $location, socket, game, AvatarService) {
         Global.getUser().then(function (authUser) {
           $scope.global = authUser;
+          console.log('global', authUser);
+          $scope.showOptions = authUser && authUser.authenticated;
 
-          $scope.showOptions = true;
-
-          if (authUser && authUser.authenticated === true) {
-            $scope.showOptions = false;
-          }
+          // if (authUser && authUser.authenticated === true) {
+          //   $scope.showOptions = false;
+          // }
 
           $scope.playAsGuest = function () {
             game.joinGame();
@@ -38,7 +38,8 @@ angular.module('mean.system')
 
         $scope.signout = function () {
           localStorage.removeItem('token');
-          $location.path('/signout');
+          $scope.showOptions = false;
+          $location.path('/');
         };
       }]
   );

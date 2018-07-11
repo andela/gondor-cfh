@@ -265,12 +265,16 @@ body{
   }
   
   .card {
-    height: auto;
-    width: 20rem;
+    height: 19rem;
+    width: 18rem;
     border-radius: 7px;
     margin: 0 5px 5px 5px;
     flex: 1 0 12rem;  
     margin: 5px 20px;
+    transition-property: transform;
+  }
+  .card:hover{
+    transform: rotate(4deg);
   }
   
   .info {
