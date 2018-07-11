@@ -12,10 +12,6 @@ angular.module('mean.system')
           $scope.global = authUser;
           $scope.showOptions = authUser && authUser.authenticated;
 
-          // if (authUser && authUser.authenticated === true) {
-          //   $scope.showOptions = false;
-          // }
-
           $scope.playAsGuest = function () {
             game.joinGame();
             $location.path('/app');
