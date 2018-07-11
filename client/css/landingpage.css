@@ -215,13 +215,12 @@ body {
   flex-direction: row; }
 
 #landing-page .card {
-  height: 19rem;
-  width: 18rem;
   border-radius: 7px;
-  margin: 0 5px 5px 5px;
   flex: 1 0 12rem;
+  height: 19rem;
   margin: 5px 20px;
-  transition-property: transform; }
+  transition-property: transform;
+  width: 18rem; }
 
 #landing-page .card:hover {
   transform: rotate(4deg); }
