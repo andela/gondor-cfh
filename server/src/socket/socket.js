@@ -76,8 +76,6 @@ module.exports = (io) => {
             }
           });
 
-          // TODO: optimize code below with the one above.
-
           /**
            * Remove game from regionGamesNeedingPlayers
            * so new players can't join it.
