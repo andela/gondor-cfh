@@ -10,7 +10,6 @@ angular.module('mean.system')
       function ($scope, Global, $location, socket, game, AvatarService) {
         Global.getUser().then(function (authUser) {
           $scope.global = authUser;
-          console.log('global', authUser);
           $scope.showOptions = authUser && authUser.authenticated;
 
           // if (authUser && authUser.authenticated === true) {
