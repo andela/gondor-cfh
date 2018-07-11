@@ -82,14 +82,18 @@
                 </ul>
               </div>
               <div class="tab-content container">
-                <div ng-show="tabIsActive(1)" class="col s12">
-                  <h5 class="text-center games-won">Games Won: <span>{{gamesWon}}</span></h5>
+                <div ng-show="tabIsActive(1)" class="col s12" ng-class="{'empty': gamesPlayed == 0}">
+                  <h5 class="text-center games-won" ng-show="gamesPlayed != 0">Games Won: <span>{{gamesWon}}</span></h5>
                   <br>
-                      <table class="striped">
+                  <div class="empty-section no-games-played" ng-show="gamesPlayed == 0">
+                    Welcome Newbie. <a href="/#!/app">Join a Game</a>
+                  </div>
+                      <table class="striped centered" ng-show="gamesPlayed != 0">
                           <thead>
                             <tr>
                               <th>Date</th>
-                              <th>Number of Players</th>
+                              <th>Players</th>
+                              <th>Round</th>
                               <th>Winner</th>
                             </tr>
                           </thead>
@@ -97,14 +101,20 @@
                           <tbody>
                             <tr ng-repeat="game in gamesPlayed">
                               <td>{{game.datePlayed}}</td>
-                              <td>{{game.players.length}}</td>
+                              <td class="scroll-ul">
+                                  <p ng-repeat="player in game.players">{{player}}</p>
+                              </td>
+                              <td>{{game.rounds}}</td>
                               <td>{{game.winner}}</td>
                             </tr>
                           </tbody>
-                        </table>
+                      </table>
                 </div>
-                <div ng-show="tabIsActive(2)" class="col s12">
-                  <table class="striped centered">
+                <div ng-show="tabIsActive(2)" class="col s12" ng-class="{'empty': leaderBoard == 0}">
+                  <div class="empty-section no-leaderboard" ng-show="leaderBoard == 0">
+                    <p>Nothing for you here.</p> <a href="/#!/app">Invite Friends</a>
+                  </div>
+                  <table class="striped centered" ng-show="leaderBoard != 0">
                     <thead>
                       <tr>
                           <th>#</th>
@@ -122,8 +132,12 @@
                     </tbody>
                   </table>
                 </div>
-                <div ng-show="tabIsActive(3)" class="col s12">
-                  <table class="striped centered">
+                <div ng-show="tabIsActive(3)" class="col s12" ng-class="{'empty': donations == 0}">
+                  <div class="empty-section no-donations" ng-show="donations == 0">
+                    <p>No Children Fed By You.</p>
+                    <a class="waves-effect waves-light btn btn-large donate-btn" ng-click="donate()">Donate Now</a>
+                  </div>
+                  <table class="striped centered" ng-show="donations != 0">
                     <thead>
                       <tr>
                         <th>#</th>

@@ -4,14 +4,18 @@ func-names: 0, no-undef: 0, no-unused-vars: 0, no-var: 0, object-shorthand: 0 */
 describe('User Profile', function () {
   var $controller, $rootScope, $scope, $location, controller, Global;
 
+  var $window = {
+    location: {
+      href: 0
+    }
+  };
+
   beforeEach(function () {
     module('mean.system');
 
     // mock out materialize function
     $.fn.sidenav = function () { return false; };
 
-    // mock out materialize function
-    M.toast = function () { return false; };
 
     ServiceMock = {
       getUser: function () {
@@ -36,6 +40,7 @@ describe('User Profile', function () {
     ProfileController = $controller('ProfileController', {
       $scope: $scope,
       $location: $location,
+      $window: $window,
       Global: ServiceMock
     });
   });
@@ -79,7 +84,8 @@ describe('User Profile', function () {
 
   it('checks length', function () {
     expect($scope.checkLength(2)).toEqual(true);
-    expect($scope.checkLength(0)).toEqual(false);
+    expect($scope.checkLength(0)).toEqual(true);
+    expect($scope.checkLength(1)).toEqual(false);
   });
 
   it('gets leaderboard', function () {
@@ -100,7 +106,7 @@ describe('User Profile', function () {
       getLeaderboard: function () {
         return {
           then: function (success, err) {
-            success({ users: [user] });
+            success({ players: [user] });
           }
         };
       }
@@ -109,6 +115,7 @@ describe('User Profile', function () {
     ProfileController = $controller('ProfileController', {
       $scope: $scope,
       $location: $location,
+      $window: $window,
       Global: ServiceMock,
       LeaderboardService: LeaderboardServiceMock
     });
@@ -134,6 +141,7 @@ describe('User Profile', function () {
     ProfileController = $controller('ProfileController', {
       $scope: $scope,
       $location: $location,
+      $window: $window,
       Global: ServiceMock
     });
 
@@ -155,11 +163,20 @@ describe('User Profile', function () {
     };
 
     DonationServiceMock = {
-      userDonated: function () {
+      donate: function () {
         return {
           then: function (success, err) {
             success({
-              date: 'April 25, 2018'
+              message: 'Donation Successful'
+            });
+          }
+        };
+      },
+      getDonations: function () {
+        return {
+          then: function (success, err) {
+            success({
+              user: donations
             });
           }
         };
@@ -169,12 +186,49 @@ describe('User Profile', function () {
     ProfileController = $controller('ProfileController', {
       $scope: $scope,
       $location: $location,
+      $window: $window,
       Global: ServiceMock,
       DonationService: DonationServiceMock
     });
 
     $scope.donate();
 
-    expect($scope.donationCount).toBe(1);
+    expect($scope.donationCount).toBe(3);
+  });
+
+  it('gets game history', function () {
+    GlobalServiceMock = {
+      getUser: function () {
+        return {
+          then: function (success, err) {
+            success({
+              user: user,
+              authenticated: true
+            });
+          }
+        };
+      }
+    };
+
+    GamesServiceMock = {
+      getHistory: function () {
+        return {
+          then: function (success, err) {
+            success({ games: gamesPlayed });
+          }
+        };
+      }
+    };
+
+    ProfileController = $controller('ProfileController', {
+      $scope: $scope,
+      $location: $location,
+      $window: $window,
+      Global: ServiceMock,
+      GamesService: GamesServiceMock
+    });
+
+    expect($scope.gamesPlayed[1].winner).toBe('test34');
+    expect($scope.gamesPlayedCount).toBe(2);
   });
 });

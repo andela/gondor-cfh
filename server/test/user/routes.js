@@ -175,16 +175,90 @@ describe('Users API Routes', () => {
     });
   });
 
-  describe('Post /api/donations', () => {
+  describe('/api/donations', () => {
     it('should add user donation', (done) => {
       chai.request(server.listen())
         .post('/api/donations')
         .set('x-access-token', tokens.goodToken)
-        .send({ date: 'June 3, 2019' })
+        .send({ amount: '5' })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body.success).to.equal(true);
+          expect(res.body.message).to.equal('Donation Successful');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should return amount is required error when amount is not passed', (done) => {
+      chai.request(server.listen())
+        .post('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .send()
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.errors.amount).to.equal('Amount must be a number greater than 0');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should return amount is required error when amount is not a number', (done) => {
+      chai.request(server.listen())
+        .post('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .send({ amount: 'hdidio' })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.errors.amount).to.equal('Amount must be a number');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should return amount is required error when amount is 0', (done) => {
+      chai.request(server.listen())
+        .post('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .send({ amount: 0 })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.errors.amount).to.equal('Amount must be a number greater than 0');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should return amount is required error when amount is negative', (done) => {
+      chai.request(server.listen())
+        .post('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .send({ amount: -1 })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.errors.amount).to.equal('Amount must be a number greater than 0');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should get user donation', (done) => {
+      chai.request(server.listen())
+        .get('/api/donations')
+        .set('x-access-token', tokens.goodToken)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.success).to.equal(true);
-          expect(res.body.message).to.equal('Donation Successful');
+          expect(res.body.user.donations[0].amount).to.equal(5);
 
           if (err) done(err);
           done();
@@ -209,7 +283,7 @@ describe('Search users <GET /api/search/users>', () => {
   };
   const user3 = {
     name: 'Full name2',
-    email: 'test2@test.com',
+    email: 'test0@test.com',
     username: 'user2',
     password: 'password'
   };
