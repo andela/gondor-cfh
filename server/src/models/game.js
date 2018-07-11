@@ -13,8 +13,7 @@ const GameSchema = new Schema({
   },
   rounds: {
     type: Number
-  }
-},
-{ timestamps: true });
+  },
+}, { timestamps: true });
 
 export default mongoose.model('Game', GameSchema);

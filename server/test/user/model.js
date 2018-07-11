@@ -13,14 +13,6 @@ let user;
 
 // The tests
 describe('<Unit Test User Model>', () => {
-  before((done) => {
-    mongoose.connection.collections.users.drop((err) => {
-      if (err) return done(err);
-    });
-
-    done();
-  });
-
   describe('Validation', () => {
     it('should return validation error if any field is blank', (done) => {
       user = new User({
