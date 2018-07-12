@@ -610,10 +610,6 @@
  }
 
  /**** Portfolio ****/
- .wpb-portfolio-body {
-
- }
-
  .wpb-portfolio-body .wpb-teaser {
    min-height: 350px;
  }
@@ -767,8 +763,6 @@
 
 
  /**** Single Portfolio Item ****/
- .wpb-single-portfolio {
- }
 
  .wpb-single-portfolio .wpb-content-inner {
    padding: 0px;
@@ -1203,7 +1197,6 @@
       font-family: Arial;
       font-size: 20px;
       font-weight: bold;
-      vertical-align: top;
       width: 100%;
    }
 
@@ -1263,13 +1256,7 @@
 /*Import Font Starts*/
 
 /*Import Font End*/
-body {
-  margin: 0 !important;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  font-family: 'Roboto', sans-serif;
-}
+
 h1, h2, h3, h4, h5, h6, p {
   margin:0;
 }

@@ -55,17 +55,24 @@ class AnswersController {
   /**
    *
    * @param {Function} cb - Callback function
-   *
+   * @param {object} region - region
    * @returns {undefined} - undefined
    */
-  static allAnswersForGame(cb) {
-    Answer.find({ official: true }).select('-_id').exec((err, answers) => {
-      if (err) {
-        console.log(err);
-      } else {
-        cb(answers);
-      }
-    });
+  static allAnswersForGame(cb, region) {
+    if (region) {
+      Answer.find({ official: true, region })
+        .select('-_id').exec((err, answers) => {
+          if (!err) {
+            cb(answers);
+          }
+        });
+    } else {
+      Answer.find({ official: true }).select('-_id').exec((err, answers) => {
+        if (!err) {
+          cb(answers);
+        }
+      });
+    }
   }
 }
 

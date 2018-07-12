@@ -1,4 +1,5 @@
 </script>
+<link rel="stylesheet" href="../css/common.css" type="text/css" />
 <div id="app-container" ng-controller="GameController">
   <div id="menu-container">
     <div id="logo">
@@ -15,24 +16,16 @@
     </span>
       <div id="invite-container" ng-show="game.state === 'awaiting players'" >
                   
-                  <div id="search-players" style="width: 350px;">
+                  <div id="search-players">
                 <input 
                   type="search" 
-                  style="
-                    border-radius: 5px;
-                    background: white;
-                    padding: 6px;
-                    border: none;
-                    margin-top: 8px;
-                    margin-right: 16px;
-                    font-size: 17px;" 
                   placeholder="Search for users"  
                   name="search" 
                   ng-model="search" 
                   ng-change="searchUsers()" 
                 >
             </div>
-            <div id="invite-player" ng-show="game.state === 'awaiting players'" style="background-color: cyan; width: 350px;">
+            <div id="invite-player" ng-show="game.state === 'awaiting players'">
                     <div ng-repeat="player in match" style="display: flex">
                       <span style="margin-right: 20px"> {{ player.name }}</span>
                       <span style="margin-right: auto"> {{ player.email }}</span>
@@ -51,6 +44,24 @@
           <timer></timer>
         </div>
       </div>
+      <div id="region-modal" class="modal">
+          <div class="modal-content">
+            <h5>Please choose a region below so we can know how horrible you are</h5>
+            <div class="input-field col s12">
+                  <select ng-model="selectedRegion">
+                      <option value="" disabled selected>Choose your region</option>
+                      <option ng-repeat="region in game.regions" value="{{region}}">
+                        {{region | uppercase}}
+                      </option>
+                    </select>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <a href="/" class="modal-close btn-flat">Cancel</a>
+            <button type="button" ng-click="initialGame();" class="btn-flat btnSecondary" ng-disabled="!selectedRegion">
+              Join Game</button>
+          </div>
+        </div>
       <div id="question-container-outer">
         <question></question>
       </div>
@@ -85,3 +96,11 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function(){
+    $('.modal').modal({
+      dismissible: false
+    });
+    $('#region-modal').modal('open');
+  });
+</script>

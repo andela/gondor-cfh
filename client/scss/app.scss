@@ -1,0 +1,24 @@
+#app-container {
+  select {
+    display: block;
+  }
+}
+#invite-container {
+  #search-player {
+    width: 350px;
+  }
+  input {
+    border-radius: 5px;
+    background: white;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    width: 350px;
+  }
+  #invite-player {
+    background-color: cyan;
+    width: 350px;
+  }
+}

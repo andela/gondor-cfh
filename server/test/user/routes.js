@@ -208,9 +208,9 @@ describe('Search users <GET /api/search/users>', () => {
     password: 'password'
   };
   const user3 = {
-    name: 'Full name2',
-    email: 'test2@test.com',
-    username: 'user2',
+    name: 'Full name0',
+    email: 'test0@test.com',
+    username: 'user0',
     password: 'password'
   };
   before((done) => {

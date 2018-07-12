@@ -11,7 +11,10 @@ angular.module('mean.system')
         Global.getUser().then(function (authUser) {
           $scope.global = authUser;
           $scope.showOptions = authUser && authUser.authenticated;
-
+          const elems = document.querySelectorAll('.slider');
+          const instances = M.Slider.init(elems, {
+            indicators: false
+          });
           $scope.playAsGuest = function () {
             game.joinGame();
             $location.path('/app');
