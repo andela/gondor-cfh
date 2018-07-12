@@ -1,0 +1,775 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400|Roboto:300,400,500|Sail|Tangerine:700");
+body {
+  margin: 0;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+.text-center {
+  text-align: center; }
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  .main.image-one {
+    background: linear-gradient(rgba(0, 105, 137, 0.8), rgba(0, 105, 137, 0.6)), url("../img/game-page-1.jpg");
+    background-color: #006989;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; }
+
+.main .game-content {
+  flex-grow: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 25px 50px 0; }
+  .main .game-content .main-board {
+    flex: 9;
+    display: flex;
+    flex-direction: column; }
+    .main .game-content .main-board .interaction-div {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 20px; }
+      .main .game-content .main-board .interaction-div .timer {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .main .game-content .main-board .interaction-div .timer > div {
+          border: 10px solid #006989;
+          border-radius: 50%;
+          box-sizing: border-box;
+          box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.1);
+          height: 220px;
+          width: 220px;
+          display: flex;
+          justify-content: center;
+          align-items: center; }
+          .main .game-content .main-board .interaction-div .timer > div p {
+            font-size: 96px;
+            font-weight: 500;
+            color: #EDAE49;
+            -webkit-text-stroke: 3px rgba(0, 0, 0, 0.2); }
+      .main .game-content .main-board .interaction-div .interaction-board {
+        flex: 3;
+        background-color: white;
+        border-radius: 5px; }
+        .main .game-content .main-board .interaction-div .interaction-board .waiting {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%; }
+          .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text {
+            margin-bottom: 50px; }
+            .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text p:first-child {
+              font-size: 2.5em;
+              margin-top: 0;
+              margin-bottom: 0;
+              color: #006989; }
+            .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text p:last-child {
+              font-size: 1.2em;
+              margin-top: 0; }
+          .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 50px;
+            box-sizing: border-box; }
+            .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn {
+              width: 150px;
+              text-transform: initial; }
+              .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.start-game-btn {
+                background-color: #EDAE49;
+                color: white;
+                font-weight: 500; }
+                .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.start-game-btn:hover, .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.start-game-btn:active, .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.start-game-btn.active {
+                  background-color: #eaa12c;
+                  color: white;
+                  transition: background-color .3s; }
+              .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.invite-btn {
+                background-color: #006989;
+                color: white;
+                font-weight: 500; }
+                .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.invite-btn:hover, .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.invite-btn:active, .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.invite-btn.active {
+                  background-color: #015E7B;
+                  color: white;
+                  transition: background-color .3s; }
+        .main .game-content .main-board .interaction-div .interaction-board .question {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          font-size: 1.5em;
+          padding: 30px;
+          box-sizing: border-box; }
+    .main .game-content .main-board .card-board {
+      flex: 2; }
+      .main .game-content .main-board .card-board .instructions {
+        width: 100%;
+        height: 100%;
+        padding: 50px 70px;
+        box-sizing: border-box;
+        background-color: white;
+        border-radius: 5px; }
+        .main .game-content .main-board .card-board .instructions p {
+          font-size: 2em;
+          color: #EDAE49;
+          margin-top: 0; }
+        .main .game-content .main-board .card-board .instructions ol li {
+          color: #006989;
+          font-size: 1.2em;
+          margin-top: 30px; }
+      .main .game-content .main-board .card-board .czar-info {
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 105, 137, 0.8);
+        border-radius: 5px; }
+        .main .game-content .main-board .card-board .czar-info .info {
+          height: 60%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center; }
+          .main .game-content .main-board .card-board .czar-info .info p:last-child {
+            font-size: 1.3em;
+            margin-bottom: 0; }
+          .main .game-content .main-board .card-board .czar-info .info p:first-child {
+            font-size: 2em;
+            margin-bottom: 0; }
+        .main .game-content .main-board .card-board .czar-info .make-a-wish {
+          height: 40%;
+          background-color: white;
+          border-radius: 5px;
+          width: 90%;
+          margin: 30px;
+          color: #333;
+          padding: 0 20px;
+          box-sizing: border-box;
+          position: relative; }
+          .main .game-content .main-board .card-board .czar-info .make-a-wish .fact-tagline {
+            font-size: 1.4em;
+            margin-top: 15px;
+            margin-bottom: 10px; }
+          .main .game-content .main-board .card-board .czar-info .make-a-wish .fact {
+            font-size: 1.1em;
+            margin-top: 0; }
+          .main .game-content .main-board .card-board .czar-info .make-a-wish .logo {
+            margin-bottom: 0;
+            position: absolute;
+            right: 15px;
+            bottom: 0; }
+      .main .game-content .main-board .card-board .cards-board {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: rgba(0, 105, 137, 0.8);
+        border-radius: 5px; }
+        .main .game-content .main-board .card-board .cards-board.has-selected .card {
+          opacity: 0; }
+        .main .game-content .main-board .card-board .cards-board.answers {
+          grid-template-columns: repeat(5, 1fr);
+          grid-gap: 1rem; }
+        .main .game-content .main-board .card-board .cards-board.czar-selections {
+          grid-template-columns: repeat(6, 1fr);
+          grid-gap: 1rem; }
+        .main .game-content .main-board .card-board .cards-board .card {
+          background-color: white;
+          color: #333;
+          margin-top: 0;
+          margin-bottom: 0;
+          border-radius: 2px;
+          padding: 15px;
+          position: relative; }
+          .main .game-content .main-board .card-board .cards-board .card:hover {
+            cursor: pointer;
+            box-shadow: 10px 10px 18px -8px #333;
+            transition: box-shadow 0.50s ease-in-out; }
+          .main .game-content .main-board .card-board .cards-board .card .answer {
+            font-size: 1.1em; }
+          .main .game-content .main-board .card-board .cards-board .card .logo {
+            color: #525252;
+            position: absolute;
+            bottom: 5px;
+            left: 15px;
+            font-family: 'Tangerine', cursive; }
+          .main .game-content .main-board .card-board .cards-board .card.selected {
+            opacity: 1; }
+            .main .game-content .main-board .card-board .cards-board .card.selected:hover {
+              box-shadow: initial; }
+      .main .game-content .main-board .card-board .call-to-donate {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 50px 70px;
+        box-sizing: border-box;
+        background-color: white;
+        border-radius: 5px; }
+        .main .game-content .main-board .card-board .call-to-donate div p {
+          margin-top: 0;
+          color: #333;
+          font-size: 1.3em;
+          text-align: center; }
+        .main .game-content .main-board .card-board .call-to-donate div p:first-child {
+          font-size: 2em;
+          color: #EDAE49; }
+        .main .game-content .main-board .card-board .call-to-donate .btns {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 100%; }
+          .main .game-content .main-board .card-board .call-to-donate .btns .btn {
+            width: 150px;
+            text-transform: initial;
+            background-color: #006989;
+            color: white;
+            font-weight: 500; }
+            .main .game-content .main-board .card-board .call-to-donate .btns .btn:hover, .main .game-content .main-board .card-board .call-to-donate .btns .btn:active, .main .game-content .main-board .card-board .call-to-donate .btns .btn.active {
+              background-color: #005570;
+              color: white;
+              transition: background-color .3s; }
+            .main .game-content .main-board .card-board .call-to-donate .btns .btn.donate-btn {
+              background-color: #EDAE49; }
+              .main .game-content .main-board .card-board .call-to-donate .btns .btn.donate-btn:hover, .main .game-content .main-board .card-board .call-to-donate .btns .btn.donate-btn:active, .main .game-content .main-board .card-board .call-to-donate .btns .btn.donate-btn.active {
+                background-color: #eba432; }
+  .main .game-content .score-board {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; }
+    .main .game-content .score-board.user-mobile {
+      display: none; }
+    .main .game-content .score-board .collection {
+      margin-top: 0;
+      margin-bottom: 0; }
+      .main .game-content .score-board .collection .collection-item {
+        padding: 5px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .main .game-content .score-board .collection .collection-item .czar-title {
+          display: none; }
+        .main .game-content .score-board .collection .collection-item.avatar {
+          min-height: 51px; }
+        .main .game-content .score-board .collection .collection-item .circle {
+          left: initial;
+          right: 15px;
+          width: 42px;
+          height: 42px; }
+        .main .game-content .score-board .collection .collection-item img {
+          flex: 1; }
+        .main .game-content .score-board .collection .collection-item > span {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 80%;
+          position: absolute;
+          left: 15px; }
+          .main .game-content .score-board .collection .collection-item > span p {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 0;
+            font-weight: 500; }
+          .main .game-content .score-board .collection .collection-item > span div span:first-child {
+            padding: 2px;
+            font-size: 0.8em;
+            background-color: #EDAE49;
+            color: white;
+            font-weight: 500;
+            border-radius: 2px;
+            margin-right: 5px; }
+          .main .game-content .score-board .collection .collection-item > span div span:last-child {
+            padding: 2px;
+            font-size: 0.8em;
+            background-color: #006989;
+            color: white;
+            font-weight: 500;
+            border-radius: 2px; }
+        .main .game-content .score-board .collection .collection-item.czar {
+          background-color: #EDAE49;
+          color: #FFFFFF;
+          box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
+          display: flex;
+          flex-direction: row; }
+          .main .game-content .score-board .collection .collection-item.czar .czar-title {
+            position: absolute;
+            left: -15px;
+            display: block;
+            flex: 1; }
+            .main .game-content .score-board .collection .collection-item.czar .czar-title p {
+              margin: 0;
+              padding-top: 2px;
+              padding-left: 5px;
+              box-sizing: border-box;
+              width: 49px;
+              transform: rotate(-90deg);
+              background-color: rgba(196, 196, 196, 0.6);
+              color: #006989;
+              font-weight: 500;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
+          .main .game-content .score-board .collection .collection-item.czar > span {
+            flex: 10; }
+            .main .game-content .score-board .collection .collection-item.czar > span p {
+              color: #FFFFFF;
+              font-size: 1.1em;
+              margin-bottom: 0; }
+            .main .game-content .score-board .collection .collection-item.czar > span div span:first-child {
+              padding: 2px;
+              font-size: 0.8em;
+              background-color: #FFFFFF;
+              color: #EDAE49;
+              font-weight: 500;
+              border-radius: 2px;
+              margin-right: 5px; }
+            .main .game-content .score-board .collection .collection-item.czar > span div span:last-child {
+              padding: 2px;
+              font-size: 0.8em;
+              background-color: #006989;
+              color: white;
+              font-weight: 500;
+              border-radius: 2px; }
+    .main .game-content .score-board .current-user-score {
+      margin-left: 40px; }
+      .main .game-content .score-board .current-user-score .collection {
+        margin-bottom: 20px;
+        border: 0px solid #e0e0e0;
+        border-radius: 0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px; }
+      .main .game-content .score-board .current-user-score > div {
+        background-color: white;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        height: 70px; }
+      .main .game-content .score-board .current-user-score p {
+        text-align: center;
+        color: white;
+        font-size: 1.3em;
+        font-weight: 500;
+        margin-top: 0;
+        margin-bottom: 10px; }
+    .main .game-content .score-board .players-score {
+      background-color: white;
+      margin-left: 40px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      overflow-y: auto; }
+      .main .game-content .score-board .players-score .collection {
+        border: 0px solid #e0e0e0;
+        border-radius: 0; }
+  @media (max-width: 991.98px) {
+    .main .game-content {
+      padding: 0 0 20px;
+      flex-direction: column; }
+      .main .game-content .main-board .interaction-div .timer > div {
+        height: 120px;
+        width: 120px; }
+        .main .game-content .main-board .interaction-div .timer > div p {
+          font-size: 70px; }
+      .main .game-content .main-board .interaction-div .interaction-board {
+        flex: 3;
+        background-color: white;
+        border-radius: 5px; }
+        .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text {
+          margin-top: 10px;
+          margin-bottom: 10px; }
+          .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text p:first-child {
+            font-size: 2em; }
+          .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text p:last-child {
+            font-size: 1.2em; }
+        .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          padding: 0;
+          box-sizing: border-box; }
+          .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn {
+            box-sizing: border-box;
+            width: initial;
+            padding: 0 10px;
+            box-shadow: none;
+            text-transform: initial; }
+            .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.start-game-btn {
+              background-color: rgba(0, 0, 0, 0);
+              color: #EDAE49;
+              font-weight: 500; }
+              .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.start-game-btn:hover, .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.start-game-btn:active, .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.start-game-btn.active {
+                background-color: rgba(0, 0, 0, 0);
+                color: #eaa12c;
+                transition: color .3s; }
+            .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.invite-btn {
+              background-color: rgba(0, 0, 0, 0);
+              color: #006989;
+              font-weight: 500; }
+              .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.invite-btn:hover, .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.invite-btn:active, .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn.invite-btn.active {
+                background-color: rgba(0, 0, 0, 0);
+                color: #015E7B;
+                transition: background-color .3s; }
+        .main .game-content .main-board .interaction-div .interaction-board .question {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          font-size: 1em;
+          padding: 20px;
+          box-sizing: border-box; }
+      .main .game-content .main-board .card-board {
+        flex: 2; }
+        .main .game-content .main-board .card-board .instructions {
+          width: 100%;
+          height: 100%;
+          padding: 40px 20px;
+          box-sizing: border-box;
+          background-color: white;
+          border-radius: 5px;
+          margin-bottom: 20px; }
+          .main .game-content .main-board .card-board .instructions p {
+            font-size: 2em;
+            color: #EDAE49;
+            margin-top: 0; }
+          .main .game-content .main-board .card-board .instructions ol li {
+            color: #006989;
+            font-size: 1.2em;
+            margin-top: 30px; }
+        .main .game-content .main-board .card-board .czar-info {
+          color: white;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 105, 137, 0.8);
+          border-radius: 5px;
+          padding: 10px;
+          box-sizing: border-box; }
+          .main .game-content .main-board .card-board .czar-info .info {
+            height: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; }
+            .main .game-content .main-board .card-board .czar-info .info p:last-child {
+              font-size: 1.3em;
+              margin-bottom: 0;
+              text-align: center; }
+            .main .game-content .main-board .card-board .czar-info .info p:first-child {
+              font-size: 2em;
+              margin-bottom: 0; }
+          .main .game-content .main-board .card-board .czar-info .make-a-wish {
+            height: 40%;
+            background-color: white;
+            border-radius: 5px;
+            width: 90%;
+            margin: 30px;
+            color: #333;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: relative; }
+            .main .game-content .main-board .card-board .czar-info .make-a-wish .fact-tagline {
+              font-size: 1.4em;
+              margin-top: 15px;
+              margin-bottom: 10px; }
+            .main .game-content .main-board .card-board .czar-info .make-a-wish .fact {
+              font-size: 1.1em;
+              margin-top: 0; }
+            .main .game-content .main-board .card-board .czar-info .make-a-wish .logo {
+              margin-bottom: 0;
+              position: absolute;
+              right: 15px;
+              bottom: 0; }
+        .main .game-content .main-board .card-board .cards-board {
+          display: grid;
+          width: 100%;
+          height: 100%;
+          padding: 20px;
+          box-sizing: border-box;
+          background-color: rgba(0, 105, 137, 0.8);
+          border-radius: 5px; }
+          .main .game-content .main-board .card-board .cards-board.has-selected .card {
+            opacity: 0; }
+          .main .game-content .main-board .card-board .cards-board.answers {
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 1rem; }
+          .main .game-content .main-board .card-board .cards-board.czar-selections {
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 1rem; }
+          .main .game-content .main-board .card-board .cards-board .card {
+            background-color: white;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 0;
+            border-radius: 2px;
+            padding: 10px;
+            position: relative; }
+            .main .game-content .main-board .card-board .cards-board .card:hover {
+              cursor: pointer;
+              box-shadow: 10px 10px 18px -8px #333;
+              transition: box-shadow 0.50s ease-in-out; }
+            .main .game-content .main-board .card-board .cards-board .card .answer {
+              font-size: 0.9em;
+              margin-bottom: 5px; }
+            .main .game-content .main-board .card-board .cards-board .card .logo {
+              bottom: 5px;
+              left: 10px;
+              font-size: 0.5em; }
+            .main .game-content .main-board .card-board .cards-board .card.selected {
+              opacity: 1; }
+              .main .game-content .main-board .card-board .cards-board .card.selected:hover {
+                box-shadow: initial; }
+        .main .game-content .main-board .card-board .call-to-donate {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          padding: 40px 20px;
+          box-sizing: border-box;
+          background-color: white;
+          border-radius: 5px;
+          margin-bottom: 20px; }
+          .main .game-content .main-board .card-board .call-to-donate div p {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.3em;
+            text-align: center; }
+          .main .game-content .main-board .card-board .call-to-donate div p:first-child {
+            font-size: 2em;
+            color: #EDAE49; }
+          .main .game-content .main-board .card-board .call-to-donate .btns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; }
+            .main .game-content .main-board .card-board .call-to-donate .btns .btn {
+              display: none; }
+              .main .game-content .main-board .card-board .call-to-donate .btns .btn.donate-btn {
+                background-color: #EDAE49;
+                display: block; }
+                .main .game-content .main-board .card-board .call-to-donate .btns .btn.donate-btn:hover, .main .game-content .main-board .card-board .call-to-donate .btns .btn.donate-btn:active, .main .game-content .main-board .card-board .call-to-donate .btns .btn.donate-btn.active {
+                  background-color: #eba432; }
+      .main .game-content .score-board .current-user-score {
+        margin-left: 0;
+        border-radius: 0;
+        display: none; }
+        .main .game-content .score-board .current-user-score .collection {
+          border-radius: 0; }
+      .main .game-content .score-board .players-score {
+        background-color: white;
+        overflow-y: auto;
+        margin-left: 0;
+        border-radius: 0; }
+      .main .game-content .score-board.user-mobile {
+        display: flex; }
+        .main .game-content .score-board.user-mobile .current-user-score {
+          display: block; } }
+
+.header {
+  margin: 0;
+  height: 64px;
+  z-index: 1000; }
+
+.header nav {
+  background-color: #006989;
+  height: 64px;
+  position: fixed;
+  width: 100%; }
+
+.header nav .nav-wrapper a:hover {
+  color: #EDAE49;
+  transition: color .3s; }
+
+.header nav .nav-wrapper .donate-btn:hover,
+.header nav .nav-wrapper .donate-btn:active,
+.header nav .nav-wrapper .donate-btn.active {
+  background-color: #eaa12c;
+  color: white;
+  transition: background-color .3s; }
+
+.header nav .nav-wrapper a:not(.brand-logo) {
+  font-size: 1.1em;
+  font-weight: 300; }
+
+.header nav .nav-wrapper .donate-btn {
+  background-color: #EDAE49;
+  border-radius: 2px;
+  text-transform: initial;
+  padding: 0 25px;
+  font-weight: 400 !important;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
+
+.header nav .nav-wrapper .brand-logo {
+  margin-left: 15px;
+  font-family: 'Sail', cursive; }
+
+.header nav .nav-wrapper ul li:last-child {
+  margin-right: 15px; }
+
+.header nav .nav-wrapper .nav-img-li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  max-height: 64px;
+  box-sizing: border-box; }
+
+.header nav .nav-wrapper .nav-img-li .nav-user-img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: white; }
+
+@media only screen and (max-width: 992px) {
+  .header nav .brand-logo {
+    left: 90%;
+    transform: translateX(-90%); } }
+
+.sidenav {
+  background-color: #006989;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 300; }
+
+.sidenav li:not(.donate-btn-li) {
+  width: 85%; }
+
+.sidenav li:not(.donate-btn-li):hover, .sidenav li:not(.donate-btn-li).active {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: white; }
+
+.sidenav li:not(.donate-btn-li) a:hover, .sidenav li:not(.donate-btn-li) a.active {
+  background-color: initial; }
+
+.sidenav .donate-btn-li {
+  width: 95%; }
+
+.sidenav li:first-child {
+  border-bottom: 0px solid white;
+  margin-top: 30px; }
+
+.sidenav li:first-child .sidenav-close-div {
+  text-align: end; }
+
+.sidenav li:first-child .sidenav-close-div i {
+  color: white;
+  font-size: 2em; }
+
+.sidenav li > a {
+  color: white;
+  font-size: 1.3em;
+  text-align: center;
+  margin: 15px 0;
+  font-weight: 300;
+  cursor: pointer; }
+
+.sidenav li > a.btn {
+  background-color: #EDAE49;
+  margin-top: 35px;
+  font-weight: 500; }
+
+.sidenav li > a.btn:hover,
+.sidenav li > a.btn:active,
+.sidenav li > a.btn.active {
+  background-color: #eaa12c;
+  color: white;
+  transition: background-color .3s; }
+
+.sidenav .nav-img-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  margin-top: 20px;
+  border: 2px solid white;
+  border-radius: 50%;
+  height: 130px;
+  width: 130px;
+  box-sizing: border-box; }
+
+.sidenav .nav-img-div img {
+  height: 130px;
+  width: 130px;
+  border-radius: 50%; }
+
+.sidenav .user-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.sidenav .user-view p, .sidenav .user-view p > a {
+  color: white; }
+
+.sidenav .user-view p {
+  font-size: 1.8em;
+  margin-bottom: 0; }
+
+.sidenav .user-view p:last-child {
+  font-size: 1.3em;
+  margin-top: 0;
+  margin-bottom: 30px; }
+
+.footer {
+  background-color: rgba(0, 0, 0, 0);
+  min-height: 70px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.footer p {
+  padding: 0 20px;
+  font-size: 15px;
+  margin-bottom: 0;
+  font-weight: 300; }
+
+.footer .footer-text {
+  color: #EDAE49; }
+
+.header nav .btn {
+  background-color: #EDAE49;
+  border-radius: 2px;
+  text-transform: initial;
+  padding: 0 25px;
+  font-weight: 400 !important;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
+  .header nav .btn.leave-game-btn {
+    background-color: #EDAE49; }
+    .header nav .btn.leave-game-btn:hover, .header nav .btn.leave-game-btn:active, .header nav .btn.leave-game-btn.active {
+      background-color: #eaa12c;
+      color: white;
+      transition: background-color .3s; }
+  .header nav .btn.tour-btn {
+    color: #EDAE49;
+    background-color: #FFFFFF; }
+    .header nav .btn.tour-btn:hover, .header nav .btn.tour-btn:active, .header nav .btn.tour-btn.active {
+      background-color: lightyellow;
+      color: #EDAE49;
+      transition: background-color .3s; }

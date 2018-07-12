@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Game Page</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+  <link rel="stylesheet" href="../css/gamepage.css">
+</head>
+<body>
+      <div class="main image-one" ng-controller="AppController">
+        <div class="header">
+          <nav>
+            <div class="nav-wrapper">
+              <a href="/" class="brand-logo">CFH</a>
+              <a data-target="slide-out" class="sidenav-trigger" ng-click="openSideNav()"><i class="material-icons">menu</i></a>
+              <div id="nav-mobile" class="right hide-on-med-and-down">
+                <ul>
+                  <li><a class="waves-effect waves-yellow btn tour-btn">Take A Tour</a></li>
+                  <li><a class="waves-effect waves-light btn leave-game-btn">Leave Game</a></li>
+                  <li class="nav-img-li"><img class="nav-user-img" src="../img/moses.jpg" /></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <ul id="slide-out" class="sidenav">
+            <li>
+              <div class="sidenav-close-div">
+                  <a class="sidenav-close" ng-click="sideNavLinkClick()"><i class="material-icons">close</i></a>
+              </div>
+            </li>
+            <li>
+              <div class="user-view">
+                <div class="nav-img-div">
+                  <img class="nav-user-img" src="../img/moses.jpg" />
+                </div>
+                <p>iveren</p>
+              </div>
+            </li>
+            <li><a class="waves-effect waves-yellow btn tour-btn">Take A Tour</a></li>
+            <li><a class="waves-effect waves-light btn leave-game-btn">Leave Game</a></li>
+          </ul>
+        </div>
+        <div class="game-content">
+          <div class="score-board user-mobile">
+              <div class="current-user-score">
+                  <ul class="collection">
+                    <li class="collection-item avatar">
+                      <span>
+                        <p>You</p>
+                        <div class>
+                          <span>Points</span>
+                          <span>4&nbsp;/&nbsp;5</span>
+                        </div>
+                      </span>
+                      <img src="../img/moses.jpg" alt="" class="circle">
+                    </li>
+                  </ul>
+                </div>
+          </div>
+          <div class="main-board">
+            <div class="interaction-div">
+              <div class="timer">
+                <div><p>0</p></div>
+              </div>
+              <div class="interaction-board">
+                <div class="waiting" style="display: none">
+                  <div class="waiting-text">
+                    <p>Searching...</p>
+                    <p>1&nbsp;/&nbsp;12 Players Found</p>
+                  </div>
+                  <div class="waiting-btns">
+                    <button class="waves-effect waves-light btn start-game-btn">Start Game</button>
+                    <button class="waves-effect waves-light btn invite-btn">Invite Players</button>
+                  </div>
+                </div>
+                <div class="question">
+                    If it weren’t for me you wouldn’t be talking about _________
+                </div>
+              </div>
+            </div>
+            <div class="card-board">
+              <div class="instructions" style="display: none">
+                <p class="text-center">Instructions</p>
+                <ol>
+                  <li>Each player begins with, and will always have, 10 white answer cards.</li>
+                  <li>For each round, one player is randomly chosen as the Card Czar.</li>
+                  <li>The player with the highlighted score card is the Czar for that round.</li>
+                  <li>Everyone else answers the black question card by clicking on the answer card they want to use.</li>
+                  <li>The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</li>
+                </ol>
+              </div>
+              <div class="czar-info" >
+                <div class="info">
+                    <p>You are the Czar</p>
+                    <p>Players are choosing their answers. Prepare to select a Card.</p>
+                </div>
+                <div class="make-a-wish">
+                    <p class='fact-tagline'>Did you know?</p>
+                    <p class='fact'>
+                        Health professionals who treat wish kids, including nurses and doctors, overwhelmingly believe that the wish experience can improve a wish kids’ physical health.
+                    </p>
+                    <div class='logo'>
+                      <img src='../img/make-a-wish-logo.png'/>
+                    </div>
+                </div>
+              </div>
+              <div class="cards-board answers" style="display: none">
+                    <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                    </div>
+                    <div class="card">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="card selected">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+              </div>
+              <div class="cards-board czar-selections" style="display: none">
+                  <div class="card">
+                    <div class="answer">Getting Spanked By Father Christmas</div>
+                    <div class="logo">
+                      <i class="fas fa-hands"></i>
+                      Cards For Humanity
+                    </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="answer">Getting Spanked By Father Christmas</div>
+                      <div class="logo">
+                        <i class="fas fa-hands"></i>
+                        Cards For Humanity
+                      </div>
+                  </div>
+              </div>
+              <div class="call-to-donate" style="display: none">
+                <div>
+                    <p>What would you like to do now?</p>
+                    <p>You might consider donating to charity to atone for the horrifying answers you've submitted.</p>
+                    <p>Donating will also place a lovely crown on your avatar's head.</p>
+                </div>
+                <div class="btns">
+                  <button class="waves-effect waves-light btn join-btn">Start Game</button>
+                  <button class="waves-effect waves-light btn btn-large donate-btn">Donate Now</button>
+                  <button class="waves-effect waves-light btn home-btn">Return to Lobby</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="score-board">
+            <div class="current-user-score">
+              <p>Score Board</p>
+              <ul class="collection">
+                <li class="collection-item avatar">
+                  <span>
+                    <p>You</p>
+                    <div class>
+                      <span>Points</span>
+                      <span>4&nbsp;/&nbsp;5</span>
+                    </div>
+                  </span>
+                  <img src="../img/moses.jpg" alt="" class="circle">
+                </li>
+              </ul>
+            </div>
+            <div class="players-score">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <div class="czar-title"><p>CZAR</p></div>
+                        <span>
+                            <p>Hasstrup</p>
+                            <div class>
+                              <span>Points</span>
+                              <span>4&nbsp;/&nbsp;5</span>
+                            </div>
+                          </span>
+                      <img src="../img/moses.jpg" alt="" class="circle">
+                    </li>
+                    <li class="collection-item avatar czar">
+                        <div class="czar-title"><p>CZAR</p></div>
+                        <span>
+                            <p>Ben</p>
+                            <div class>
+                              <span>Points</span>
+                              <span>4&nbsp;/&nbsp;5</span>
+                            </div>
+                          </span>
+                      <img src="../img/moses.jpg" alt="" class="circle">
+                    </li>
+                    <li class="collection-item avatar">
+                        <div class="czar-title"><p>CZAR</p></div>
+                        <span>
+                            <p>Dika</p>
+                            <div class>
+                              <span>Points</span>
+                              <span>4&nbsp;/&nbsp;5</span>
+                            </div>
+                          </span>
+                      <img src="../img/moses.jpg" alt="" class="circle">
+                    </li>
+                    <li class="collection-item avatar">
+                        <div class="czar-title"><p>CZAR</p></div>
+                        <span>
+                            <p>IK</p>
+                            <div class>
+                              <span>Points</span>
+                              <span>4&nbsp;/&nbsp;5</span>
+                            </div>
+                          </span>
+                      <img src="../img/moses.jpg" alt="" class="circle">
+                    </li>
+                    <li class="collection-item avatar">
+                        <div class="czar-title"><p>CZAR</p></div>
+                        <span>
+                            <p>Nkem</p>
+                            <div class>
+                              <span>Points</span>
+                              <span>4&nbsp;/&nbsp;5</span>
+                            </div>
+                          </span>
+                      <img src="../img/moses.jpg" alt="" class="circle">
+                    </li>
+                    <li class="collection-item avatar">
+                        <div class="czar-title"><p>CZAR</p></div>
+                        <span>
+                            <p>Iveren</p>
+                            <div class>
+                              <span>Points</span>
+                              <span>4&nbsp;/&nbsp;5</span>
+                            </div>
+                          </span>
+                        <img src="../img/moses.jpg" alt="" class="circle">
+                      </li>
+                      <li class="collection-item avatar">
+                          <div class="czar-title"><p>CZAR</p></div>
+                          <span>
+                              <p>Stephen</p>
+                              <div class>
+                                <span>Points</span>
+                                <span>4&nbsp;/&nbsp;5</span>
+                              </div>
+                            </span>
+                          <img src="../img/moses.jpg" alt="" class="circle">
+                        </li>
+                        <li class="collection-item avatar">
+                            <div class="czar-title"><p>CZAR</p></div>
+                            <span>
+                                <p>Ogooluwa</p>
+                                <div class>
+                                  <span>Points</span>
+                                  <span>4&nbsp;/&nbsp;5</span>
+                                </div>
+                              </span>
+                            <img src="../img/moses.jpg" alt="" class="circle">
+                          </li>
+                          <li class="collection-item avatar">
+                              <div class="czar-title"><p>CZAR</p></div>
+                              <span>
+                                  <p>Jacob</p>
+                                  <div class>
+                                    <span>Points</span>
+                                    <span>4&nbsp;/&nbsp;5</span>
+                                  </div>
+                                </span>
+                              <img src="../img/moses.jpg" alt="" class="circle">
+                            </li>
+                            <li class="collection-item avatar">
+                                <div class="czar-title"><p>CZAR</p></div>
+                                <span>
+                                    <p>Femi</p>
+                                    <div class>
+                                      <span>Points</span>
+                                      <span>4&nbsp;/&nbsp;5</span>
+                                    </div>
+                                  </span>
+                                <img src="../img/moses.jpg" alt="" class="circle">
+                              </li>
+                              <li class="collection-item avatar">
+                                  <div class="czar-title"><p>CZAR</p></div>
+                                  <span>
+                                      <p>Otse</p>
+                                      <div class>
+                                        <span>Points</span>
+                                        <span>4&nbsp;/&nbsp;5</span>
+                                      </div>
+                                    </span>
+                                  <img src="../img/moses.jpg" alt="" class="circle">
+                                </li>
+                  </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <p class="text-center">This game is based on the <span class="footer-text">Card Against Humanity</span> card game, which is CC licensed (BY-NC-SA). Cards For Humanity is not affiliated with Cards Against Humanity.</p>
+        </div>
+      </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  <script src="../js/gamepage.js"></script>
+</body>
+</html>
