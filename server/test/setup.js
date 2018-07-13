@@ -61,4 +61,21 @@ export const users = [{
   gamesWon: 3
 }];
 
+export const games = [{
+  _id: '5b3e284eb7f9946a637b9932',
+  gameId: 3245,
+  winner: 'test1',
+  players: ['test', 'test2', 'myName006'],
+  rounds: 5,
+  datePlayed: '2018-07-10T13:59:56.064Z'
+},
+{
+  _id: '5b3e284eb7f9946b637b9932',
+  gameId: 3246,
+  winner: 'test4',
+  players: ['test', 'test2', 'myName006'],
+  rounds: 8,
+  datePlayed: '2018-07-10T13:59:57.064Z'
+}];
+
 export default { tokens };

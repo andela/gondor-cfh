@@ -39,31 +39,33 @@
                   <li><a href="#!/app">Join Game</a></li>
                   <li ng-hide="!showOptions"><a href="#!/profile">Profile</a></li>
                   <li ng-hide="!showOptions"><a ng-click="signout()">Sign Out</a></li>
-                  <li ng-hide="showOptions"><a href="/signup">Sign Up</a></li>
+                  <li ng-hide="showOptions"><a href="#!/signup">Sign Up</a></li>
                   <li><a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="waves-effect waves-light btn donate-btn">Donate Now</a></li>
                 </ul>
               </div>
           </div>
       </div>
-      <ul id="slide-out" class="sidenav">
-          <li>
-            <div class="sidenav-close-div">
-                <a class="sidenav-close"><i class="material-icons">close</i></a>
-            </div>
-          </li>
-          <li>
-            <div class="user-view">
-              <div class="nav-img-div">
-                <img class="nav-user-img" src="{{global.user.avatar}}" />
-              </div>
-              <p>{{global.user.name}}</p>
-            </div>
-          </li>
-          <li><a href="#!/app">Join Game</a></li>
-          <li><a href="#!/signup">Sign Out</a></li>
-          <li class="donate-btn-li"><a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="waves-effect waves-light btn donate-btn">Donate Now</a></li>
-      </ul>
   </nav>
+  <ul id="slide-out" class="sidenav">
+    <li>
+      <div class="sidenav-close-div">
+          <a class="sidenav-close"><i class="material-icons">close</i></a>
+      </div>
+    </li>
+    <li>
+      <div class="user-view" ng-hide="!showOptions">
+        <div class="nav-img-div">
+          <img class="nav-user-img"  src="{{global.user.profileImage}}" />
+        </div>
+        <p>{{global.user.username}}</p>
+      </div>
+    </li>
+    <li><a ng-hide="!showOptions" href="#!/app">Join Game</a></li>
+    <li><a ng-hide="!showOptions" href="#!/profile">Profile</a></li>
+    <li><a ng-hide="!showOptions" ng-click="signout()">Sign Out</a></li>
+    <li ng-hide="showOptions"><a href="#!/signup">Sign Up</a></li>
+    <li class="donate-btn-li"><a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="waves-effect waves-light btn donate-btn">Donate Now</a></li>
+</ul>
   <div class="bottom-section">
     <div class="steps">
       <h1 class="center head-title">How To Play</h1>

@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400|Roboto:300,400,500|Sail");
 .header {
   margin: 0;
-  height: 64px; }
+  height: 64px;
+  z-index: 1000 }
   .header nav {
     background-color: #006989;
     height: 64px;
@@ -106,6 +107,7 @@
 
 .nav-tab {
   display: flex;
+  margin: 0 !important;
   flex-direction: column; }
   .nav-tab i {
     display: none; }
@@ -157,7 +159,57 @@
     flex-grow: 11; }
 
 .tab-content > div {
-  margin: 50px 0; }
+  min-height: 200px !important;
+  overflow-y: scroll;
+  margin: 50px 0;
+}
+.tab-content > div.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-content .games-card-group {
+  display: grid;
+  padding: 40px 25px;
+  grid-gap: 20px;
+  grid-template-columns: repeat(1, minmax(auto, 1fr));
+}
+
+.tab-content .games-card-group .card {
+  max-width: 300px;
+}
+.tab-content .games-card-group .card .card-content p {
+  font-size: 1.2em;
+}
+.tab-content .games-card-group .card .card-content p.winner {
+  color: #EDAE49;
+}
+.tab-content .games-card-group .card .card-content i,
+.tab-content .games-card-group .card .card-reveal i {
+  display: initial;
+}
+.tab-content .games-card-group .card .card-content p.view-players-link {
+  color: #006989;
+  cursor: pointer;
+}
+.tab-content > div.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 700px) {
+  .tab-content .games-card-group {
+    display: grid;
+    padding: 40px 25px;
+    grid-gap: 20px;
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+  }
+}
+
   .tab-content > div table {
     font-size: 1.2em; }
     .tab-content > div table th {
@@ -250,6 +302,33 @@
     font-weight: 300; }
   .footer .footer-text {
     color: #EDAE49; }
+
+.empty-section {
+  font-size: 1.7em;
+  font-weight: 300;
+  color: #333;
+  text-align: center;
+}
+
+.empty-section a {
+  color: #EDAE49;
+}
+
+.empty-section p {
+  padding-bottom: 40px;
+}
+
+.empty-section.no-leaderboard p {
+  padding-bottom: 20px;
+}
+
+.empty-section .btn {
+  background-color: #EDAE49;
+  color: white;
+  font-weight: 400;
+  font-size: 1em;
+  text-transform: none;
+}
 
 body {
   margin: 0;

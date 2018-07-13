@@ -25,7 +25,7 @@ describe('Users API Routes', () => {
     done();
   });
 
-  describe('Post /api/auth/signup', () => {
+  describe('POST /api/auth/signup', () => {
     it('should create user successfully and return token', (done) => {
       chai.request(server.listen())
         .post('/api/auth/signup')
@@ -77,7 +77,7 @@ describe('Users API Routes', () => {
     });
   });
 
-  describe('Post /api/auth/login', () => {
+  describe('POST /api/auth/login', () => {
     // Login user details
     const user = {
       email: 'test@test.com',
@@ -145,7 +145,7 @@ describe('Users API Routes', () => {
     });
   });
 
-  describe('Get /api/profile', () => {
+  describe('GET /api/profile', () => {
     it('should return user profile successfully', (done) => {
       chai.request(server.listen())
         .get('/api/profile')
@@ -175,16 +175,91 @@ describe('Users API Routes', () => {
     });
   });
 
-  describe('Post /api/donations', () => {
+  describe('POST /api/donations', () => {
     it('should add user donation', (done) => {
       chai.request(server.listen())
         .post('/api/donations')
         .set('x-access-token', tokens.goodToken)
-        .send({ date: 'June 3, 2019' })
+        .send({ amount: '5' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.success).to.equal(true);
           expect(res.body.message).to.equal('Donation Successful');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should return amount is required error when amount is not passed', (done) => {
+      chai.request(server.listen())
+        .post('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .send()
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.errors.amount).to.equal('Amount must be a number greater than 0');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should return amount is required error when amount is not a number', (done) => {
+      chai.request(server.listen())
+        .post('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .send({ amount: 'hdidio' })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.errors.amount).to.equal('Amount must be a number');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should return amount is required error when amount is 0', (done) => {
+      chai.request(server.listen())
+        .post('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .send({ amount: 0 })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.errors.amount).to.equal('Amount must be a number greater than 0');
+
+          if (err) done(err);
+          done();
+        });
+    });
+
+    it('should return amount is required error when amount is negative', (done) => {
+      chai.request(server.listen())
+        .post('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .send({ amount: -1 })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.errors.amount).to.equal('Amount must be a number greater than 0');
+
+          if (err) done(err);
+          done();
+        });
+    });
+  });
+  describe('GET /api/donations', () => {
+    it('should get user donation', (done) => {
+      chai.request(server.listen())
+        .get('/api/donations')
+        .set('x-access-token', tokens.goodToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.success).to.equal(true);
+          expect(res.body.user.donations[0].amount).to.equal(5);
 
           if (err) done(err);
           done();
@@ -208,9 +283,9 @@ describe('Search users <GET /api/search/users>', () => {
     password: 'password'
   };
   const user3 = {
-    name: 'Full name0',
+    name: 'Full name2',
     email: 'test0@test.com',
-    username: 'user0',
+    username: 'user2',
     password: 'password'
   };
   before((done) => {
