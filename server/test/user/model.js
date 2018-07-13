@@ -5,14 +5,20 @@ import should from 'should';
 import { expect } from 'chai';
 import mongoose from 'mongoose';
 import User from '../../src/models/user';
+import { cleanCollection } from '../setup';
 import '../../src/index';
 
 
 // Globals
 let user;
 
+
 // The tests
-describe('<Unit Test User Model>', () => {
+describe('User model', () => {
+  before((done) => {
+    cleanCollection('users', done);
+  });
+
   describe('Validation', () => {
     it('should return validation error if any field is blank', (done) => {
       user = new User({
@@ -125,8 +131,6 @@ describe('<Unit Test User Model>', () => {
     });
   });
 
-  after(done => done());
-
   describe('Method Save', () => {
     before((done) => {
       user = new User({
@@ -151,9 +155,9 @@ describe('<Unit Test User Model>', () => {
         });
       });
     });
-
-    after(done => done());
   });
 
-  after(done => done());
+  after((done) => {
+    cleanCollection('users', done);
+  });
 });

@@ -1,21 +1,17 @@
-import mongoose from 'mongoose';
+/* eslint-disable no-unused-vars, no-use-before-define, no-shadow */
+import consoleStamp from 'console-stamp';
+import shortId from 'shortid';
 import Game from './game';
 import Player from './player';
 import Questions from '../models/question';
 import { avatars } from '../controllers/avatars.js';
+import User from '../models/user';
 
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-shadow */
+consoleStamp(console, 'm/dd HH:MM:ss');
 
-require('console-stamp')(console, 'm/dd HH:MM:ss');
-
-const User = mongoose.model('User');
 const link = '';
-// Valid characters to use to generate random private game IDs
-const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
 
-module.exports = (io) => {
+export default (io) => {
   let game;
   const allGames = {};
   const allPlayers = {};
@@ -260,24 +256,13 @@ module.exports = (io) => {
   };
 
   const createGameWithFriends = (player, socket) => {
-    let isUniqueRoom = false;
-    let uniqueRoom = '';
-    // Generate a random 6-character game ID
-    while (!isUniqueRoom) {
-      uniqueRoom = '';
-      /* eslint-disable no-plusplus */
-      for (let i = 0; i < 6; i++) {
-        uniqueRoom += chars[Math.floor(Math.random() * chars.length)];
-      }
-      if (!allGames[uniqueRoom] && !(/^\d+$/).test(uniqueRoom)) {
-        isUniqueRoom = true;
-      }
-    }
-    // console.log(socket.id, 'has created unique game', uniqueRoom);
-    const game = new Game(uniqueRoom, io);
+    const newGameId = shortId.generate();
+
+    // console.log(socket.id, 'has created unique game', newGameId);
+    const game = new Game(newGameId, io);
     allPlayers[socket.id] = true;
     game.players.push(player);
-    allGames[uniqueRoom] = game;
+    allGames[newGameId] = game;
     socket.join(game.gameID);
     socket.gameID = game.gameID;
     game.assignPlayerColors();

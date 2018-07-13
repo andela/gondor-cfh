@@ -85,10 +85,9 @@ angular.module('mean.system')
 
         $scope.donate = function () {
           var now = new Date();
+          const currentMonth = now.toLocaleString('en-us', { month: 'long' });
           var donation = {
-            date: monthList[now.getMonth()] + ' '
-            + now.getDate() + ', ' + now.getFullYear(),
-            amount: 5
+            date: `${currentMonth} ${now.getDate()}, ${now.getFullYear()}`
           };
 
           DonationService.donate(donation).then(function (success) {

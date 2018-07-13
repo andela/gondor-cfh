@@ -23,14 +23,7 @@
     "merge:lcov": "cat ./coverage/*/lcov.info > ./coverage/lcov.info",
     "coverage": "npm run merge:lcov && cat ./coverage/lcov.info | coveralls",
     "heroku-postbuild": "npm run build",
-    "migrate": "cross-env NODE_ENV=development ./node_modules/.bin/migrate-mongo up",
-    "migrate:test": "cross-env NODE_ENV=test ./node_modules/.bin/migrate-mongo up",
-    "migrate:staging": "cross-env NODE_ENV=staging ./node_modules/.bin/migrate-mongo up",
-    "migrate:prod": "cross-env NODE_ENV=production ./node_modules/.bin/migrate-mongo up",
-    "migrate:down": "cross-env NODE_ENV=development ./node_modules/.bin/migrate-mongo down",
-    "migrate:test-down": "cross-env NODE_ENV=test ./node_modules/.bin/migrate-mongo down",
-    "migrate:staging-down": "cross-env NODE_ENV=staging ./node_modules/.bin/migrate-mongo down",
-    "migrate:prod-down": "cross-env NODE_ENV=production ./node_modules/.bin/migrate-mongo down"
+    "migrate": "migrate-mongo up"
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -48,6 +41,7 @@
     "jade": "^0.35.0",
     "jsonwebtoken": "^8.3.0",
     "karma-babel-preprocessor": "^7.0.0",
+    "lodash": "^4.17.10",
     "mean-logger": "^0.0.1",
     "migrate-mongo": "^3.0.2",
     "mongoose": "4.13.14",
@@ -59,6 +53,7 @@
     "passport-google-oauth": "^0.1.5",
     "passport-local": "^0.1.6",
     "passport-twitter": "^1.0.2",
+    "shortid": "^2.2.11",
     "sinon": "^1.17.7",
     "socket.io": "^0.9.16",
     "socket.io-client": "^0.9.16",
@@ -69,6 +64,7 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",

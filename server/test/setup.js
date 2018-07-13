@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -77,5 +78,17 @@ export const games = [{
   rounds: 8,
   datePlayed: '2018-07-10T13:59:57.064Z'
 }];
+
+/**
+ * This deletes all entries in a collection
+ *
+ * @param {string} collectionName Name of the collection
+ * @param {Function} done Mocha done function
+ */
+export const cleanCollection = (collectionName, done) => {
+  mongoose.connection.collections[collectionName].remove({})
+    .then(() => done())
+    .catch(done);
+};
 
 export default { tokens };

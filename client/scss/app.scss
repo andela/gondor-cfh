@@ -22,3 +22,23 @@
     width: 350px;
   }
 }
+
+
+#new-round-modal {
+  text-align: center;
+
+  .round-winner-msg {
+    font-size: 27px;
+    font-weight: bold;
+  }
+
+  .countdown {
+    font-size: 24px;
+
+    .timer{
+      font-weight: bold;
+      font-size: 35px;
+      color: #065067e0;
+    }
+  }
+}

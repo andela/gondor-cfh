@@ -4,23 +4,15 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
 import server from '../../src/index';
-import { tokens, users, games } from '../setup';
+import { tokens, users, games, cleanCollection } from '../setup';
 
 chai.use(chaiHttp);
 
 describe('Games API Routes', () => {
   before((done) => {
-    mongoose.connection.collections.users.insertMany(users).then(() => {
-      done();
-    }).catch(done);
-  });
-
-  after((done) => {
-    mongoose.connection.collections.users.drop((err) => {
-      if (err) return done(err);
-
-      done();
-    });
+    mongoose.connection.collections.users.insertMany(users)
+      .then(() => done())
+      .catch(done);
   });
 
   describe('GET /api/leaderboard', () => {
@@ -29,6 +21,8 @@ describe('Games API Routes', () => {
         .get('/api/leaderboard')
         .set('x-access-token', tokens.goodToken)
         .end((err, res) => {
+          if (err) done(err);
+
           expect(res.status).to.equal(200);
           expect(res.body.success).to.equal(true);
           expect(res.body.players[0].username).to.equal('test2');
@@ -69,9 +63,12 @@ describe('Games API Routes', () => {
           expect(res.body.games[0].gameId).to.equal(3245);
           expect(res.body.games[0].winner).to.equal('test1');
 
-          if (err) done(err);
           done();
         });
     });
+  });
+
+  after((done) => {
+    cleanCollection('users', done);
   });
 });

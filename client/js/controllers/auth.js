@@ -5,7 +5,6 @@ angular.module('mean.system')
     ['$scope', '$http', '$location', 'Upload', 'cloudinary',
       function ($scope, $http, $location, Upload, cloudinary) {
         $scope.submitting = false;
-
         /**
          * signup method to handle signup button click
          * calls server api for authentication
@@ -20,8 +19,10 @@ angular.module('mean.system')
           // check if passwords are the same
           if (password === confirmPassword) {
             $scope.submitting = true;
+            const cloudName = cloudinary.config().cloud_name;
+
             Upload.upload({
-              url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
+              url: `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
               data: {
                 upload_preset: cloudinary.config().upload_preset,
                 file: profilePic

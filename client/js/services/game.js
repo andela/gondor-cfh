@@ -12,6 +12,7 @@ angular.module('mean.system')
         playerIndex: 0,
         winningCard: -1,
         winningCardPlayer: -1,
+        roundWinner: {},
         gameWinner: -1,
         table: [],
         czar: null,
@@ -57,11 +58,11 @@ angular.module('mean.system')
       var timeSetViaUpdate = false;
       var decrementTime = function () {
         if (game.time > 0 && !timeSetViaUpdate) {
-          game.time--;
+          game.time -= 1;
         } else {
           timeSetViaUpdate = false;
         }
-        $timeout(decrementTime, 950);
+        $timeout(decrementTime, 1000);
       };
 
       socket.on('id', function (data) {
@@ -111,6 +112,15 @@ angular.module('mean.system')
           game.time = game.timeLimits.stateJudging - 1;
           timeSetViaUpdate = true;
         } else if (newState && data.state === 'winner has been chosen') {
+          const delayBeforeNewRound = game.timeLimits.stateResults * 1000;
+          /**
+           * Popup a modal before the start of a new round
+           */
+          $('#new-round-modal').modal('open');
+          $timeout(function () {
+            $('#new-round-modal').modal('close');
+          }, delayBeforeNewRound);
+
           game.time = game.timeLimits.stateResults - 1;
           timeSetViaUpdate = true;
         }
@@ -119,6 +129,7 @@ angular.module('mean.system')
         game.round = data.round;
         game.winningCard = data.winningCard;
         game.winningCardPlayer = data.winningCardPlayer;
+        game.roundWinner = data.players[data.winningCardPlayer];
         game.winnerAutopicked = data.winnerAutopicked;
         game.gameWinner = data.gameWinner;
         game.pointLimit = data.pointLimit;
@@ -238,7 +249,7 @@ angular.module('mean.system')
       };
       socket.on('playerFilled', function () {
       // eslint-disable-next-line
-      addToNotificationQueue('A maximum of 12 players have already joined this game');      
+      addToNotificationQueue('A maximum of 12 players have already joined this game');
         playersMax();
       });
       game.successMailNotify = function () {
