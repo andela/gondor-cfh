@@ -81,63 +81,79 @@
                   </li>
                 </ul>
               </div>
-              <div class="tab-content container">
-                <div ng-show="tabIsActive(1)" class="col s12">
-                  <h5 class="text-center games-won">Games Won: <span>{{gamesWon}}</span></h5>
+              <div class="tab-content">
+                <div ng-show="tabIsActive(1)" class="col s12" ng-class="{'empty': gamesPlayed == 0}">
+                  <h5 class="text-center games-won" ng-show="gamesPlayed != 0">Games Won: <span>{{gamesWon}}</span></h5>
                   <br>
-                      <table class="striped">
-                          <thead>
-                            <tr>
-                              <th>Date</th>
-                              <th>Number of Players</th>
-                              <th>Winner</th>
-                            </tr>
-                          </thead>
-                  
-                          <tbody>
-                            <tr ng-repeat="game in gamesPlayed">
-                              <td>{{game.datePlayed}}</td>
-                              <td>{{game.players.length}}</td>
-                              <td>{{game.winner}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
+                  <div class="empty-section no-games-played container" ng-show="gamesPlayed == 0">
+                    Welcome Newbie. <a href="/#!/app">Join a Game</a>
+                  </div>
+                  <div class="games-card-group" ng-show="gamesPlayed != 0">
+                    <div class="card" ng-repeat="game in gamesPlayed">
+                      <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="img/game-page-1.jpg">
+                      </div>
+                      <div class="card-content">
+                        <p class="card-title grey-text text-darken-4">{{game.datePlayed}}</p>
+                        <p class="card-title grey-text text-darken-4">{{game.rounds}} Rounds</p>
+                        <p class="card-title winner"><i class="fas fa-crown"></i> {{game.winner}}</p>
+                        <p class="card-title activator view-players-link">View Players</p>
+                      </div>
+                      <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Players<i class="material-icons right">close</i></span>
+                        <ul>
+                          <li class="card-title grey-text text-darken-4" ng-repeat="player in game.players">{{player}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div ng-show="tabIsActive(2)" class="col s12">
-                  <table class="striped centered">
-                    <thead>
-                      <tr>
-                          <th>#</th>
-                          <th>User</th>
-                          <th>Games Won</th>
-                      </tr>
-                    </thead>
-            
-                    <tbody>
-                      <tr ng-repeat="user in leaderBoard">
-                        <td>{{$index + 1}}</td>
-                        <td>{{user.username}}</td>
-                        <td>{{user.gamesWon}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div ng-show="tabIsActive(3)" class="col s12">
-                  <table class="striped centered">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Date</th>
-                      </tr>
-                    </thead>
-            
-                    <tbody>
-                        <tr ng-repeat="donation in donations">
-                          <td>{{$index + 1}}</td>
-                          <td>{{donation.date}}</td>
+                <div ng-show="tabIsActive(2)" class="col s12" ng-class="{'empty': leaderBoard == 0}">
+                  <div class="empty-section no-leaderboard  container" ng-show="leaderBoard == 0">
+                    <p>Nothing for you here.</p> <a href="/#!/app">Invite Friends</a>
+                  </div>
+                  <div class="container">
+                    <table class="striped centered" ng-show="leaderBoard != 0">
+                      <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Games Won</th>
                         </tr>
-                    </tbody>
-                  </table>
+                      </thead>
+              
+                      <tbody>
+                        <tr ng-repeat="user in leaderBoard">
+                          <td>{{$index + 1}}</td>
+                          <td>{{user.username}}</td>
+                          <td>{{user.gamesWon}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div ng-show="tabIsActive(3)" class="col s12" ng-class="{'empty': donations == 0}">
+                  <div class="empty-section no-donations container" ng-show="donations == 0">
+                    <p>No Children Fed By You.</p>
+                    <a class="waves-effect waves-light btn btn-large donate-btn" ng-click="donate()">Donate Now</a>
+                  </div>
+                  <div class="container">
+                    <table class="striped centered" ng-show="donations != 0">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Date</th>
+                        </tr>
+                      </thead>
+              
+                      <tbody>
+                          <tr ng-repeat="donation in donations">
+                            <td>{{$index + 1}}</td>
+                            <td>{{donation.date}}</td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

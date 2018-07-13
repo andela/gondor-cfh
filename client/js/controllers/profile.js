@@ -5,22 +5,45 @@ object-shorthand: 0, vars-on-top: 0, prefer-template: 0, max-len: 0 */
 angular.module('mean.system')
   .controller(
     'ProfileController',
-    ['$scope', '$location', 'Global', 'LeaderboardService', 'DonationService',
-      function ($scope, $location, Global, LeaderboardService, DonationService) {
+    ['$scope', '$location', '$window', 'Global', 'LeaderboardService', 'DonationService', 'GamesService',
+      function ($scope, $location, $window, Global, LeaderboardService, DonationService, GamesService) {
+        const monthList = [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
         Global.getUser().then(function (authUser) {
           if (!authUser.user) {
             return $location.path('#!/');
           }
 
           $scope.global = authUser;
-          $scope.gamesPlayed = authUser.user.gamesPlayed;
-          $scope.gamesPlayedCount = authUser.user.gamesPlayed.length;
           $scope.gamesWon = authUser.user.gamesWon;
-          $scope.donations = authUser.user.donations;
-          $scope.donationCount = authUser.user.donations.length;
+
+          GamesService.getHistory().then(function (response) {
+            $scope.gamesPlayed = response.games.map((item) => {
+              const date = new Date(item.createdAt);
+              item.datePlayed = monthList[date.getMonth()] + ' '
+              + date.getDate() + ', ' + date.getFullYear();
+
+              return item;
+            });
+            $scope.gamesPlayedCount = response.games.length;
+          });
 
           LeaderboardService.getLeaderboard().then(function (leaderBoard) {
-            $scope.leaderBoard = leaderBoard.users;
+            $scope.leaderBoard = leaderBoard.players;
+          });
+
+          DonationService.getDonations().then(function (response) {
+            $scope.donations = response.user.donations.map((item) => {
+              const date = new Date(item.date);
+              item.date = monthList[date.getMonth()] + ' '
+              + date.getDate() + ', ' + date.getFullYear();
+
+              return item;
+            });
+            $scope.donationCount = response.user.donations.length;
           });
         });
 
@@ -57,24 +80,21 @@ angular.module('mean.system')
         };
 
         $scope.checkLength = function (number) {
-          return number > 1;
+          return number > 1 || number === 0;
         };
 
         $scope.donate = function () {
-          const monthList = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-          ];
           var now = new Date();
           var donation = {
             date: monthList[now.getMonth()] + ' '
-            + now.getDate() + ', ' + now.getFullYear()
+            + now.getDate() + ', ' + now.getFullYear(),
+            amount: 5
           };
 
-          DonationService.userDonated(donation).then(function (success) {
+          DonationService.donate(donation).then(function (success) {
             $scope.donations.push(donation);
             $scope.donationCount += 1;
-            M.toast({ html: '<p>Thanks for donating.</p>', displayLength: 2000, classes: 'cfh-toast' });
+            $window.location.href = 'https://www.crowdrise.com/cfhio/fundraiser/cards4humanity';
           });
         };
       }]

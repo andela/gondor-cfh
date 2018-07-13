@@ -3,8 +3,8 @@ import UsersController from '../controllers/users';
 import UsersApiController from '../controllers/api/users';
 import MailController from '../controllers/api/mail';
 import QuestionsController from '../controllers/questions';
-import GameController from '../controllers/api/game';
 import ErrorHandler from '../middlewares/errorHandler';
+import Validations from '../middlewares/validation';
 import { authenticate as Authenticate } from '../middlewares/authorization';
 import GamesController from '../controllers/api/games';
 
@@ -27,13 +27,24 @@ export default (app, passport) => {
     '/api/profile',
     Authenticate, UsersApiController.profile, ErrorHandler
   );
-  app.get('/api/leaderboard', GamesController.leaderboard, ErrorHandler);
+  app.get(
+    '/api/leaderboard',
+    Authenticate, GamesController.leaderboard, ErrorHandler
+  );
+  app.get(
+    '/api/games/history',
+    Authenticate, GamesController.history, ErrorHandler
+  );
 
   // Game routes
-  app.post('/api/games/save', Authenticate, GameController.saveGame);
+  app.post('/api/games/save', Authenticate, GamesController.saveGame);
 
   // Donation Routes
-  app.post('/api/donations', Authenticate, UsersApiController.addDonation);
+  app.get('/api/donations', Authenticate, UsersApiController.getDonations);
+  app.post(
+    '/api/donations',
+    Authenticate, Validations.validateDonation, UsersApiController.addDonation
+  );
   app.post('/donations', UsersController.addDonation);
 
   app.post('/users/session', passport.authenticate('local', {

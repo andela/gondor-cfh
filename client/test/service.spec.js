@@ -16,8 +16,6 @@ describe('Service', function () {
       });
 
       $scope = $rootScope.$new();
-
-      spyOn(global, 'getUser').and.callThrough();
     });
 
     it('exists', function () {
@@ -25,22 +23,22 @@ describe('Service', function () {
       expect(typeof global.getUser).toEqual('function');
     });
 
-    it('returns a user', function () {
-      httpBackend.whenGET('/api/profile').respond(200, user);
+    it('returns data when getUser() method is successful', function () {
+      httpBackend.whenGET('/api/profile').respond(200, { user });
 
       global.getUser().then(function (response) {
-        httpBackend.flush();
-        expect(response.data.user.username).to.equal('test');
+        expect(response.user.username).toEqual('test');
       });
+      httpBackend.flush();
     });
 
-    it('returns error', function () {
+    it('returns error when getUser() method is unsuccessful', function () {
       httpBackend.whenGET('/api/profile').respond(401, { message: 'error' });
 
       global.getUser().then(function (response) {
-        httpBackend.flush();
-        expect(response.data.message).to.equal('error');
+        expect(response.user).toEqual(null);
       });
+      httpBackend.flush();
     });
   });
 
@@ -58,8 +56,6 @@ describe('Service', function () {
       });
 
       $scope = $rootScope.$new();
-
-      spyOn(leaderboard, 'getLeaderboard').and.callThrough();
     });
 
     it('exists', function () {
@@ -67,24 +63,25 @@ describe('Service', function () {
       expect(typeof leaderboard.getLeaderboard).toEqual('function');
     });
 
-    it('returns data', function () {
+    it('returns data when getLeaderboard() method is successful', function () {
       httpBackend.whenGET('/api/leaderboard').respond(200, { check: 'test' });
 
       leaderboard.getLeaderboard().then(function (response) {
-        httpBackend.flush();
-        expect(response.data.check).to.equal('test');
+        expect(response.check).toEqual('test');
       });
+      httpBackend.flush();
     });
 
-    it('returns error', function () {
-      httpBackend
-        .whenGET('/api/leaderboard').respond(401, { message: 'error' });
+    it('returns error when getLeaderboard() method is unsuccessful',
+      function () {
+        httpBackend
+          .whenGET('/api/leaderboard').respond(401, { players: [] });
 
-      leaderboard.getLeaderboard().then(function (response) {
+        leaderboard.getLeaderboard().then(function (response) {
+          expect(response.players.length).toEqual(0);
+        });
         httpBackend.flush();
-        expect(response.data.message).to.equal('error');
       });
-    });
   });
 
   describe('Donations', function () {
@@ -101,33 +98,171 @@ describe('Service', function () {
       });
 
       $scope = $rootScope.$new();
+    });
 
-      spyOn(donations, 'userDonated').and.callThrough();
+    it('donate method exists', function () {
+      expect(donations.donate).toBeDefined();
+      expect(typeof donations.donate).toEqual('function');
+    });
+
+    it('getDonations method exists', function () {
+      expect(donations.getDonations).toBeDefined();
+      expect(typeof donations.getDonations).toEqual('function');
+    });
+
+    it('returns data when donate() method is successful', function () {
+      httpBackend
+        .whenPOST('/api/donations').respond(201, { check: 'test' });
+
+      donations.donate().then(function (response) {
+        expect(response.check).toEqual('test');
+      });
+      httpBackend.flush();
+    });
+
+    it('returns data when getDonations() method is successful', function () {
+      httpBackend
+        .whenGET('/api/donations').respond(200, { check: 'test' });
+
+      donations.getDonations().then(function (response) {
+        expect(response.check).toEqual('test');
+      });
+      httpBackend.flush();
+    });
+
+    it('returns error when donate() method is unsuccessful', function () {
+      httpBackend
+        .whenPOST('/api/donations').respond(401, { message: 'error' });
+
+      donations.donate().then(function (response) {
+        expect(response.message).toEqual('Something Happened');
+      });
+      httpBackend.flush();
+    });
+
+    it('returns error when donate() method is unsuccessful', function () {
+      httpBackend
+        .whenGET('/api/donations').respond(401, {
+          user: {
+            donations: []
+          }
+        });
+
+      donations.getDonations().then(function (response) {
+        expect(response.user.donations.length).toEqual(0);
+      });
+      httpBackend.flush();
+    });
+  });
+
+  describe('Games', function () {
+    var $rootScope, $scope, httpBackend, games;
+
+    beforeEach(function () {
+      module('mean.system');
+
+      inject(function (_$rootScope_, _$httpBackend_, _$http_, $injector) {
+        games = $injector.get('GamesService');
+        $rootScope = _$rootScope_;
+        $http = _$http_;
+        httpBackend = _$httpBackend_;
+      });
+
+      $scope = $rootScope.$new();
     });
 
     it('exists', function () {
-      expect(donations.userDonated).toBeDefined();
-      expect(typeof donations.userDonated).toEqual('function');
+      expect(games.getHistory).toBeDefined();
+      expect(typeof games.getHistory).toEqual('function');
     });
 
-    it('returns data', function () {
+    it('returns data when getHistory() method is successful', function () {
       httpBackend
-        .whenGET('/api/leaderboard').respond(200, { check: 'test' });
+        .whenGET('/api/games/history').respond(200, { check: 'test' });
 
-      donations.userDonated().then(function (response) {
-        httpBackend.flush();
-        expect(response.data.check).to.equal('test');
+      games.getHistory().then(function (response) {
+        expect(response.check).toEqual('test');
       });
+      httpBackend.flush();
     });
 
-    it('returns error', function () {
+    it('returns error when getHistory() method is unsuccessful', function () {
       httpBackend
-        .whenGET('/api/leaderboard').respond(401, { message: 'error' });
+        .whenGET('/api/games/history').respond(401, { games: [] });
 
-      donations.userDonated().then(function (response) {
-        httpBackend.flush();
-        expect(response.data.message).to.equal('error');
+      games.getHistory().then(function (response) {
+        expect(response.games.length).toEqual(0);
       });
+      httpBackend.flush();
     });
+  });
+
+  describe('Avatar', function () {
+    var $rootScope, $scope, httpBackend, avatars;
+
+    beforeEach(function () {
+      module('mean.system');
+
+      inject(function (_$rootScope_, _$httpBackend_, _$http_, $injector) {
+        avatars = $injector.get('AvatarService');
+        $rootScope = _$rootScope_;
+        $http = _$http_;
+        httpBackend = _$httpBackend_;
+      });
+
+      $scope = $rootScope.$new();
+    });
+
+    it('exists', function () {
+      expect(avatars.getAvatars).toBeDefined();
+      expect(typeof avatars.getAvatars).toEqual('function');
+    });
+
+    it('returns data when getAvatars() method is successful', function () {
+      httpBackend
+        .whenGET('/avatars').respond(200, { check: 'test' });
+
+      avatars.getAvatars().then(function (response) {
+        expect(response.check).toEqual('test');
+      });
+      httpBackend.flush();
+    });
+
+    it('returns error when getAvatars() method is unsuccessful', function () {
+      httpBackend
+        .whenGET('/avatars').respond(401, { avatars: [] });
+
+      avatars.getAvatars().then(function (response) {
+        expect(response.avatars).toEqual([]);
+      });
+      httpBackend.flush();
+    });
+  });
+
+  describe('MakeAWishFacts', function () {
+    var $rootScope, $scope, httpBackend, facts;
+
+    beforeEach(function () {
+      module('mean.system');
+
+      inject(function (_$rootScope_, $injector) {
+        facts = $injector.get('MakeAWishFactsService');
+        $rootScope = _$rootScope_;
+      });
+
+      $scope = $rootScope.$new();
+    });
+
+    it('exists', function () {
+      expect(facts.getMakeAWishFacts).toBeDefined();
+      expect(typeof facts.getMakeAWishFacts).toEqual('function');
+    });
+
+    it('returns data when getMakeAWishFacts() method is successful',
+      function () {
+        const factList = facts.getMakeAWishFacts();
+
+        expect(factList.length).toEqual(24);
+      });
   });
 });

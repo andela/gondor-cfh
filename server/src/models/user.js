@@ -35,7 +35,13 @@ const UserSchema = new Schema({
   provider: String,
   avatar: String,
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)
-  donations: [],
+  donations: [{
+    amount: Number,
+    date: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   hashedPassword: {
     type: String,
     required: [true, 'Password is required']
@@ -48,7 +54,7 @@ const UserSchema = new Schema({
     type: Number,
     default: 0
   },
-});
+}, { timestamps: true });
 
 /**
  * Virtuals

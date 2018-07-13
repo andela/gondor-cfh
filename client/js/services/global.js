@@ -29,9 +29,39 @@ angular.module('mean.system')
   .factory('LeaderboardService', ['$http', function ($http) {
     return {
       getLeaderboard: function () {
-        return $http.get('/api/leaderboard')
+        return $http({
+          url: '/api/leaderboard',
+          method: 'GET',
+          headers: {
+            'x-access-token': localStorage.getItem('token')
+          }
+        })
           .then(function (response) {
             return response.data;
+          }, function (err) {
+            return {
+              players: []
+            };
+          });
+      }
+    };
+  }])
+  .factory('GamesService', ['$http', function ($http) {
+    return {
+      getHistory: function () {
+        return $http({
+          url: '/api/games/history',
+          method: 'GET',
+          headers: {
+            'x-access-token': localStorage.getItem('token')
+          }
+        })
+          .then(function (response) {
+            return response.data;
+          }, function (err) {
+            return {
+              games: []
+            };
           });
       }
     };
@@ -39,18 +69,20 @@ angular.module('mean.system')
   .factory('AvatarService', ['$http', '$q', function ($http, $q) {
     return {
       getAvatars: function () {
-        return $q.all([
-          $http.get('/avatars')
-        ])
-          .then(function (results) {
-            return results[0].data;
+        return $http.get('/avatars')
+          .then(function (response) {
+            return response.data;
+          }, function (err) {
+            return {
+              avatars: []
+            };
           });
       }
     };
   }])
   .factory('DonationService', ['$http', function ($http) {
     return {
-      userDonated: function (donationObject) {
+      donate: function (donationObject) {
         return $http({
           url: '/api/donations',
           method: 'POST',
@@ -60,6 +92,28 @@ angular.module('mean.system')
           data: donationObject
         }).then(function (response) {
           return response.data;
+        }, function (err) {
+          return {
+            message: 'Something Happened'
+          };
+        });
+      },
+      getDonations: function (donationObject) {
+        return $http({
+          url: '/api/donations',
+          method: 'GET',
+          headers: {
+            'x-access-token': localStorage.getItem('token')
+          },
+          data: donationObject
+        }).then(function (response) {
+          return response.data;
+        }, function (err) {
+          return {
+            user: {
+              donations: []
+            }
+          };
         });
       }
     };

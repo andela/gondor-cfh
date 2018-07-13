@@ -5,16 +5,13 @@ object-shorthand: 0, vars-on-top: 0, prefer-template: 0 */
 angular.module('mean.system')
   .controller(
     'IndexController',
-    ['$scope', 'Global', '$location', 'socket',
-      'game', 'AvatarService',
-      function ($scope, Global, $location, socket, game, AvatarService) {
+    ['$scope', 'Global', '$location', 'game',
+      function ($scope, Global, $location, game) {
         Global.getUser().then(function (authUser) {
           $scope.global = authUser;
           $scope.showOptions = authUser && authUser.authenticated;
           const elems = document.querySelectorAll('.slider');
-          const instances = M.Slider.init(elems, {
-            indicators: false
-          });
+          M.Slider.init(elems, { indicators: false });
           $scope.playAsGuest = function () {
             game.joinGame();
             $location.path('/app');
@@ -26,13 +23,9 @@ angular.module('mean.system')
             }
             return false;
           };
-
-          $scope.avatars = [];
-          AvatarService.getAvatars()
-            .then(function (data) {
-              $scope.avatars = data;
-            });
         });
+
+        $('.sidenav').sidenav();
 
         $scope.signout = function () {
           localStorage.removeItem('token');
