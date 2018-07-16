@@ -1,21 +1,89 @@
-<div id="player-container" ng-repeat="player in game.players" style="background-color:{{colors[player.color]}}">
-  <div id ="above-czar-container">
-    <div id="avatar_">
-      <span ng-show="isPremium($index)">
-        <img ng-src="img/king.png" id="king">
-      </span>
-      <img ng-src="{{player.avatar}}"/>
-    </div>
-    <div id="player-container-inner">
-      <div id="player-name"><h4>{{player.username | upperFirstLetter}}</h4></div>
-      <div id="player-score"><h2>{{player.points}}/{{game.pointLimit}}</h2></div>
-      <div ng-show="isPlayer($index)" id="player-star">
-        <img src="../img/11.png"/>
+<!-- your screen  -->
+<div
+  class="current-user-score"
+  ng-hide="game.state === 'game ended' || game.state ==='game dissolved'"
+>
+  <p>Score Board</p>
+  <ul
+    class="collection"
+  >
+    <li
+      ng-class="toggleClassName(isCzar(), 'collection-item avatar', 'collection-item avatar czar')"
+    >
+      <div
+        class="czar-title"
+        ng-show="isCzar()"
+      >
+        <p>CZAR</p>
       </div>
-    </div>
-  </div>
-  <div id="czar-container" ng-show="currentCzar($index)">
-    <span id='the-czar'>CZAR</span>
-  </div>
+      <span>
+        <p>You</p>
+        <div>
+          <span>Points</span>
+          <span>{{currentPlayer().points}}&nbsp;/&nbsp;{{game.pointLimit}}</span>
+        </div>
+      </span>
+
+      <img ng-src="{{currentPlayer().avatar}}" alt="" class="circle">
+    </li>
+  </ul>
+</div>
+
+<!-- when game ends or dissoves -->
+<div
+  class="current-user-score"
+  ng-show="game.state === 'game ended' || game.state ==='game dissolved'"
+>
+  <p>Score Board</p>
+  <ul
+    class="collection"
+  >
+    <li class="collection-item avatar">
+      <div
+        class="czar-title"
+        style=" display: none"
+      >
+        <p>CZAR</p>
+      </div>
+      <span>
+        <p>You</p>
+        <div>
+          <span>Points</span>
+          <span>{{currentPlayer().points}}&nbsp;/&nbsp;{{game.pointLimit}}</span>
+        </div>
+      </span>
+
+      <img ng-src="{{currentPlayer().avatar}}" alt="" class="circle">
+    </li>
+  </ul>
+</div>
+
+<!-- player screen -->
+<div
+  class="players-score"
+  ng-hide="game.state === 'game ended' || game.state ==='game dissolved'"
+>
+  <ul class="collection">
+    <li
+      ng-repeat="player in game.players"
+      ng-class="toggleClassName(currentCzar($index), 'collection-item avatar', 'collection-item avatar czar')"
+      ng-hide="isPlayer($index)"
+    >
+      <div
+        class="czar-title"
+        ng-show="currentCzar($index)"
+      >
+        <p>CZAR</p>
+      </div>
+      <span>
+        <p>{{player.username}}</p>
+        <div>
+          <span>Points</span>
+          <span>{{player.points}}&nbsp;/&nbsp;{{game.pointLimit}}</span>
+        </div>
+      </span>
+      <img ng-src="{{player.avatar}}" alt="" class="circle">
+    </li>
+  </ul>
 </div>
 

@@ -161,4 +161,4 @@ angular.module('mean.system')
       }
     };
   }]);
-  
+

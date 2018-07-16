@@ -1,10 +1,9 @@
 /* eslint prefer-arrow-callback: 0, func-names: 0, no-undef: 0 */
 /* eslint vars-on-top: 0, no-var: 0, object-shorthand: 0, no-plusplus: 0 */
 /* eslint no-unused-vars: 0 */
-
 angular.module('mean.system')
-  .factory('game', ['socket', '$timeout', '$http',
-    function (socket, $timeout, $http) {
+  .factory('game', ['socket', '$timeout', '$http', 'Global',
+    function (socket, $timeout, $http, Global) {
       var game = {
         id: null, // This player's socket ID, so we know who this player is
         gameID: null,
@@ -16,7 +15,7 @@ angular.module('mean.system')
         gameWinner: -1,
         table: [],
         czar: null,
-        playerMinLimit: 3,
+        playerMinLimit: 6,
         playerMaxLimit: 12,
         pointLimit: null,
         state: null,
@@ -227,19 +226,22 @@ angular.module('mean.system')
         room = room || '';
         region = region || '';
         createPrivate = createPrivate || false;
-        var userID = window.user ? user._id : 'unauthenticated';
-        socket.emit(mode,
-          {
-            userID: userID,
-            room: room,
-            createPrivate: createPrivate,
-            region: region
-          }
-        );
+
+        Global.getUser().then(function (authUser) {
+          var userID = authUser.user ? authUser.user._id : 'unauthenticated';
+          socket.emit(mode,
+            {
+              userID: userID,
+              room: room,
+              createPrivate: createPrivate,
+              region: region
+            }
+          );
+        });
       };
       var playersMin = function () {
       // eslint-disable-next-line
-      game.errorPlayerMin = 'To play the game, there must be at least 3 players';
+      game.errorPlayerMin = 'To play the game, there must be at least 6 players';
         $timeout(function () { game.errorPlayerMin = ''; }, 3000);
       };
       var playersMax = function () {
@@ -261,14 +263,15 @@ angular.module('mean.system')
         );
         playersMax();
       };
+
       game.getRegions = function () {
         socket.emit('getRegionsFromServer');
       };
 
       game.startGame = function () {
-        if (game.players.length < 3) {
+        if (game.players.length < 6) {
           addToNotificationQueue(
-            'To play the game, there must be at least 3 players'
+            'To play the game, there must be at least 6 players'
           );
           playersMin();
         }

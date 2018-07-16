@@ -38,31 +38,32 @@ body {
       flex: 1;
       display: flex;
       flex-direction: row;
-      margin-bottom: 20px; }
+      margin-bottom: 20px;
+      justify-content: center;
+      align-items: center; }
       .main .game-content .main-board .interaction-div .timer {
-        flex: 1;
+        border: 10px solid #006989;
+        border-radius: 50%;
+        box-sizing: border-box;
+        box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        height: 200px;
+        width: 200px;
         display: flex;
         justify-content: center;
-        align-items: center; }
-        .main .game-content .main-board .interaction-div .timer > div {
-          border: 10px solid #006989;
-          border-radius: 50%;
-          box-sizing: border-box;
-          box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.1);
-          height: 220px;
-          width: 220px;
-          display: flex;
-          justify-content: center;
-          align-items: center; }
-          .main .game-content .main-board .interaction-div .timer > div p {
-            font-size: 96px;
-            font-weight: 500;
-            color: #EDAE49;
-            -webkit-text-stroke: 3px rgba(0, 0, 0, 0.2); }
+        align-items: center;
+        margin-right: 20px; }
+        .main .game-content .main-board .interaction-div .timer p {
+          font-size: 96px;
+          font-weight: 500;
+          color: #EDAE49;
+          -webkit-text-stroke: 3px rgba(0, 0, 0, 0.2); }
       .main .game-content .main-board .interaction-div .interaction-board {
         flex: 3;
         background-color: white;
-        border-radius: 5px; }
+        border-radius: 5px;
+        padding: 20px;
+        height: 220px;
+        box-sizing: border-box; }
         .main .game-content .main-board .interaction-div .interaction-board .waiting {
           display: flex;
           flex-direction: column;
@@ -71,9 +72,14 @@ body {
           width: 100%;
           height: 100%; }
           .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text {
-            margin-bottom: 50px; }
+            margin-bottom: 20px; }
+            .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text div {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center; }
             .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text p:first-child {
-              font-size: 2.5em;
+              font-size: 1.5em;
               margin-top: 0;
               margin-bottom: 0;
               color: #006989; }
@@ -84,7 +90,7 @@ body {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            padding: 0 50px;
+            padding: 0 20px;
             box-sizing: border-box; }
             .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns .btn {
               width: 150px;
@@ -106,15 +112,26 @@ body {
                   color: white;
                   transition: background-color .3s; }
         .main .game-content .main-board .interaction-div .interaction-board .question {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 100%;
           font-size: 1.5em;
-          padding: 30px;
-          box-sizing: border-box; }
+          color: #333; }
+          .main .game-content .main-board .interaction-div .interaction-board .question u {
+            position: relative;
+            content: '';
+            display: inline-block;
+            width: 25%;
+            text-decoration: none;
+            height: 1em;
+            border-bottom: 0.125em solid #333;
+            margin-bottom: -0.125em; }
+            .main .game-content .main-board .interaction-div .interaction-board .question u .small {
+              width: 25%; }
+            .main .game-content .main-board .interaction-div .interaction-board .question u .big {
+              width: 75%; }
+            .main .game-content .main-board .interaction-div .interaction-board .question u .end:after {
+              position: absolute;
+              right: -0.357em;
+              display: inline-block;
+              content: '.'; }
     .main .game-content .main-board .card-board {
       flex: 2; }
       .main .game-content .main-board .card-board .instructions {
@@ -176,46 +193,56 @@ body {
             position: absolute;
             right: 15px;
             bottom: 0; }
-      .main .game-content .main-board .card-board .cards-board {
-        display: grid;
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-        background-color: rgba(0, 105, 137, 0.8);
-        border-radius: 5px; }
-        .main .game-content .main-board .card-board .cards-board.has-selected .card {
-          opacity: 0; }
-        .main .game-content .main-board .card-board .cards-board.answers {
-          grid-template-columns: repeat(5, 1fr);
-          grid-gap: 1rem; }
-        .main .game-content .main-board .card-board .cards-board.czar-selections {
-          grid-template-columns: repeat(6, 1fr);
-          grid-gap: 1rem; }
-        .main .game-content .main-board .card-board .cards-board .card {
-          background-color: white;
-          color: #333;
-          margin-top: 0;
-          margin-bottom: 0;
-          border-radius: 2px;
-          padding: 15px;
-          position: relative; }
-          .main .game-content .main-board .card-board .cards-board .card:hover {
-            cursor: pointer;
-            box-shadow: 10px 10px 18px -8px #333;
-            transition: box-shadow 0.50s ease-in-out; }
-          .main .game-content .main-board .card-board .cards-board .card .answer {
-            font-size: 1.1em; }
-          .main .game-content .main-board .card-board .cards-board .card .logo {
-            color: #525252;
-            position: absolute;
-            bottom: 5px;
-            left: 15px;
-            font-family: 'Tangerine', cursive; }
-          .main .game-content .main-board .card-board .cards-board .card.selected {
-            opacity: 1; }
-            .main .game-content .main-board .card-board .cards-board .card.selected:hover {
-              box-shadow: initial; }
+      .main .game-content .main-board .card-board .cards {
+        height: 100%; }
+        .main .game-content .main-board .card-board .cards .cards-board {
+          display: grid;
+          width: 100%;
+          height: 100%;
+          padding: 20px;
+          box-sizing: border-box;
+          background-color: rgba(0, 105, 137, 0.8);
+          border-radius: 5px; }
+          .main .game-content .main-board .card-board .cards .cards-board.has-selected .game-card {
+            opacity: 0; }
+          .main .game-content .main-board .card-board .cards .cards-board.answers {
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 1rem; }
+          .main .game-content .main-board .card-board .cards .cards-board.czar-selections {
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 1rem; }
+          .main .game-content .main-board .card-board .cards .cards-board .answer-card-div .game-card {
+            margin-bottom: 20px; }
+            .main .game-content .main-board .card-board .cards .cards-board .answer-card-div .game-card:last-child {
+              margin-bottom: 0; }
+          .main .game-content .main-board .card-board .cards .cards-board .game-card {
+            background-color: white;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 0;
+            border-radius: 2px;
+            box-sizing: border-box;
+            padding: 15px;
+            position: relative;
+            min-width: 100px;
+            max-width: 250px;
+            height: 220px; }
+            .main .game-content .main-board .card-board .cards .cards-board .game-card:hover {
+              cursor: pointer;
+              box-shadow: 10px 10px 18px -8px #333;
+              transition: box-shadow 0.50s ease-in-out; }
+            .main .game-content .main-board .card-board .cards .cards-board .game-card .answer {
+              font-size: 1.1em; }
+            .main .game-content .main-board .card-board .cards .cards-board .game-card .logo {
+              color: #525252;
+              position: absolute;
+              bottom: 5px;
+              left: 15px;
+              font-family: 'Tangerine', cursive; }
+            .main .game-content .main-board .card-board .cards .cards-board .game-card.selected {
+              opacity: 1; }
+              .main .game-content .main-board .card-board .cards .cards-board .game-card.selected:hover {
+                box-shadow: initial; }
       .main .game-content .main-board .card-board .call-to-donate {
         display: flex;
         flex-direction: column;
@@ -364,13 +391,16 @@ body {
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         height: 70px; }
-      .main .game-content .score-board .current-user-score p {
+      .main .game-content .score-board .current-user-score > p {
         text-align: center;
         color: white;
         font-size: 1.3em;
         font-weight: 500;
         margin-top: 0;
         margin-bottom: 10px; }
+      .main .game-content .score-board .current-user-score .czar-title p {
+        padding-left: 7px !important;
+        width: 55px !important; }
     .main .game-content .score-board .players-score {
       background-color: white;
       margin-left: 40px;
@@ -384,20 +414,24 @@ body {
     .main .game-content {
       padding: 0 0 20px;
       flex-direction: column; }
-      .main .game-content .main-board .interaction-div .timer > div {
+      .main .game-content .main-board .interaction-div .timer {
         height: 120px;
         width: 120px; }
-        .main .game-content .main-board .interaction-div .timer > div p {
+        .main .game-content .main-board .interaction-div .timer p {
           font-size: 70px; }
       .main .game-content .main-board .interaction-div .interaction-board {
         flex: 3;
         background-color: white;
-        border-radius: 5px; }
+        border-radius: 5px;
+        height: 140px;
+        justify-content: center; }
         .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text {
-          margin-top: 10px;
+          margin-top: 0;
           margin-bottom: 10px; }
+          .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text img {
+            height: 25px; }
           .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text p:first-child {
-            font-size: 2em; }
+            font-size: 1.2em; }
           .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text p:last-child {
             font-size: 1.2em; }
         .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-btns {
@@ -429,15 +463,7 @@ body {
                 color: #015E7B;
                 transition: background-color .3s; }
         .main .game-content .main-board .interaction-div .interaction-board .question {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 100%;
-          font-size: 1em;
-          padding: 20px;
-          box-sizing: border-box; }
+          font-size: 1em; }
       .main .game-content .main-board .card-board {
         flex: 2; }
         .main .game-content .main-board .card-board .instructions {
@@ -503,45 +529,51 @@ body {
               position: absolute;
               right: 15px;
               bottom: 0; }
-        .main .game-content .main-board .card-board .cards-board {
-          display: grid;
-          width: 100%;
-          height: 100%;
-          padding: 20px;
-          box-sizing: border-box;
-          background-color: rgba(0, 105, 137, 0.8);
-          border-radius: 5px; }
-          .main .game-content .main-board .card-board .cards-board.has-selected .card {
-            opacity: 0; }
-          .main .game-content .main-board .card-board .cards-board.answers {
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 1rem; }
-          .main .game-content .main-board .card-board .cards-board.czar-selections {
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 1rem; }
-          .main .game-content .main-board .card-board .cards-board .card {
-            background-color: white;
-            color: #333;
-            margin-top: 0;
-            margin-bottom: 0;
-            border-radius: 2px;
-            padding: 10px;
-            position: relative; }
-            .main .game-content .main-board .card-board .cards-board .card:hover {
-              cursor: pointer;
-              box-shadow: 10px 10px 18px -8px #333;
-              transition: box-shadow 0.50s ease-in-out; }
-            .main .game-content .main-board .card-board .cards-board .card .answer {
-              font-size: 0.9em;
-              margin-bottom: 5px; }
-            .main .game-content .main-board .card-board .cards-board .card .logo {
-              bottom: 5px;
-              left: 10px;
-              font-size: 0.5em; }
-            .main .game-content .main-board .card-board .cards-board .card.selected {
-              opacity: 1; }
-              .main .game-content .main-board .card-board .cards-board .card.selected:hover {
-                box-shadow: initial; }
+        .main .game-content .main-board .card-board .cards {
+          height: 100%; }
+          .main .game-content .main-board .card-board .cards .cards-board {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgba(0, 105, 137, 0.8);
+            border-radius: 5px; }
+            .main .game-content .main-board .card-board .cards .cards-board.has-selected .card {
+              opacity: 0; }
+            .main .game-content .main-board .card-board .cards .cards-board.answers {
+              grid-template-columns: repeat(3, 1fr);
+              grid-gap: 1rem; }
+            .main .game-content .main-board .card-board .cards .cards-board.czar-selections {
+              grid-template-columns: repeat(3, 1fr);
+              grid-gap: 1rem; }
+            .main .game-content .main-board .card-board .cards .cards-board .answer-card-div .game-card {
+              margin-bottom: 10px; }
+              .main .game-content .main-board .card-board .cards .cards-board .answer-card-div .game-card:last-child {
+                margin-bottom: 0; }
+            .main .game-content .main-board .card-board .cards .cards-board .game-card {
+              background-color: white;
+              color: #333;
+              margin-top: 0;
+              margin-bottom: 0;
+              border-radius: 2px;
+              padding: 10px;
+              position: relative; }
+              .main .game-content .main-board .card-board .cards .cards-board .game-card:hover {
+                cursor: pointer;
+                box-shadow: 10px 10px 18px -8px #333;
+                transition: box-shadow 0.50s ease-in-out; }
+              .main .game-content .main-board .card-board .cards .cards-board .game-card .answer {
+                font-size: 0.9em;
+                margin-bottom: 5px; }
+              .main .game-content .main-board .card-board .cards .cards-board .game-card .logo {
+                bottom: 5px;
+                left: 10px;
+                font-size: 0.5em; }
+              .main .game-content .main-board .card-board .cards .cards-board .game-card.selected {
+                opacity: 1; }
+                .main .game-content .main-board .card-board .cards .cards-board .game-card.selected:hover {
+                  box-shadow: initial; }
         .main .game-content .main-board .card-board .call-to-donate {
           display: flex;
           flex-direction: column;
@@ -576,8 +608,7 @@ body {
                   background-color: #eba432; }
       .main .game-content .score-board .current-user-score {
         margin-left: 0;
-        border-radius: 0;
-        display: none; }
+        border-radius: 0; }
         .main .game-content .score-board .current-user-score .collection {
           border-radius: 0; }
       .main .game-content .score-board .players-score {
@@ -659,7 +690,8 @@ body {
   font-weight: 300; }
 
 .sidenav li:not(.donate-btn-li) {
-  width: 85%; }
+  width: 85%;
+  border-bottom: 0px solid #333; }
 
 .sidenav li:not(.donate-btn-li):hover, .sidenav li:not(.donate-btn-li).active {
   background-color: rgba(0, 0, 0, 0.05);
@@ -773,3 +805,17 @@ body {
       background-color: lightyellow;
       color: #EDAE49;
       transition: background-color .3s; }
+
+#selection-number {
+  color: #EDAE49; }
+
+.winner-text, .loser-text {
+  font-size: 1.7em; }
+
+.winner-text > span, .loser-text > span {
+  color: #e5b05b; }
+
+.popup {
+  background-color: teal;
+  height: 40px;
+  width: 400px; }
