@@ -23,7 +23,7 @@ class GamesController {
   static leaderboard(req, res, next) {
     return User.find({
       gamesWon: { $gte: 1 }
-    }, '-_id -__v -hashedPassword -donations')
+    }, '-__v -hashedPassword -donations')
       .limit(10)
       .sort({ gamesWon: -1 })
       .exec((err, users) => {
@@ -48,7 +48,7 @@ class GamesController {
 
     return Game.find({
       players: username
-    }, '-_id').exec((err, games) => {
+    }).exec((err, games) => {
       if (err) return next(err);
 
       res.json({ success: true, games });

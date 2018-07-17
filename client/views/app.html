@@ -1,112 +1,186 @@
 </script>
-<link rel="stylesheet" href="../css/common.css" type="text/css" />
-<div id="app-container" ng-controller="GameController">
-  <div id="menu-container">
-    <div id="logo">
-      <span id="first-word">Cards</span>
-      <span id="second-word"> for</span>
-      <span id="third-word">Humanity</span>
-    </div>
-    <div id = 'abandon-game-button' ng-click="abandonGame()">
-        Abandon Game
-    </div>
-        <span id="tweet-container">
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    </span>
-      <div id="invite-container" ng-show="game.state === 'awaiting players'" >
-
-                  <div id="search-players">
-                <input
-                  type="search"
-                  placeholder="Search for users"
-                  name="search"
-                  ng-model="search"
-                  ng-change="searchUsers()"
-                >
-            </div>
-            <div id="invite-player" ng-show="game.state === 'awaiting players'">
-                    <div ng-repeat="player in match" style="display: flex">
-                      <span style="margin-right: 20px"> {{ player.name }}</span>
-                      <span style="margin-right: auto"> {{ player.email }}</span>
-              <span><button class= "" ng-click="inviteUsers(player.email)">Invite</button></span>
-                    </div>
-            </div>
+<div id="app-container" class="main image-one" ng-controller="GameController">
+  <!-- header -->
+  <div class="header">
+      <nav>
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo">CFH</a>
+          <a data-target="slide-out" class="sidenav-trigger" ng-click="openSideNav()"><i class="material-icons">menu</i></a>
+          <div id="nav-mobile" class="right hide-on-med-and-down">
+            <ul>
+              <li><a class="waves-effect waves-yellow btn tour-btn">Take A Tour</a></li>
+              <li><a class="waves-effect waves-light btn leave-game-btn" ng-click="abandonGame()">Leave Game</a></li>
+              <li class="nav-img-li profile"><img class="nav-user-img" ng-src="{{currentPlayer().avatar}}" /></li>
+            </ul>
           </div>
+        </div>
+      </nav>
+      <!-- mobile sidenav -->
+      <ul id="slide-out" class="sidenav">
+        <li>
+          <div class="sidenav-close-div">
+              <a class="sidenav-close" ng-click="sideNavLinkClick()"><i class="material-icons">close</i></a>
+          </div>
+        </li>
+        <li>
+          <div class="user-view">
+            <div class="nav-img-div">
+              <img class="nav-user-img" ng-src="{{currentPlayer().avatar}}" />
+            </div>
+            <p>{{currentPlayer().username}}</p>
+          </div>
+        </li>
+        <li><a class="waves-effect waves-yellow btn tour-btn">Take A Tour</a></li>
+        <li><a class="waves-effect waves-light btn leave-game-btn" ng-click="sideNavAbandonGame()">Leave Game</a></li>
+      </ul>
   </div>
-  <div id="gameplay-container">
-    <div id="upper-gameplay-container">
-      <div id="menu-timeremaining-container">
-        <div id="menu-container">
-          <span id="menu-button">Menu</span>
+
+  <!-- game board -->
+  <div class="game-content">
+    <!-- main board -->
+    <div class="main-board">
+      <!-- interaction board -->
+      <div class="interaction-div">
+
+        <!-- timer -->
+        <div class="timer">
+            <p>{{game.time}}</p>
         </div>
-        <div id="timer-container">
-          <timer></timer>
-        </div>
-      </div>
-      <div id="new-round-modal" class="modal">
+
+        <!-- new round modal -->
+        <div id="new-round-modal" class="modal">
           <div class="modal-content">
             <div class="round-winner-msg">
-              <i>{{game.roundWinner.username}}</i> won this round!
+              <span>{{game.roundWinner.username}}</span> won this round!
             </div>
             <div class="countdown">
-              Next round starts in <br />
+              Next round starts in <br><br>
               <span class="timer">{{game.time}}</span>
             </div>
 
           </div>
-      </div>
-      <div id="region-modal" class="modal">
-          <div class="modal-content">
-            <h5>Please choose a region below so we can know how horrible you are</h5>
-            <div class="input-field col s12">
-                  <select ng-model="selectedRegion">
-                      <option value="" disabled selected>Choose your region</option>
-                      <option ng-repeat="region in game.regions" value="{{region}}">
-                        {{region | uppercase}}
-                      </option>
-                    </select>
-              </div>
-          </div>
+        </div>
 
-          <div class="modal-footer">
-              <a href="/" class="modal-close btn-flat">Cancel</a>
-            <button type="button" ng-click="initialGame();" class="btn-flat btnSecondary" ng-disabled="!selectedRegion">
-              Join Game</button>
+        <!-- region modal -->
+        <div id="region-modal" class="modal">
+            <div class="modal-content">
+              <h5>Please choose a region below so we can know how horrible you are</h5>
+              <div class="input-field col s12">
+                    <select ng-model="selectedRegion">
+                        <option value="" disabled selected>Choose your region</option>
+                        <option ng-repeat="region in game.regions" value="{{region}}">
+                          {{region | uppercase}}
+                        </option>
+                      </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="/" class="modal-close btn-flat">Cancel</a>
+              <button type="button" ng-click="initialGame();" class="btn-flat btnSecondary" ng-disabled="!selectedRegion">
+                Join Game</button>
+            </div>
+        </div>
+
+        <!-- question board -->
+        <question class="interaction-board"></question>
+      </div>
+
+        <!-- info board -->
+      <div class="card-board">
+        <!-- before game start -->
+        <div
+          class="instructions"
+          ng-show="game.state === 'awaiting players'"
+        >
+          <p class="text-center">Instructions</p>
+          <ol>
+            <li>Each player begins with, and will always have, 10 white answer cards.</li>
+            <li>For each round, one player is randomly chosen as the Card Czar.</li>
+            <li>The player with the highlighted score card is the Czar for that round.</li>
+            <li>Everyone else answers the black question card by clicking on the answer card they want to use.</li>
+            <li>The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</li>
+          </ol>
+        </div>
+
+        <!-- czar board while waiting-->
+        <div
+          class="czar-info"
+          ng-show="isCzar() && game.state === 'waiting for players to pick'"
+        >
+          <div class="info">
+            <p>You are the Card Czar</p>
+            <p>Players are choosing their answers. Prepare to select a Card.</p>
+          </div>
+          <div class="make-a-wish">
+            <p class='fact-tagline'>Did you know?</p>
+            <p class='fact'>
+                {{ makeAWishFact }}
+            </p>
+            <div class='logo'>
+              <img src='../img/make-a-wish-logo.png'/>
+            </div>
           </div>
         </div>
-      <div id="question-container-outer">
-        <question></question>
+
+        <!-- answer cards -->
+        <answers
+          class="cards"
+          ng-hide="game.state === 'game ended' || game.state === 'game dissolved' || game.state === 'awaiting players'"
+        >
+        </answers>
+
+        <!-- game over stuff -->
+        <div
+          class="call-to-donate"
+          ng-show="game.state === 'game ended' || game.state === 'game dissolved'"
+        >
+          <div>
+              <p>What would you like to do now?</p>
+              <p>You might consider donating to charity to atone for the horrifying answers you've submitted.</p>
+              <p>Donating will also place a lovely crown on your avatar's head.</p>
+          </div>
+          <div class="btns">
+            <button class="waves-effect waves-light btn join-btn" ng-click="game.joinGame('joinNewGame')">Start Game</button>
+            <button class="waves-effect waves-light btn btn-large donate-btn" ng-click="donate()">Donate Now</button>
+            <button class="waves-effect waves-light btn home-btn" ng-click="abandonGame()">Return to Lobby</button>
+          </div>
+        </div>
       </div>
     </div>
-    <answers></answers>
+
+    <!-- scoreboard -->
+    <player
+      class="score-board"
+    >
+    </player>
   </div>
-      <!-- Maximum Player Notification Modal-->
-  <div id="modal" ng-show="game.errorPlayerMax">
-    <div id="modal-content">
-      <div class="modal-body" ng-if="game.errorPlayerMax">
-          <h6>{{game.errorPlayerMax}}</h6>
-      </div>
-      <div class="button-div">
-        <span><button class= "" ><a href="/play?custom" id="startanewgame">New game</a></button></span>
-        <span><button class= "" ng-click="abandonGame()">Go back</button></span>
-      </div>
-    </div>
-  </div>
+
   <!-- Invite User Modal-->
-  <div id="modal" ng-show="game.inviteMessage">
+  <div id="modal" class="invite-modal hide">
       <div id="modal-content">
-        <button type="button" ng-click="closeModal()">&times;</button>
+        <button type="button" ng-click="closeModal('.invite-modal')">&times;</button>
         <div class="modal-body" ng-if="game.inviteMessage">
-          <h6>{{game.inviteMessage}}</h6>
+          <h6>{{ game.inviteMessage }}</h6>
         </div>
         <div ng-repeat="player in match">
             <span> {{ player.name }}</span>
             <span> {{ player.email }}</span>
-    <span><button class= "" ng-click="inviteUsers(player.email)">Invite</button></span>
-          </div>
+            <span>
+                <button class= "" ng-click="inviteUsers(player.email)">
+                  Invite
+                </button>
+            </span>
+        </div>
       </div>
-    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="footer">
+    <p class="text-center">
+      This game is based on the
+      <span class="footer-text">Card Against Humanity</span>
+      card game, which is CC licensed (BY-NC-SA). Cards For Humanity is not affiliated with Cards Against Humanity.
+    </p>
   </div>
 </div>
 <script>

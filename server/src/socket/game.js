@@ -41,7 +41,7 @@ class Game {
     this.gameWinner = -1; // Index in this.players
     this.winnerAutopicked = false;
     this.czar = -1; // Index in this.players
-    this.playerMinLimit = 3;
+    this.playerMinLimit = 6;
     this.playerMaxLimit = 12;
     this.pointLimit = 5;
     this.state = 'awaiting players';

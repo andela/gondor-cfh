@@ -137,7 +137,7 @@ class UsersApiController {
 
     User.findOne({
       email: email.trim().toLowerCase()
-    }, '-_id -__v -hashedPassword -donations').exec((err, foundUser) => {
+    }, '-__v -hashedPassword -donations').exec((err, foundUser) => {
       if (err) return next(err);
 
       if (!foundUser) {
@@ -200,7 +200,7 @@ class UsersApiController {
       {
         email: email.trim().toLowerCase()
       },
-      '-_id -__v -hashedPassword -gamesWon -profileImage'
+      '-__v -hashedPassword -gamesWon -profileImage'
     ).exec((err, user) => {
       if (err) return next(err);
 

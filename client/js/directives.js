@@ -8,8 +8,8 @@ angular.module('mean.directives', [])
       restrict: 'EA',
       templateUrl: '/views/player.html',
       link: function (scope, elem, attr) {
-        scope.colors = ['#7CE4E8', '#FFFFa5', '#FC575E',
-          '#F2ADFF', '#398EC4', '#8CFF95'];
+        scope.colors = ['#5603AD', '#F61067', '#6B9080',
+          '#CF5C36', '#764248', '#820933'];
       }
     };
   }).directive('answers', function () {
