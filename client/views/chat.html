@@ -1,0 +1,44 @@
+
+  <div ng-controller="ChatController">
+    <div class="chat-container is-down">
+      <div class="chat-header">
+        <div class="chat-logo">
+          <span ><sup ng-show="showNotifications">{{unreadMessages}}</sup></span>
+          <i class="material-icons">chat</i>
+           <span class="logo-t">Chat </span> 
+        </div>
+        <div class="up-down">
+          <i class="material-icons">{{open}}</i>
+        </div>
+      </div>
+      <div class="chat-body">
+        <div class="chat-messages">
+          <ul>
+            <li class="chat-li" ng-repeat="message in messages">
+              <!-- edit a message -->
+              <div class="user-img">
+                  <img src={{message.avatar}} alt="">
+              </div>
+              
+              <div class="chat-username">
+                <div class="name-date">
+                  <h5>{{message.username}}</h5>
+                  <span>{{message.date}} </span>
+                </div>
+                <input ng-disabled="disable" class="text-message" ng-model="message.text" ng-change="messages.$save(message)"/>
+              </div>
+              <div ng-if="name == message.username" class="chat-s">
+                <!-- <i ng-click="edit()" class="material-icons">edit</i> -->
+                <i ng-click="messages.$remove(message)" class="material-icons">delete</i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- push a new message onto the array -->
+      <div class="input-area">
+        <input class="inputs" ng-model="newMessageText" placeholder="send a message" ng-keypress="enterEvent($event)" />
+        <span ng-click="addMessage()" class="btn-send"><i class="material-icons">send</i></span>
+      </div>
+    </div>
+  </div>

@@ -2,7 +2,7 @@
 
 angular.module('mean',
   [
-    'ngCookies', 'ngResource', 'ui.bootstrap',
+    'ngCookies', 'firebase', 'ngResource', 'ui.bootstrap',
     'ui.route', 'mean.system', 'mean.directives',
     'cloudinary', 'ngFileUpload'
   ])

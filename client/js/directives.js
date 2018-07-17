@@ -81,6 +81,12 @@ angular.module('mean.directives', [])
       link: function (scope, elem, attr) {}
     };
   })
+  .directive('chat', function () {
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/chat.html',
+    };
+  })
   .directive('landing', function () {
     return {
       restrict: 'EA',
