@@ -163,23 +163,46 @@
   </div>
 
   <!-- Invite User Modal-->
-  <!-- <div id="modal" class="invite-modal">
-      <div id="modal-content">
-        <button type="button" ng-click="closeModal('.invite-modal')">&times;</button>
-        <div class="modal-body" ng-if="game.inviteMessage">
-          <h6>{{ game.inviteMessage }}</h6>
-        </div>
-        <div ng-repeat="player in match">
-            <span> {{ player.name }}</span>
-            <span> {{ player.email }}</span>
-            <span>
-                <button class= "" ng-click="inviteUsers(player.email)">
-                  Invite
-                </button>
-            </span>
-        </div>
+  <div id="invite-modal" class="modal">
+    <div class="modal-content ">
+        <h5 class="text-center">Search for your friends</h5>
+      <div class ="row invite-option">
+          <label class ="col s6 m6">
+              <input type="checkbox" />
+              <span>Invite to Game</span>
+          </label>
+          <label class ="col s6 m6">
+              <input type="checkbox" />
+              <span>Connect as Friends</span>
+          </label>
       </div>
-  </div> -->
+      
+      <div class="input-field col s12">
+          <input type="search" class="invite-modal"
+          placeholder="Search for users"  
+          name="search" 
+          ng-model="search" 
+          ng-change="searchUsers()"
+          >
+
+          <div class="invite-player" ng-repeat="player in match">
+              <span> {{ player.name }}</span>
+              <span> {{ player.email }}</span>
+              <span>
+                  <button 
+                    class="waves-effect waves-light btn invite-btn" 
+                    ng-click="inviteUsers(player.email)"
+                    >
+                    Send Request
+                  </button>
+              </span>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <a href="/#!/app" class="modal-close btn cancel-request-btn">Cancel</a>
+    </div>
+</div>
 
   <!-- footer -->
   <div class="footer">
