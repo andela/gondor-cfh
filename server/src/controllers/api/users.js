@@ -51,6 +51,40 @@ class UsersApiController {
   }
 
   /**
+   * call back for social authentications
+   *
+   * @static
+   * @param {object} req Express request object
+   * @param {object} res Express response object
+   * @param {object} next Express next object
+   * @returns {object} returns token
+   */
+  static authCallback(req, res, next) {
+    if (!req.user) {
+      res.redirect('/#!/signup');
+    } else {
+      const { id, email, username } = req.user;
+      jwt.sign(
+        {
+          id,
+          email,
+          username
+        },
+        process.env.SECRET,
+        { expiresIn: '48h' },
+        (err, token) => {
+          if (err) return next(err);
+
+          // form redirect url with token
+          const url = `/#!/?token=${token}`;
+
+          res.redirect(url);
+        }
+      );
+    }
+  }
+
+  /**
    *
    * Logs user in
    *

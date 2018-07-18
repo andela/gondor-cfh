@@ -9,6 +9,7 @@ import _ from 'underscore';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import uniqueFieldValidator from 'mongoose-unique-validator';
+import findOrCreate from 'mongoose-findorcreate';
 
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
 const { Schema } = mongoose;
@@ -161,5 +162,6 @@ UserSchema.methods = {
 
 // Add unique field validation plugin
 UserSchema.plugin(uniqueFieldValidator, { message: '{PATH} already exist!' });
+UserSchema.plugin(findOrCreate);
 
 export default mongoose.model('User', UserSchema);

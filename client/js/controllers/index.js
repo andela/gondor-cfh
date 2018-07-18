@@ -5,8 +5,14 @@ object-shorthand: 0, vars-on-top: 0, prefer-template: 0 */
 angular.module('mean.system')
   .controller(
     'IndexController',
-    ['$scope', 'Global', '$location', 'game',
-      function ($scope, Global, $location, game) {
+    ['$scope', '$routeParams', 'Global', '$location', 'game', '$window',
+      function ($scope, $routeParams, Global, $location, game, $window) {
+        $scope.token = $routeParams.token;
+        if ($scope.token) {
+          localStorage.setItem('token', $scope.token);
+          $location.path('/#!/');
+        }
+
         Global.getUser().then(function (authUser) {
           $scope.global = authUser;
           $scope.showOptions = authUser && authUser.authenticated;
