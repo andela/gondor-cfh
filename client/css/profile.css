@@ -347,10 +347,6 @@ body {
   font-family: 'Montserrat', 'sans-serif';
 }
 
-.cfh-toast {
-  background-color: #EDAE49;
-}
-
 .main {
   min-height: 100vh;
   display: flex;

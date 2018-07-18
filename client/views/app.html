@@ -1,5 +1,5 @@
 </script>
-<div id="app-container" class="main image-one" ng-controller="GameController">
+<div id="app-container" class="main image-one" ng-controller="GameController" ng-intro-options="IntroOptions" ng-intro-method="CallMe">
   <!-- header -->
   <div class="header">
       <nav>
@@ -8,7 +8,7 @@
           <a data-target="slide-out" class="sidenav-trigger" ng-click="openSideNav()"><i class="material-icons">menu</i></a>
           <div id="nav-mobile" class="right hide-on-med-and-down">
             <ul>
-              <li><a class="waves-effect waves-yellow btn tour-btn">Take A Tour</a></li>
+              <li><a class="waves-effect waves-yellow btn tour-btn" ng-click="CallMe()">Take A Tour</a></li>
               <li><a class="waves-effect waves-light btn leave-game-btn" ng-click="abandonGame()">Leave Game</a></li>
               <li class="nav-img-li profile"><img class="nav-user-img" ng-src="{{currentPlayer().avatar}}" /></li>
             </ul>
@@ -30,7 +30,7 @@
             <p>{{currentPlayer().username}}</p>
           </div>
         </li>
-        <li><a class="waves-effect waves-yellow btn tour-btn">Take A Tour</a></li>
+        <li><a class="waves-effect waves-yellow btn tour-btn" ng-click="CallMe()">Take A Tour</a></li>
         <li><a class="waves-effect waves-light btn leave-game-btn" ng-click="sideNavAbandonGame()">Leave Game</a></li>
       </ul>
   </div>
@@ -62,9 +62,14 @@
         </div>
 
         <!-- region modal -->
-        <div id="region-modal" class="modal">
+        <div id="region-modal" class="modal region-modal">
             <div class="modal-content">
-              <h5>Please choose a region below so we can know how horrible you are</h5>
+              <div class="modal-tour-content">
+                  <!-- <h5>Welcome</h5> -->
+                  <a class="waves-effect waves-yellow btn tour-btn" ng-click="takeTour()">Take A Tour</a>
+                  <p>or</p>
+              </div>
+              <h6 class="text-center">Choose a Region Below to Start Playing So That We Can Know How Horrible You Are</h6>
               <div class="input-field col s12">
                     <select ng-model="selectedRegion">
                         <option value="" disabled selected>Choose your region</option>
@@ -82,13 +87,14 @@
         </div>
 
         <!-- question board -->
-        <question class="interaction-board"></question>
+        <question class="interaction-board" id="interaction-board-tour"></question>
       </div>
 
         <!-- info board -->
       <div class="card-board">
         <!-- before game start -->
         <div
+          id="instructions-board-tour"
           class="instructions"
           ng-show="game.state === 'awaiting players'"
         >
@@ -157,7 +163,7 @@
   </div>
 
   <!-- Invite User Modal-->
-  <div id="modal" class="invite-modal hide">
+  <!-- <div id="modal" class="invite-modal">
       <div id="modal-content">
         <button type="button" ng-click="closeModal('.invite-modal')">&times;</button>
         <div class="modal-body" ng-if="game.inviteMessage">
@@ -173,7 +179,7 @@
             </span>
         </div>
       </div>
-  </div>
+  </div> -->
 
   <!-- footer -->
   <div class="footer">

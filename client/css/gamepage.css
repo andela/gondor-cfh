@@ -76,6 +76,7 @@ body {
             .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text div {
               width: 100%;
               display: flex;
+              flex-direction: column;
               justify-content: center;
               align-items: center; }
             .main .game-content .main-board .interaction-div .interaction-board .waiting .waiting-text p:first-child {
@@ -819,3 +820,43 @@ body {
   background-color: teal;
   height: 40px;
   width: 400px; }
+
+.tour .cards-board {
+  height: auto !important; }
+
+.region-modal .modal-tour-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .region-modal .modal-tour-content h5 {
+    margin-bottom: 20px; }
+  .region-modal .modal-tour-content .tour-btn {
+    color: #FFFFFF;
+    background-color: #EDAE49;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px; }
+    .region-modal .modal-tour-content .tour-btn:hover, .region-modal .modal-tour-content .tour-btn:active, .region-modal .modal-tour-content .tour-btn.active {
+      background-color: #eba432;
+      color: #FFFFFF;
+      transition: background-color .3s; }
+  .region-modal .modal-tour-content p {
+    font-size: 1.2em;
+    margin-bottom: 20px; }
+
+.tour-intro {
+  font-size: 1.2em;
+  color: #006989; }
+  .tour-intro span {
+    color: #EDAE49;
+    font-style: italic; }
+
+.introjs-tooltiptext {
+  text-align: justify;
+  padding: 10px; }
+
+.introjs-tooltipbuttons {
+  display: flex;
+  justify-content: center;
+  align-items: center; }

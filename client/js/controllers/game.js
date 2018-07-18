@@ -6,9 +6,9 @@ angular.module('mean.system')
   .controller(
     'GameController',
     ['$scope', 'game', '$window', '$timeout', '$location',
-      'MakeAWishFactsService', '$dialog', '$http', 'Global', 'DonationService',
+      'MakeAWishFactsService', '$dialog', '$http', 'Global', 'DonationService', 'ngIntroService',
       function ($scope, game, $window, $timeout, $location, MakeAWishFactsService,
-        $dialog, $http, Global, DonationService) {
+        $dialog, $http, Global, DonationService, ngIntroService) {
         $scope.hasPickedCards = false;
         $scope.winningCardPicked = false;
         $scope.showTable = false;
@@ -263,7 +263,6 @@ angular.module('mean.system')
          * @returns {null} - null
          */
         $scope.showModal = function (modalClassName) {
-          console.log('show modal');
           document.querySelector(modalClassName).classList.remove('hide');
         };
 
@@ -304,8 +303,6 @@ angular.module('mean.system')
 
           Global.getUser().then(function (response) {
             if (response.authenticated) {
-              console.log(response.authenticated);
-              console.log(donation);
               DonationService.donate(donation).then(function () {
                 $window.location.href = 'https://www.crowdrise.com/cfhio/fundraiser/cards4humanity';
               });
@@ -330,4 +327,66 @@ angular.module('mean.system')
           game.joinGame();
         }
         */
+
+        // Tour
+        $scope.IntroOptions = {
+          steps: [
+            {
+              intro: '<p class="text-center tour-intro">Welcome to <br> <span>Cards For Humanity</span>.</p>You can click on the control buttons below to take a tour of the game.'
+            },
+            {
+              element: '#interaction-board-tour',
+              intro: 'This is the game interaction board where the game instructions and current question for each round will appear.'
+            },
+            {
+              element: '#searching-for-players-text-tour',
+              intro: 'When there are less than 6 players, the game keeps searching for more players.'
+            },
+            {
+              element: '#players-found-text-tour',
+              intro: 'This is where you see how many players have joined the game.'
+            },
+            {
+              element: '#invite-players-btn-tour',
+              intro: 'You can click here to invite players to the game instead of just waiting for more players to join.'
+            },
+            {
+              element: '#start-game-btn-tour',
+              intro: 'You can click here to start a game when there are enough players.'
+            },
+            {
+              element: '#score-board-tour',
+              intro: 'This is where you see your game avatar and game info.',
+              position: 'left'
+            },
+            {
+              element: '#instructions-board-tour',
+              intro: 'These are the instructions for playing the game.',
+              position: 'top'
+            },
+          ],
+          showStepNumbers: false,
+          showBullets: true,
+          exitOnOverlayClick: true,
+          exitOnEsc: true,
+          nextLabel: '<span style="color:green">Next</span>',
+          prevLabel: '<span style="color:red">Previous</span>',
+          skipLabel: 'Skip Tour',
+          doneLabel: '<span style="color:#015E7B; font-weight: 500">Tour a Live Game Page</span>'
+        };
+
+        ngIntroService.setOptions($scope.IntroOptions);
+
+        $scope.takeTour = function () {
+          game.joinGame('joinGame', null, null, 'Africa');
+          $('#region-modal').modal('close');
+          ngIntroService.start();
+        };
+
+        ngIntroService.onComplete(function () {
+          $window.location.href = './#!/tourapp';
+        });
+        ngIntroService.onExit(function () {
+          $('#region-modal').modal('open');
+        });
       }]);

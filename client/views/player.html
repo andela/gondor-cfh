@@ -9,6 +9,7 @@
   >
     <li
       ng-class="toggleClassName(isCzar(), 'collection-item avatar', 'collection-item avatar czar')"
+      id="score-board-tour"
     >
       <div
         class="czar-title"
@@ -20,7 +21,7 @@
         <p>You</p>
         <div>
           <span>Points</span>
-          <span>{{currentPlayer().points}}&nbsp;/&nbsp;{{game.pointLimit}}</span>
+          <span>{{currentPlayer().points}} / {{game.pointLimit}}</span>
         </div>
       </span>
 
@@ -49,7 +50,7 @@
         <p>You</p>
         <div>
           <span>Points</span>
-          <span>{{currentPlayer().points}}&nbsp;/&nbsp;{{game.pointLimit}}</span>
+          <span>{{currentPlayer().points}} / {{game.pointLimit}}</span>
         </div>
       </span>
 
@@ -79,7 +80,7 @@
         <p>{{player.username}}</p>
         <div>
           <span>Points</span>
-          <span>{{player.points}}&nbsp;/&nbsp;{{game.pointLimit}}</span>
+          <span>{{player.points}} / {{game.pointLimit}}</span>
         </div>
       </span>
       <img ng-src="{{player.avatar}}" alt="" class="circle">

@@ -45,6 +45,11 @@ angular.module('mean.system')
         } else {
         // Show a notification and check again in a bit
           game.notification = notificationQueue.shift();
+          M.toast({
+            html: `<p>${game.notification}</p>`,
+            displayLength: 1300,
+            classes: 'cfh-toast'
+          });
           timeout = $timeout(setNotification, 1300);
         }
       };

@@ -4,7 +4,7 @@ angular.module('mean',
   [
     'ngCookies', 'firebase', 'ngResource', 'ui.bootstrap',
     'ui.route', 'mean.system', 'mean.directives',
-    'cloudinary', 'ngFileUpload'
+    'cloudinary', 'ngFileUpload', 'angular-intro'
   ])
   .config(['$routeProvider',
     function ($routeProvider) {
@@ -14,6 +14,9 @@ angular.module('mean',
         })
         .when('/app', {
           templateUrl: '/views/app.html',
+        })
+        .when('/tourapp', {
+          templateUrl: '/views/tourview.html',
         })
         .when('/privacy', {
           templateUrl: '/views/privacy.html',

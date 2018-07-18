@@ -1,35 +1,20 @@
-<!-- Minimum Player Required Popup-->
-<div
-  class="popup"
-  ng-show="game.errorPlayerMin"
->
-  {{game.errorPlayerMin}}
-</div>
-
-<!-- Player Invite Success Popup-->
-<span>
-  <div
-    class="popup"
-    ng-show="game.inviteMessage"
-  >
-    {{game.inviteMessage}}
-  </div>
-</span>
-
 <!-- searching -->
 <div
   class="waiting"
   ng-show="game.state === 'awaiting players'"
 >
   <div class="waiting-text">
+    <div id="searching-for-players-text-tour">
     <p>Searching for Players</p>
     <div>
       <img src="/img/loaders/spinner.svg" width="50"/>
     </div>
-    <p class="text-center">{{game.players.length}}&nbsp;/&nbsp;12 Players Found</p>
+  </div>
+    <p class="text-center" id="players-found-text-tour">{{game.players.length}} / 12 Players Found</p>
   </div>
   <div class="waiting-btns">
     <button
+      id='start-game-btn-tour'
       class="waves-effect waves-light btn start-game-btn"
       ng-click="game.startGame()"
     >
@@ -38,6 +23,7 @@
     <button
       class="waves-effect waves-light btn invite-btn"
       ng-click="showModal('.invite-modal')"
+      id="invite-players-btn-tour"
     >
       Invite Players
     </button>
@@ -87,13 +73,4 @@
     </span>
     That makes you a loser, unfortunately.
   </div>
-</div>
-
-<!-- game notification -->
-<div
-  id="notifications"
-  ng-if="game.notification"
-  ng-bind-html-unsafe="game.notification"
-  ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}"
->
 </div>

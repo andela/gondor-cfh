@@ -104,8 +104,7 @@ angular.module('mean.system')
           method: 'GET',
           headers: {
             'x-access-token': localStorage.getItem('token')
-          },
-          data: donationObject
+          }
         }).then(function (response) {
           return response.data;
         }, function (err) {
