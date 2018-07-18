@@ -3,6 +3,7 @@
     display: block;
   }
 }
+
 #invite-container {
   #search-player {
     width: 350px;
@@ -50,5 +51,9 @@
       font-size: 40px;
       color: #EDAE49;
     }
+  }
+
+  .bg-color {
+    background-color: #F8FFE5 !important;
   }
 }
