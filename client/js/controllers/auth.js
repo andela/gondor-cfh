@@ -87,5 +87,36 @@ angular.module('mean.system')
             $scope.signinError = err.data.message || 'An error occurred';
           });
         };
+
+        // $scope.googleSignup = function (googleUser) {
+        //   const profile = googleUser.getBasicProfile();
+        //   // // The ID token you need to pass to your backend:
+        //   // var id_token = googleUser.getAuthResponse().id_token;
+        //   // console.log("ID Token: " + id_token);
+
+        // const newUser = {
+        //   name: profile.getName(),
+        //   username: profile.getName(),
+        //   profileImage: profile.getImageUrl(),
+        //   email: profile.getEmail(),
+        //   password: profile.getId()
+        // };
+
+        //   console.log(newUser);
+
+        //   $http.post({
+        //     url: '/api/auth/signup',
+        //     method: 'POST',
+        //     data: newUser
+        //   }).then((response) => {
+        //     console.log(response.data);
+        //   }, (err) => {
+        //     console.log('server error');
+        //   });
+
+        //   console.log('after');
+        // };
+
+        window.onSignIn = $scope.googleSignup;
       }
     ]);
