@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars, no-use-before-define, no-shadow */
 import consoleStamp from 'console-stamp';
 import shortId from 'shortid';
+import Random from 'random-js';
 import Game from './game';
 import Player from './player';
 import Questions from '../models/question';
@@ -182,8 +183,7 @@ export default (io) => {
   const fireGame = (player, socket) => {
     let game;
     if (gamesNeedingPlayers.length <= 0) {
-      gameID += 1;
-      const gameIDStr = gameID.toString();
+      const gameIDStr = gameID;
       game = new Game(gameIDStr, io, null);
       allPlayers[socket.id] = true;
       game.players.push(player);
@@ -215,13 +215,14 @@ export default (io) => {
 
   const fireRegionGame = (player, socket, region) => {
     let game;
+    const random = new Random(Random.engines.mt19937().autoSeed());
+
     if (!regionGamesNeedingPlayers[region]
         || (regionGamesNeedingPlayers[region]
         && regionGamesNeedingPlayers[region].length <= 0)) {
       // means a new game should be created for the region
-      gameID += 1;
-      const gameIDStr = gameID.toString();
-      game = new Game(gameIDStr, io, region);
+      gameID = random.integer(1, 10000000000);
+      game = new Game(gameID, io, region);
       allPlayers[socket.id] = true;
       game.players.push(player);
       allGames[gameID] = game;
