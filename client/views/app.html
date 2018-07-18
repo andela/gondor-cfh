@@ -61,6 +61,42 @@
           </div>
         </div>
 
+         <!-- czar question selection modal -->
+         <div id="czar-question-selection" class="modal">
+          <div class="modal-content">
+            <div class="heading">
+              <p>You are the <b>Czar</b></p>
+              <p>Please pick a question from the deck</p>
+            </div>
+            <div class="question-cards">
+              <div class="question-card"
+                ng-click="flipQuestionCard($index)"
+                ng-repeat="question in game.czarQuestionOptions"
+              >
+                <div class="back">
+                  <div class="content">
+                    <div class="icon">
+                      <i class="fas fa-hands"></i>
+                    </div>
+                    Cards For Humanity
+                  </div>
+                </div>
+                <div class="front" >
+                  <div class="content">
+                      {{question.text}}
+                    <div class="trademark">
+                      <span class="icon">
+                        <i class="fas fa-hands"></i>
+                      </span>
+                      Cards For Humanity
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- region modal -->
         <div id="region-modal" class="modal region-modal">
             <div class="modal-content">
@@ -176,12 +212,12 @@
               <span>Connect as Friends</span>
           </label>
       </div>
-      
+
       <div class="input-field col s12">
           <input type="search" class="invite-modal"
-          placeholder="Search for users"  
-          name="search" 
-          ng-model="search" 
+          placeholder="Search for users"
+          name="search"
+          ng-model="search"
           ng-change="searchUsers()"
           >
 
@@ -189,8 +225,8 @@
               <span> {{ player.name }}</span>
               <span> {{ player.email }}</span>
               <span>
-                  <button 
-                    class="waves-effect waves-light btn invite-btn" 
+                  <button
+                    class="waves-effect waves-light btn invite-btn"
                     ng-click="inviteUsers(player.email)"
                     >
                     Send Request

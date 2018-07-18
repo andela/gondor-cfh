@@ -21,6 +21,7 @@ angular.module('mean.system')
         state: null,
         round: 0,
         time: 0,
+        czarQuestionOptions: [],
         curQuestion: null,
         notification: null,
         timeLimits: {},
@@ -108,12 +109,15 @@ angular.module('mean.system')
         var newState = (data.state !== game.state);
 
         // Handle updating game.time
-        if (data.round !== game.round && data.state !== 'awaiting players'
-      && data.state !== 'game ended' && data.state !== 'game dissolved') {
-          game.time = game.timeLimits.stateChoosing - 1;
+        if (data.round !== game.round
+          && data.state !== 'awaiting players'
+          && data.state !== 'game ended'
+          && data.state !== 'game dissolved'
+          && data.state !== 'czar is selecting a question') {
+          game.time = game.timeLimits.stateChoosing;
           timeSetViaUpdate = true;
         } else if (newState && data.state === 'waiting for czar to decide') {
-          game.time = game.timeLimits.stateJudging - 1;
+          game.time = game.timeLimits.stateJudging;
           timeSetViaUpdate = true;
         } else if (newState && data.state === 'winner has been chosen') {
           const delayBeforeNewRound = game.timeLimits.stateResults * 1000;
@@ -125,7 +129,7 @@ angular.module('mean.system')
             $('#new-round-modal').modal('close');
           }, delayBeforeNewRound);
 
-          game.time = game.timeLimits.stateResults - 1;
+          game.time = game.timeLimits.stateResults;
           timeSetViaUpdate = true;
         }
 
@@ -134,6 +138,8 @@ angular.module('mean.system')
         game.winningCard = data.winningCard;
         game.winningCardPlayer = data.winningCardPlayer;
         game.roundWinner = data.players[data.winningCardPlayer];
+        game.czarQuestionOptions = data.czarQuestionOptions;
+        game.czar = data.czar;
         game.winnerAutopicked = data.winnerAutopicked;
         game.gameWinner = data.gameWinner;
         game.pointLimit = data.pointLimit;
@@ -161,7 +167,9 @@ angular.module('mean.system')
             }
           }
         }
-
+        if (data.state === 'czar is selecting a question') {
+          game.czar = data.czar;
+        }
         if (game.state !== 'waiting for players to pick'
       || game.players.length !== data.players.length) {
           game.players = data.players;
@@ -172,7 +180,6 @@ angular.module('mean.system')
         }
 
         if (data.state === 'waiting for players to pick') {
-          game.czar = data.czar;
           game.curQuestion = data.curQuestion;
           // Extending the underscore within the question
           game.curQuestion.text = data.curQuestion.text
@@ -290,11 +297,15 @@ angular.module('mean.system')
       };
 
       game.pickCards = function (cards) {
-        socket.emit('pickCards', { cards: cards });
+        socket.emit('pickCards', { cards });
       };
 
       game.pickWinning = function (card) {
         socket.emit('pickWinning', { card: card.id });
+      };
+
+      game.czarSelectedQuestion = function (questionIndex) {
+        socket.emit('czarSelectedQuestion', questionIndex);
       };
 
       decrementTime();

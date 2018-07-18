@@ -124,22 +124,22 @@ describe('Game Server', () => {
     const expectStartGame = () => {
       client1.emit('startGame');
       client1.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar is selecting a question');
       });
       client2.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar is selecting a question');
       });
       client3.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar is selecting a question');
       });
       client4.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar is selecting a question');
       });
       client5.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar is selecting a question');
       });
       client6.on('gameUpdate', (data) => {
-        data.state.should.equal('waiting for players to pick');
+        data.state.should.equal('czar is selecting a question');
       });
       setTimeout(disconnect, 200);
     };
@@ -240,6 +240,17 @@ describe('Game Socket:', () => {
       expect(result[1].text).to.equal(expectedResult[1].text);
       expect(result[2].text).to.equal(expectedResult[2].text);
       done();
+    });
+  });
+
+  describe('setCurQuestion method', () => {
+    it('should update current question', () => {
+      const socket = io.connect(socketURL, options);
+      const region = 'Europe';
+      const game = new Game(123, socket, region);
+      game.czarQuestionOptions = ['asdf', 'adsfas', 'fcu'];
+      game.setCurQuestion(1);
+      expect(game.curQuestion).to.equal('adsfas');
     });
   });
 });

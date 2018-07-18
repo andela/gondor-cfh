@@ -111,7 +111,7 @@ gulp.task('copyclient',
   () => copyFiles(['client/**/*', '!client/js/**'], './dist/client'));
 
 gulp.task('backendTestCoverage:instrument',
-  () => gulp.src(['server/**/*.js'])
+  () => gulp.src(['server/src/**/*.js'])
     .pipe(istanbul({
       // supports es6
       instrumenter: Instrumenter
@@ -126,7 +126,7 @@ gulp.task('backendMainTest', () => gulp.src(['server/test/**/*.js'])
     timeout: 5000
   })));
 
-gulp.task('backendTestCoverage:cover', () => gulp.src(['server/test/**/*.js'])
+gulp.task('backendTestCoverage:cover', () => gulp.src(['server/src/**/*.js'])
   .pipe(istanbul.writeReports({
     dir: './coverage/backend',
     reporters: ['lcov', 'json', 'text', 'text-summary'],

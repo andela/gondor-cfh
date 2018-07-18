@@ -34,8 +34,20 @@
 <span
   class="question"
   ng-bind-html-unsafe="game.curQuestion.text"
-  ng-hide="game.state === 'awaiting players' || game.state === 'game ended' || game.state === 'game dissolved'"
+  ng-hide="
+  game.state === 'awaiting players' ||
+  game.state === 'game ended' ||
+  game.state === 'game dissolved' ||
+  game.state === 'czar is selecting a question'"
 >
+</span>
+
+<!-- When czar is selecting a question -->
+<span
+  class="question"
+  ng-show="game.state === 'czar is selecting a question'"
+>
+  Hold on! The Czar is selecting a question for this round.
 </span>
 
 <!-- When game is dissolved -->

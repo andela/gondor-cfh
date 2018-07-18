@@ -46,6 +46,26 @@ angular.module('mean.system')
           };
         })(false, 1000);
 
+        $scope.czarHasSelectedQuestion = false;
+        $scope.flipQuestionCard = function (index) {
+          if (!$scope.czarHasSelectedQuestion) {
+            $scope.czarHasSelectedQuestion = true;
+            const nth = index + 1;
+            const selector = `.question-card:nth-child(${nth})`;
+            $(`${selector} .back`).css({
+              'visibility': 'hidden'
+            });
+            $(`${selector} .front`).css({
+              'visibility': 'visible',
+              'z-index': 1
+            });
+            $timeout(function () {
+              $('#czar-question-selection').modal('close');
+              $scope.czarHasSelectedQuestion = false;
+              game.czarSelectedQuestion(index);
+            }, 2000);
+          }
+        };
         $scope.inviteUsers = function (receiver) {
           var link = document.URL;
           var httpMessage = '<h2> Join the game' + link + '</h2>';
@@ -213,6 +233,10 @@ angular.module('mean.system')
           if (game.state === 'waiting for czar to decide'
             && $scope.showTable === false) {
             $scope.showTable = true;
+          }
+
+          if (game.state === 'czar is selecting a question' && $scope.isCzar()) {
+            $('#czar-question-selection').modal('open');
           }
         });
 

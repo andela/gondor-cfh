@@ -22,7 +22,9 @@
   <!-- all answers picked by players on czar view -->
   <div
     class="cards-board czar-selections"
-    ng-show="showTable || game.state === 'waiting for czar to decide'"
+    ng-show="
+    showTable ||
+    game.state === 'waiting for czar to decide'"
   >
     <div
       ng-repeat="answer in game.table"

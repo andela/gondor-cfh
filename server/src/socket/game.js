@@ -46,12 +46,13 @@ class Game {
     this.pointLimit = 5;
     this.state = 'awaiting players';
     this.round = 0;
-    this.questions = null;
+    this.questions = [];
     this.answers = null;
+    this.czarQuestionOptions = [];
     this.curQuestion = null;
     this.timeLimits = {
-      stateChoosing: 21,
-      stateJudging: 16,
+      stateChoosing: 20,
+      stateJudging: 15,
       stateResults: 5
     };
     // setTimeout ID that triggers the czar judging state
@@ -70,7 +71,7 @@ class Game {
   /**
    * @returns {undefined} - undefined
    */
-  payload() {
+  payload = () => {
     const players = [];
     this.players.forEach((player) => {
       players.push({
@@ -95,6 +96,7 @@ class Game {
       winnerAutopicked: this.winnerAutopicked,
       table: this.table,
       pointLimit: this.pointLimit,
+      czarQuestionOptions: this.czarQuestionOptions,
       curQuestion: this.curQuestion
     };
   }
@@ -127,8 +129,7 @@ class Game {
   assignGuestNames() {
     this.players.forEach((player) => {
       if (player.username === 'Guest') {
-        const randIndex = Math.floor(Math.random() * this.guestNames.length);
-        [player.username] = this.guestNames.splice(randIndex, 1);
+        player.username = _.sample(this.guestNames);
         if (!this.guestNames.length) {
           this.guestNames = guestNames.slice();
         }
@@ -139,7 +140,7 @@ class Game {
   /**
    * @returns {undefined} - undefined
    */
-  prepareGame() {
+  prepareGame = () => {
     this.state = 'game in progress';
 
     this.io.sockets.in(this.gameID).emit('prepareGame',
@@ -150,15 +151,14 @@ class Game {
         timeLimits: this.timeLimits
       });
 
-    const self = this;
     async.parallel([
-      this.getQuestions.bind(this),
-      this.getAnswers.bind(this)
+      this.getQuestions,
+      this.getAnswers
     ],
     (err, results) => {
-      [self.questions, self.answers] = results;
+      [this.questions, this.answers] = results;
 
-      self.startGame();
+      this.startGame();
     });
   }
 
@@ -166,9 +166,9 @@ class Game {
    * @returns {undefined} - undefined
    */
   startGame() {
-    this.shuffleCards(this.questions);
-    this.shuffleCards(this.answers);
-    this.stateChoosing();
+    this.questions = _.shuffle(this.questions);
+    this.answers = _.shuffle(this.answers);
+    this.stateSelectingQuestion();
   }
 
   /**
@@ -179,17 +179,44 @@ class Game {
   }
 
   /**
+   * Allows czar to select questions for each round
+   *
+   * @returns {undefined} undefined
+   */
+  stateSelectingQuestion() {
+    this.state = 'czar is selecting a question';
+    this.table = [];
+    this.winningCard = -1;
+    this.winningCardPlayer = -1;
+    this.winnerAutopicked = false;
+    // Rotate card czar
+    if (this.czar >= this.players.length - 1) {
+      this.czar = 0;
+    } else {
+      this.czar += 1;
+    }
+    this.czarQuestionOptions = _.shuffle(this.questions).slice(0, 10);
+    this.sendUpdate();
+  }
+
+  /**
+   * Sets the question selected by the czar as the current game question
+   *
+   * @param {Number} questionIndex Index of the selected question from the czarQuestionOptions array
+   *
+   * @returns {undefined} undefined
+   */
+  setCurQuestion(questionIndex) {
+    this.curQuestion = this.czarQuestionOptions[questionIndex];
+  }
+
+  /**
    *
    * @returns {undefined} - undefined
    */
   stateChoosing = () => {
     this.state = 'waiting for players to pick';
     // console.log(self.gameID,self.state);
-    this.table = [];
-    this.winningCard = -1;
-    this.winningCardPlayer = -1;
-    this.winnerAutopicked = false;
-    this.curQuestion = this.questions.pop();
     if (_.isEmpty(this.questions)) {
       this.getQuestions((err, data) => {
         this.questions = data;
@@ -197,17 +224,12 @@ class Game {
     }
     this.round += 1;
     this.dealAnswers();
-    // Rotate card czar
-    if (this.czar >= this.players.length - 1) {
-      this.czar = 0;
-    } else {
-      this.czar += 1;
-    }
     this.sendUpdate();
 
-    this.choosingTimeout = setTimeout(() => {
-      this.stateJudging(this);
-    }, this.timeLimits.stateChoosing * 1000);
+    this.choosingTimeout = setTimeout(
+      this.stateJudging,
+      this.timeLimits.stateChoosing * 1000
+    );
   }
 
   /**
@@ -223,28 +245,28 @@ class Game {
       this.stateResults();
     } else {
     // console.log(this.gameID,'no cards were picked!');
-      this.stateChoosing();
+      this.stateSelectingQuestion();
     }
   }
 
   /**
    * Function to handle CZAR's winner card selection
-   * @param {object} self - instance of game
+   *
    * @returns {null} - null value
    */
-  stateJudging(self) {
+  stateJudging = () => {
     this.state = 'waiting for czar to decide';
     // console.log(self.gameID,self.state);
 
-    if (self.table.length <= 1) {
+    if (this.table.length <= 1) {
       // Automatically select a card if only one card was submitted
-      self.selectFirst();
+      this.selectFirst();
     } else {
-      self.sendUpdate();
-      self.judgingTimeout = setTimeout(() => {
+      this.sendUpdate();
+      this.judgingTimeout = setTimeout(() => {
         // Automatically select the first submitted card when time runs out.
-        self.selectFirst();
-      }, self.timeLimits.stateJudging * 1000);
+        this.selectFirst();
+      }, this.timeLimits.stateJudging * 1000);
     }
   }
 
@@ -267,15 +289,17 @@ class Game {
       if (gameWon) {
         this.stateEndGame(winner);
       } else {
-        this.stateChoosing();
+        this.stateSelectingQuestion();
       }
     }, this.timeLimits.stateResults * 1000);
   }
 
   /**
    * Function to update game state when game ends
-   * @param {object} winner - Express request object
-   * @return {null} - null
+   *
+   * @param {Number} winner - Winner index in players array
+   *
+   * @return {undefined} - undefined
    */
   stateEndGame(winner) {
     this.state = 'game ended';
@@ -293,8 +317,8 @@ class Game {
 
   /**
    * Function to update game state when game dissolves
-   * @param {null} - no args
-   * @returns {null} - no args
+   *
+   * @returns {undefined} - undefined
    */
   stateDissolveGame() {
     this.state = 'game dissolved';
@@ -306,7 +330,7 @@ class Game {
    * @param {function} cb - callback function
    * @returns {null} - null
    */
-  getQuestions(cb) {
+  getQuestions = (cb) => {
     questions.allQuestionsForGame((data) => {
       cb(null, data);
     }, this.region);
@@ -317,49 +341,26 @@ class Game {
    * @param {function} cb - callback function
    * @returns {null} - null
    */
-  getAnswers(cb) {
+  getAnswers = (cb) => {
     answers.allAnswersForGame((data) => {
       cb(null, data);
     }, this.region);
   }
 
-  /* eslint-disable class-methods-use-this */
   /**
-   * Function to shuffle cards
-   * @param {object} cards
-   * @returns {object} - shuffled cards
-   */
-  shuffleCards(cards) {
-    let shuffleIndex = cards.length;
-    let temp;
-    let randNum;
-
-    while (shuffleIndex) {
-      randNum = Math.floor(Math.random() * shuffleIndex--);
-      temp = cards[randNum];
-      cards[randNum] = cards[shuffleIndex];
-      cards[shuffleIndex] = temp;
-    }
-
-    return cards;
-  }
-
-  /**
-   * Function to share
+   * Function to deal answer cards
+   *
    * @param {number} maxAnswers
-   * @return {null} - null
+   * @return {undefined} - undefined
    */
-  dealAnswers(maxAnswers) {
-    let nAnswers = [...this.answers];
-    maxAnswers = maxAnswers || 10;
-    for (let i = 0; i < this.players.length; i++) {
-      while (this.players[i].hand.length < maxAnswers) {
-        if (!nAnswers.length) {
-          nAnswers = [...this.answers];
-        }
-        this.players[i].hand.push(nAnswers.pop());
+  dealAnswers(maxAnswers = 10) {
+    let availableAnswers = this.answers.slice();
+    this.players.forEach((player) => {
+      if (_.isEmpty(availableAnswers)) {
+        availableAnswers = this.answers.slice();
       }
-    }
+      player.hand = availableAnswers.splice(0, maxAnswers);
+    });
   }
 
   /**
@@ -368,12 +369,8 @@ class Game {
    * @returns {number} - player index
    */
   _findPlayerIndexBySocket(thisPlayer) {
-    let playerIndex = -1;
-    _.each(this.players, (player, index) => {
-      if (player.socket.id === thisPlayer) {
-        playerIndex = index;
-      }
-    });
+    const playerIndex = this.players.findIndex(player => player.socket.id === thisPlayer);
+
     return playerIndex;
   }
 
@@ -484,7 +481,7 @@ class Game {
           this.sendNotification(
             'The Czar left the game! Starting a new round.'
           );
-          return this.stateChoosing();
+          return this.stateSelectingQuestion();
         } if (this.state === 'waiting for czar to decide') {
         // If players are waiting on a czar to pick, auto pick.
           this.sendNotification(
