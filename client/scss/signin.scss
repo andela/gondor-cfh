@@ -7,26 +7,27 @@
   background-position: center center;
   background-attachment: fixed;
   background-image: $background-image;
-}
-.top {
-  padding: 20px;
-}
-.card {
-  margin-left: auto;
-  margin-right: auto;
-}
-.padding {
-  padding: 10px;
-}
-.left-signin-card {
-  background-color:white;
-  min-height: 75vh !important;
-  background-size: cover;
-  background-image: $left-card-background-image;
-}
-.right-signin-card {
-  background-color: black;
-  min-height: 75vh !important;
-  background-size: cover;
-  background-image: $right-card-background-image;
+
+  .top {
+    padding: 20px;
+  }
+  .card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .padding {
+    padding: 10px;
+  }
+  .left-signin-card {
+    background-color:white;
+    min-height: 75vh !important;
+    background-size: cover;
+    background-image: $left-card-background-image;
+  }
+  .right-signin-card {
+    background-color: black;
+    min-height: 75vh !important;
+    background-size: cover;
+    background-image: $right-card-background-image;
+  }
 }

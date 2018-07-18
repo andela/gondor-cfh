@@ -1,78 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Game Page</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
-  <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-  <link rel="stylesheet" href="../css/gamepage.css">
-</head>
-<body>
-      <div class="main image-one" ng-controller="AppController">
-        <div class="header">
-          <nav>
-            <div class="nav-wrapper">
-              <a href="/" class="brand-logo">CFH</a>
-              <a data-target="slide-out" class="sidenav-trigger" ng-click="openSideNav()"><i class="material-icons">menu</i></a>
-              <div id="nav-mobile" class="right hide-on-med-and-down">
-                <ul>
-                  <li><a class="waves-effect waves-yellow btn tour-btn">Take A Tour</a></li>
-                  <li><a class="waves-effect waves-light btn leave-game-btn">Leave Game</a></li>
-                  <li class="nav-img-li"><img class="nav-user-img" src="../img/moses.jpg" /></li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-          <ul id="slide-out" class="sidenav">
-            <li>
-              <div class="sidenav-close-div">
-                  <a class="sidenav-close" ng-click="sideNavLinkClick()"><i class="material-icons">close</i></a>
-              </div>
-            </li>
-            <li>
-              <div class="user-view">
-                <div class="nav-img-div">
-                  <img class="nav-user-img" src="../img/moses.jpg" />
-                </div>
-                <p>iveren</p>
-              </div>
-            </li>
-            <li><a class="waves-effect waves-yellow btn tour-btn">Take A Tour</a></li>
-            <li><a class="waves-effect waves-light btn leave-game-btn">Leave Game</a></li>
-          </ul>
-        </div>
+<div class="main image-one tour" ng-controller="TourController" ng-intro-options="IntroOptions" ng-intro-autostart="true" ng-intro-method="CallMe">
         <div class="game-content">
-          <div class="score-board user-mobile">
-              <div class="current-user-score">
-                  <ul class="collection">
-                    <li class="collection-item avatar">
-                      <span>
-                        <p>You</p>
-                        <div class>
-                          <span>Points</span>
-                          <span>4&nbsp;/&nbsp;5</span>
-                        </div>
-                      </span>
-                      <img src="../img/moses.jpg" alt="" class="circle">
-                    </li>
-                  </ul>
-                </div>
-          </div>
           <div class="main-board">
-            <div class="interaction-div">
-              <div class="timer">
-                <div><p>0</p></div>
+            <div class="interaction-div" id="interaction-board-tour">
+              <div class="timer" id="timer-tour">
+                <div><p>12</p></div>
               </div>
-              <div class="interaction-board">
+              <div class="interaction-board"  id="question-tour">
                 <div class="waiting" style="display: none">
                   <div class="waiting-text">
                     <p>Searching...</p>
-                    <p>1&nbsp;/&nbsp;12 Players Found</p>
+                    <p>1 / 12 Players Found</p>
                   </div>
                   <div class="waiting-btns">
                     <button class="waves-effect waves-light btn start-game-btn">Start Game</button>
@@ -111,7 +48,7 @@
                 </div>
               </div>
               <div class="cards">
-                <div class="cards-board answers has-selected">
+                <div class="cards-board answers" id="cards-board-tour">
                     <div class="game-card">
                       <div class="answer">Getting Spanked By Father Christmas</div>
                       <div class="logo">
@@ -120,63 +57,63 @@
                       </div>
                     </div>
                     <div class="game-card">
-                        <div class="answer">Getting Spanked By Father Christmas dsiuddfio weiuwhuyjdsgus dsfuojdwhods</div>
-                        <div class="logo">
-                          <i class="fas fa-hands"></i>
-                          Cards For Humanity
-                        </div>
-                    </div>
-                    <div class="game-card selected">
-                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="answer">Kissing Robin Hood</div>
                         <div class="logo">
                           <i class="fas fa-hands"></i>
                           Cards For Humanity
                         </div>
                     </div>
                     <div class="game-card">
-                        <div class="answer">Getting</div>
+                        <div class="answer">Dating JayZ and being Becky</div>
                         <div class="logo">
                           <i class="fas fa-hands"></i>
                           Cards For Humanity
                         </div>
                     </div>
                     <div class="game-card">
-                        <div class="answer">Getting Spanked By Father</div>
+                        <div class="answer">Getting Blown Up</div>
                         <div class="logo">
                           <i class="fas fa-hands"></i>
                           Cards For Humanity
                         </div>
                     </div>
                     <div class="game-card">
-                        <div class="answer">Getting Spanked By Father Christmas</div>
-                        <div class="logo">
-                          <i class="fas fa-hands"></i>
-                          Cards For Humanity
-                        </div>
-                    </div>
-                    <div class="game-card selected">
-                        <div class="answer">Getting Spanked By Father Christmas</div>
-                        <div class="logo">
-                          <i class="fas fa-hands"></i>
-                          Cards For Humanity
-                        </div>
-                    </div>
-                    <div class="game-card selected">
-                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="answer">Spice it up!</div>
                         <div class="logo">
                           <i class="fas fa-hands"></i>
                           Cards For Humanity
                         </div>
                     </div>
                     <div class="game-card">
-                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="answer">The Bloody Baron</div>
                         <div class="logo">
                           <i class="fas fa-hands"></i>
                           Cards For Humanity
                         </div>
                     </div>
                     <div class="game-card">
-                        <div class="answer">Getting Spanked By Father Christmas</div>
+                        <div class="answer">Parry Hotter</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="answer">The Joker</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="answer">Farts</div>
+                        <div class="logo">
+                          <i class="fas fa-hands"></i>
+                          Cards For Humanity
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="answer">Drinking spunked beer</div>
                         <div class="logo">
                           <i class="fas fa-hands"></i>
                           Cards For Humanity
@@ -284,17 +221,16 @@
               </div>
             </div>
           </div>
-          <div class="score-board">
+          <div class="score-board" id="score-board-tour">
             <div class="current-user-score">
               <p>Score Board</p>
               <ul class="collection">
-                <li class="collection-item avatar czar">
-                  <div class="czar-title"><p>CZAR</p></div>
+                <li class="collection-item avatar"  id="user-score-card-tour">
                   <span>
                     <p>You</p>
                     <div class>
                       <span>Points</span>
-                      <span>4&nbsp;/&nbsp;5</span>
+                      <span>3 / 5</span>
                     </div>
                   </span>
                   <img src="../img/moses.jpg" alt="" class="circle">
@@ -309,18 +245,18 @@
                             <p>Hasstrup</p>
                             <div class>
                               <span>Points</span>
-                              <span>4&nbsp;/&nbsp;5</span>
+                              <span>1 / 5</span>
                             </div>
                           </span>
                       <img src="../img/moses.jpg" alt="" class="circle">
                     </li>
-                    <li class="collection-item avatar czar">
+                    <li class="collection-item avatar czar" id="czar-score-card-tour">
                         <div class="czar-title"><p>CZAR</p></div>
                         <span>
                             <p>Ben</p>
                             <div class>
                               <span>Points</span>
-                              <span>4&nbsp;/&nbsp;5</span>
+                              <span>2 / 5</span>
                             </div>
                           </span>
                       <img src="../img/moses.jpg" alt="" class="circle">
@@ -331,7 +267,7 @@
                             <p>Dika</p>
                             <div class>
                               <span>Points</span>
-                              <span>4&nbsp;/&nbsp;5</span>
+                              <span>3 / 5</span>
                             </div>
                           </span>
                       <img src="../img/moses.jpg" alt="" class="circle">
@@ -342,7 +278,7 @@
                             <p>IK</p>
                             <div class>
                               <span>Points</span>
-                              <span>4&nbsp;/&nbsp;5</span>
+                              <span>4 / 5</span>
                             </div>
                           </span>
                       <img src="../img/moses.jpg" alt="" class="circle">
@@ -353,7 +289,7 @@
                             <p>Nkem</p>
                             <div class>
                               <span>Points</span>
-                              <span>4&nbsp;/&nbsp;5</span>
+                              <span>2 / 5</span>
                             </div>
                           </span>
                       <img src="../img/moses.jpg" alt="" class="circle">
@@ -364,7 +300,7 @@
                             <p>Iveren</p>
                             <div class>
                               <span>Points</span>
-                              <span>4&nbsp;/&nbsp;5</span>
+                              <span>1 / 5</span>
                             </div>
                           </span>
                         <img src="../img/moses.jpg" alt="" class="circle">
@@ -375,7 +311,7 @@
                               <p>Stephen</p>
                               <div class>
                                 <span>Points</span>
-                                <span>4&nbsp;/&nbsp;5</span>
+                                <span>2 / 5</span>
                               </div>
                             </span>
                           <img src="../img/moses.jpg" alt="" class="circle">
@@ -386,7 +322,7 @@
                                 <p>Ogooluwa</p>
                                 <div class>
                                   <span>Points</span>
-                                  <span>4&nbsp;/&nbsp;5</span>
+                                  <span>1 / 5</span>
                                 </div>
                               </span>
                             <img src="../img/moses.jpg" alt="" class="circle">
@@ -397,7 +333,7 @@
                                   <p>Jacob</p>
                                   <div class>
                                     <span>Points</span>
-                                    <span>4&nbsp;/&nbsp;5</span>
+                                    <span>2 / 5</span>
                                   </div>
                                 </span>
                               <img src="../img/moses.jpg" alt="" class="circle">
@@ -408,7 +344,7 @@
                                     <p>Femi</p>
                                     <div class>
                                       <span>Points</span>
-                                      <span>4&nbsp;/&nbsp;5</span>
+                                      <span>1 / 5</span>
                                     </div>
                                   </span>
                                 <img src="../img/moses.jpg" alt="" class="circle">
@@ -419,21 +355,13 @@
                                       <p>Otse</p>
                                       <div class>
                                         <span>Points</span>
-                                        <span>4&nbsp;/&nbsp;5</span>
+                                        <span>4 / 5</span>
                                       </div>
                                     </span>
                                   <img src="../img/moses.jpg" alt="" class="circle">
-                                </li>
+                        </li>
                   </ul>
             </div>
           </div>
         </div>
-        <div class="footer">
-          <p class="text-center">This game is based on the <span class="footer-text">Card Against Humanity</span> card game, which is CC licensed (BY-NC-SA). Cards For Humanity is not affiliated with Cards Against Humanity.</p>
-        </div>
       </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-  <script src="../js/gamepage.js"></script>
-</body>
-</html>

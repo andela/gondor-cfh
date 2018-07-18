@@ -11,18 +11,36 @@
   background-position: center center;
   background-attachment: fixed;
   background-image: $background-image;
+
+  .top {
+    padding: 20px;
+  }
+  .card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .padding {
+    padding: 10px;
+  }
+  .left-signup-card {
+    background-color: #ffffff;
+    min-height: 90vh !important;
+    background-size: cover;
+    background-image: $left-card-background-image;
+  }
+  .right-signup-card {
+    background-color: #ffffff;
+    min-height: 90vh !important;
+    background-size: cover;
+    background-image: $right-card-background-image;
+  }
+  
+  .middleContainer{
+    display: flex;
+  }
 }
-.top {
-  padding: 20px;
-}
-.card {
-  margin-left: auto;
-  margin-right: auto;
-}
-.padding {
-  padding: 10px;
-}
-.upload-button{
+
+.upload-button {
   background-color: transparent;
   color: $secondary-color;
   border-width: 3px;
@@ -33,21 +51,4 @@
 }
 .upload-button:hover {
   background-color: transparent;
-}
-
-.left-signup-card {
-  background-color: #ffffff;
-  min-height: 90vh !important;
-  background-size: cover;
-  background-image: $left-card-background-image;
-}
-.right-signup-card {
-  background-color: #ffffff;
-  min-height: 90vh !important;
-  background-size: cover;
-  background-image: $right-card-background-image;
-}
-
-.middleContainer{
-  display: flex;
 }

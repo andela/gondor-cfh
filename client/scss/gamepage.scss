@@ -93,6 +93,7 @@ body {
               div {
                 width: 100%;
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
               }
@@ -1088,4 +1089,64 @@ body {
   background-color: teal;
   height: 40px;
   width: 400px
+}
+
+.tour {
+  .cards-board {
+    height: auto !important;
+  }
+}
+.region-modal {
+  .modal-tour-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    h5 {
+      margin-bottom: 20px;
+    }
+
+    .tour-btn {
+      color: #FFFFFF;
+      background-color: #EDAE49;
+      margin-bottom: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
+  
+      &:hover,
+      &:active,
+      &.active {
+        background-color: darken(#EDAE49, 5%);
+        color: #FFFFFF;
+        transition: background-color .3s;
+      }
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.tour-intro {
+  font-size: 1.2em;
+  color: #006989;
+
+  span {
+    color: #EDAE49;
+    font-style: italic;
+  }
+}
+
+.introjs-tooltiptext {
+  text-align: justify;
+  padding: 10px;
+}
+
+.introjs-tooltipbuttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
