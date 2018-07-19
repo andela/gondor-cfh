@@ -622,6 +622,20 @@ body {
         .main .game-content .score-board.user-mobile .current-user-score {
           display: block; } }
 
+.main .modal .bottom-margin {
+  margin-bottom: 10px; }
+
+.main .modal ul.typeahead li a {
+  margin-left: 65px;
+  cursor: pointer;
+  color: black;
+  display: inline-block;
+  z-index: 1;
+  width: 80%; }
+
+.main .modal .invitebutton {
+  margin-left: 65px; }
+
 .header {
   margin: 0;
   height: 64px;

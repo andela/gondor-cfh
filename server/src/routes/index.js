@@ -36,6 +36,10 @@ export default (app, passport) => {
     Authenticate, GamesController.history, ErrorHandler
   );
 
+  // Adding the friend API
+  app.post('/api/friends', Authenticate, UsersApiController.addFriend);
+  app.get('/api/friends', Authenticate, UsersApiController.getFriends);
+
   // Game routes
   app.post('/api/games/save', Authenticate, GamesController.saveGame);
 
@@ -119,8 +123,8 @@ export default (app, passport) => {
   app.get('/', index.render);
 
   // Search Users
-  app.get('/api/search/users', UsersController.userSearch);
+  app.get('/api/search/users', Authenticate, UsersController.userSearch);
 
   // Email Users
-  app.post('/api/mail', MailController.sendMail);
+  app.post('/api/mail', Authenticate, MailController.sendMail);
 };

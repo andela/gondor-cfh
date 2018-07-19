@@ -21,9 +21,13 @@
       Start Game
     </button>
     <button
-      id="invite-players-btn-tour"
-      class="waves-effect waves-light modal-trigger btn invite-btn"
-      href="#invite-modal"
+      class="waves-effect waves-light btn invite-btn modal-trigger" data-target="invite-friends" ng-click="getFriends()"
+    >
+      Invite Friends
+    </button>
+    <button
+    id="invite-players-btn-tour"    
+      class="waves-effect waves-light btn invite-btn modal-trigger" data-target="invite-modal" ng-click="game.usersOnline()"
     >
       Invite Players
     </button>

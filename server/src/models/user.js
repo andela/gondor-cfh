@@ -42,6 +42,10 @@ const UserSchema = new Schema({
       default: Date.now
     }
   }],
+  friends: [new Schema({
+    username: { type: String, required: [true, 'Username cannot be blank'] },
+    email: { type: String, required: [true, 'Email cannot be blank'] }
+  }, { _id: false, id: false })],
   hashedPassword: {
     type: String,
     required: [true, 'Password is required']

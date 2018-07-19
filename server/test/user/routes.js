@@ -247,15 +247,41 @@ describe('Users API Routes', () => {
         });
     });
   });
-  describe('GET /api/donations', () => {
-    it('should get user donation', (done) => {
+  describe(' /api/friends', () => {
+    const user = {
+      name: 'myname100',
+      email: 'test6@test.com',
+      username: 'test6',
+      password: 'password'
+    };
+    before((done) => {
+      User.create([user], (err) => {
+        if (err) return done(err);
+        done();
+      });
+    });
+    it('POST should add a friend', (done) => {
       chai.request(server.listen())
-        .get('/api/donations')
+        .post('/api/friends')
+        .set('x-access-token', tokens.goodToken)
+        .send({ email: user.email, username: user.username })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.success).to.equal(true);
+          expect(res.body.message).to.equal('Friend Added Successfully');
+
+          if (err) done(err);
+          done();
+        });
+    });
+    it('GET should return the friend', (done) => {
+      chai.request(server.listen())
+        .get('/api/friends')
         .set('x-access-token', tokens.goodToken)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.success).to.equal(true);
-          expect(res.body.user.donations[0].amount).to.equal(5);
+          expect(res.body.user.friends[0]).to.include({ email: user.email, username: user.username });
 
           if (err) done(err);
           done();
@@ -305,6 +331,7 @@ describe('Users API Routes', () => {
       };
       chai.request(server)
         .get(`/api/search/users?search=${searchTerm}`)
+        .set('x-access-token', tokens.goodToken)
         .end((err, res) => {
           if (err) { return done(err); }
           expect(res).to.have.status(200);

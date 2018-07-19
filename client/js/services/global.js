@@ -117,6 +117,43 @@ angular.module('mean.system')
       }
     };
   }])
+  .factory('FriendService', ['$http', function ($http) {
+    return {
+      addFriend: function (friendObject) {
+        return $http({
+          url: '/api/friends',
+          method: 'POST',
+          headers: {
+            'x-access-token': localStorage.getItem('token')
+          },
+          data: friendObject
+        }).then(function (response) {
+          return response.data;
+        }, function (err) {
+          return {
+            message: 'Something Happened'
+          };
+        });
+      },
+      getFriends: function () {
+        return $http({
+          url: '/api/friends',
+          method: 'GET',
+          headers: {
+            'x-access-token': localStorage.getItem('token')
+          },
+        }).then(function (response) {
+          return response.data;
+        }, function (err) {
+          return {
+            user: {
+              friends: []
+            }
+          };
+        });
+      }
+    };
+  }])
   .factory('MakeAWishFactsService', [function () {
     return {
       /*eslint-disable*/

@@ -1,26 +1,86 @@
 /* eslint prefer-arrow-callback: 0, func-names: 0, no-undef: 0 wrap-iife: 0 */
 /* eslint vars-on-top: 0, no-var: 0, object-shorthand: 0, no-plusplus: 0 */
 /* eslint prefer-template: 0, quote-props: 0, no-else-return: 0 no-console: 0 */
-/* eslint max-len: 0 */
+/* eslint max-len: 0, prefer-destructuring: 0 */
 angular.module('mean.system')
   .controller(
     'GameController',
     ['$scope', 'game', '$window', '$timeout', '$location',
-      'MakeAWishFactsService', '$dialog', '$http', 'Global', 'DonationService', 'ngIntroService',
+      'MakeAWishFactsService', '$dialog', '$http', 'Global', 'socket', 'DonationService', 'FriendService', 'ngIntroService',
       function ($scope, game, $window, $timeout, $location, MakeAWishFactsService,
-        $dialog, $http, Global, DonationService, ngIntroService) {
+        $dialog, $http, Global, socket, DonationService, FriendService, ngIntroService) {
         $scope.hasPickedCards = false;
         $scope.winningCardPicked = false;
         $scope.showTable = false;
         $scope.modalShown = false;
         $scope.game = game;
         $scope.pickedCards = [];
-        $scope.search = '';
+        $scope.searchType = 'all';
+        $scope.selected = '';
         $scope.match = [];
+        $scope.messageLength = 0;
         var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
         $scope.makeAWishFact = makeAWishFacts.pop();
         game.getRegions();
+        Global.getUser().then(function (authUser) {
+          $scope.global = authUser;
+          var notificationList = [];
+          if ($scope.global.user) {
+            const payload = { username: $scope.global.user.username, email: $scope.global.user.email };
+            socket.emit('userConnected', payload);
+          }
+          socket.on('onlineInvitation', (data) => {
+            $scope.notificationData = data;
+            const message = `<div>${data.username} has invited you to play a game as friends. Accept?</div>`;
+            notificationList.push(data);
+            if (typeof notificationList !== 'undefined'
+            && notificationList.length > 0) {
+              $scope.notifications = notificationList;
+            }
+            $scope.messageLength = $scope.notifications.length;
+            M.toast({ html: message, displayLength: 2000, classes: 'cfh-toast' });
+          });
+        });
 
+        $scope.getFriends = function () {
+          FriendService.getFriends().then(function (response) {
+            $scope.friends = response.user.friends.map(friend => ({ email: friend.email, username: friend.username }));
+          });
+        };
+        $scope.addFriend = function (index, user) {
+          if (user && user.username) {
+            const username = user.username;
+            const email = user.email;
+            FriendService.addFriend({ username: username, email: email });
+          }
+          $scope.notifications.splice(index, 1);
+          $scope.messageLength = $scope.notifications.length;
+        };
+        $scope.selected = undefined;
+
+        socket.on('onlinePlayers', function (players) {
+          $scope.fullUsers = players;
+          $scope.users = players.filter(function (player) { return player.username !== $scope.global.user.username; });
+        });
+        $scope.clearSearch = function () {
+          $scope.selected = '';
+          $scope.search = '';
+          $scope.match = [];
+        };
+        $scope.searchOnlinePlayers = function () {
+          if ($scope.selected !== '') {
+            var gameUrl = $location.$$absUrl;
+            var messageData = {
+              gameUrl,
+              target: $scope.selected,
+              username: $scope.global.user.username,
+              email: $scope.global.user.email
+            };
+            socket.emit('invitePlayer', messageData);
+            M.toast({ html: '<p>Your friend has been invited</p>', displayLength: 2000, classes: 'cfh-toast' });
+          }
+          $scope.selected = '';
+        };
         (function (timer, delay) {
           $scope.searchUsers = function () {
             if (timer) {
@@ -30,7 +90,10 @@ angular.module('mean.system')
               $http({
                 url: '/api/search/users',
                 method: 'GET',
-                params: { search: $scope.search }
+                params: { search: $scope.search },
+                headers: {
+                  'x-access-token': localStorage.getItem('token')
+                }
               })
                 .success(function (data) {
                   if (data.message === 'No matching user') {
@@ -68,14 +131,23 @@ angular.module('mean.system')
         };
         $scope.inviteUsers = function (receiver) {
           var link = document.URL;
-          var httpMessage = '<h2> Join the game' + link + '</h2>';
+          var httpMessage = '</div><h2> You have been invited to join a Cards for Humanity game. Click the link below to join</h2></br>'
+        + link + '</div>';
           if (game.players.length < 12) {
-            return $http.post('/api/mail', {
-              receiver: receiver,
-              subject: 'Game Invitation',
-              html: httpMessage
+            return $http({
+              url: '/api/mail',
+              method: 'POST',
+              data: {
+                receiver: receiver,
+                subject: 'Game Invitation',
+                html: httpMessage
+              },
+              headers: {
+                'x-access-token': localStorage.getItem('token')
+              }
             })
               .success(function (data) {
+                $scope.search = '';
                 game.inviteMessage = data.message;
                 game.successMailNotify();
                 $timeout(function () { game.inviteMessage = ''; }, 3000);
@@ -95,13 +167,13 @@ angular.module('mean.system')
                 $scope.sendPickedCards();
                 $scope.hasPickedCards = true;
               } else if (game.curQuestion.numAnswers === 2
-                && $scope.pickedCards.length === 2) {
-              // delay and send
+              && $scope.pickedCards.length === 2) {
+                // delay and send
                 $scope.hasPickedCards = true;
                 $timeout($scope.sendPickedCards, 300);
+              } else {
+                $scope.pickedCards.pop();
               }
-            } else {
-              $scope.pickedCards.pop();
             }
           }
         };
@@ -243,13 +315,13 @@ angular.module('mean.system')
         $scope.$watch('game.gameID', function () {
           if (game.gameID && game.state === 'awaiting players') {
             if (!$scope.isCustomGame() && $location.search().game) {
-            // If the player didn't successfully enter the request room,
-            // reset the URL so they don't think they're in the requested room.
+              // If the player didn't successfully enter the request room,
+              // reset the URL so they don't think they're in the requested room.
               $location.search({});
             } else if ($scope.isCustomGame() && !$location.search().game) {
-            // Once the game ID is set,
-            // update the URL if this is a game with friends,
-            // where the link is meant to be shared.
+              // Once the game ID is set,
+              // update the URL if this is a game with friends,
+              // where the link is meant to be shared.
               $location.search({ game: game.gameID });
               if (!$scope.modalShown) {
                 setTimeout(function () {

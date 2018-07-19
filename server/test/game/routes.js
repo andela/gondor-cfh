@@ -4,7 +4,12 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
 import server from '../../src/index';
-import { tokens, users, games, cleanCollection } from '../setup';
+import {
+  tokens,
+  users,
+  games,
+  cleanCollection
+} from '../setup';
 
 chai.use(chaiHttp);
 

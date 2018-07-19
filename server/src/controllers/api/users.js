@@ -210,6 +210,67 @@ class UsersApiController {
       });
     });
   }
+
+  /**
+   *
+   * Adds User Friend
+   * req.body = {
+   *   username: any,
+   *   email: any
+   * }
+   *
+   * @static
+   * @param {object} req Express request object
+   * @param {object} res Express response object
+   * @param {object} next Express next object
+   * @returns {object} success object
+   */
+  static addFriend(req, res, next) {
+    const { email, username } = req.decoded;
+
+    User.findOneAndUpdate(
+      { email: email.trim().toLowerCase() },
+      { $addToSet: { friends: req.body } },
+    ).then(() => User.findOneAndUpdate(
+      { email: req.body.email.trim().toLowerCase() },
+      { $addToSet: { friends: { username, email } } },
+      (err) => {
+        if (err) return next(err);
+        res.json({
+          success: true,
+          message: 'Friend Added Successfully'
+        });
+      }))
+      .catch(err => next(err));
+  }
+
+  /**
+   *
+   * Gets all User's Friends
+   *
+   * @static
+   * @param {object} req Express request object
+   * @param {object} res Express response object
+   * @param {object} next Express next object
+   * @returns {object} success object
+   */
+  static getFriends(req, res, next) {
+    const { email } = req.decoded;
+
+    User.findOne(
+      {
+        email: email.trim().toLowerCase()
+      },
+      '-_id -__v -hashedPassword -gamesWon -profileImage'
+    ).exec((err, user) => {
+      if (err) return next(err);
+
+      res.json({
+        success: true,
+        user
+      });
+    });
+  }
 }
 
 export default UsersApiController;
