@@ -1,4 +1,4 @@
- import { avatars } from './avatars';
+import { avatars } from './avatars';
 import User from '../models/user';
 
 /**

@@ -13,7 +13,7 @@ const index = require('../controllers/index');
 
 export default (app, passport) => {
   // User Routes
-  app.get('/signin', UsersController.signin);
+  app.get('/signin', UsersApiController.authCallback, ErrorHandler);
   app.get('/signup', UsersApiController.authCallback, ErrorHandler);
   app.get('/chooseavatars', UsersController.checkAvatar);
   app.get('/signout', UsersController.signout);
@@ -62,12 +62,12 @@ export default (app, passport) => {
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: ['email'],
-    failureRedirect: '/signin'
-  }), UsersController.signin);
+    failureRedirect: '/signup'
+  }), UsersApiController.authCallback);
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    failureRedirect: '/signin'
-  }), UsersController.authCallback);
+    failureRedirect: '/signup'
+  }), UsersApiController.authCallback);
 
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
