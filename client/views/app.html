@@ -8,6 +8,11 @@
           <a data-target="slide-out" class="sidenav-trigger" ng-click="openSideNav()"><i class="material-icons">menu</i></a>
           <div id="nav-mobile" class="right hide-on-med-and-down">
             <ul>
+                <li ng-if="messageLength > 0">
+                    <a href="#notify"  class="modal-trigger" id="modal-anchor">
+                      <i class="fa fa-bell" aria-hidden="true"></i><span class="new badge">{{messageLength}}</span>
+                    </a>
+              </li>
               <li><a class="waves-effect waves-yellow btn tour-btn" ng-click="CallMe()">Take A Tour</a></li>
               <li><a class="waves-effect waves-light btn leave-game-btn" ng-click="abandonGame()">Leave Game</a></li>
               <li class="nav-img-li profile"><img class="nav-user-img" ng-src="{{currentPlayer().avatar}}" /></li>
@@ -17,6 +22,11 @@
       </nav>
       <!-- mobile sidenav -->
       <ul id="slide-out" class="sidenav">
+          <li ng-if="messageLength > 0" >
+              <a href="#notify"  class="modal-trigger" id="modal-anchor2">
+                <i class="fa fa-bell" aria-hidden="true"></i><span class="new badge">{{messageLength}}</span>
+              </a>
+          </li>
         <li>
           <div class="sidenav-close-div">
               <a class="sidenav-close" ng-click="sideNavLinkClick()"><i class="material-icons">close</i></a>
@@ -199,34 +209,36 @@
   </div>
 
   <!-- Invite User Modal-->
-  <div id="invite-modal" class="modal">
+  <div id="invite-modal" class="modal invite-modal">
     <div class="modal-content ">
         <h5 class="text-center">Search for your friends</h5>
-      <div class ="row invite-option">
+        <!-- options section -->
+      <div class="row invite-option">
           <label class ="col s6 m6">
-              <input type="checkbox" />
+              <input type="radio" name="searchType" ng-model="searchType" value="all"  />
               <span>Invite to Game</span>
           </label>
           <label class ="col s6 m6">
-              <input type="checkbox" />
+              <input type="radio" name="searchType" ng-model="searchType" value="online" />
               <span>Connect as Friends</span>
           </label>
       </div>
-
-      <div class="input-field col s12">
-          <input type="search" class="invite-modal"
-          placeholder="Search for users"
-          name="search"
-          ng-model="search"
+      <!-- all users search -->
+      <div class="input-field col s12" ng-hide="searchType !== 'all'">
+          <input type="search" 
+          class="invite-modal"
+          placeholder="Search for users"  
+          name="search" 
+          ng-model="search" 
           ng-change="searchUsers()"
           >
 
-          <div class="invite-player" ng-repeat="player in match">
-              <span> {{ player.name }}</span>
-              <span> {{ player.email }}</span>
-              <span>
-                  <button
-                    class="waves-effect waves-light btn invite-btn"
+          <div class="row invite-player" ng-repeat="player in match">
+              <span class="col s3"> {{ player.name }}</span>
+              <span class="col s3"> {{ player.email }}</span>
+              <span class="col s3 offset-s3">
+                  <button 
+                    class="waves-effect waves-light btn invite-btn modal-close" 
                     ng-click="inviteUsers(player.email)"
                     >
                     Send Request
@@ -234,12 +246,60 @@
               </span>
           </div>
       </div>
+      <!-- online users search -->
+      <div ng-hide="searchType !== 'online'">
+      <div class="input-field col s12">
+          <input type="search" 
+          class="form-control" 
+          placeholder="Search for online users" 
+          ng-model="selected" 
+          typeahead="user.username for user in users | filter:$viewValue"
+          >
+      </div>
+      <div class="invitebutton" ng-hide="$scope.selected === ''">
+        <button class="btn invite-btn modal-close" ng-click="searchOnlinePlayers()">invite</button>
+      </div>
+    </div>
     </div>
     <div class="modal-footer">
-        <a href="/#!/app" class="modal-close btn cancel-request-btn">Cancel</a>
+        <button class="modal-close btn cancel-request-btn">Cancel</button>  
     </div>
 </div>
 
+  <!-- Invite Friends Modal-->
+ 
+  <div id="invite-friends" class="modal invite-modal">
+    
+      <div class="modal-content">
+        <h4 class="bottom-margin">Your Friends</h4>
+        <div class="row bottom-margin" ng-repeat="friend in friends">
+            <span class="col s3"> {{ friend.username }}</span>
+            <span class="col s3"> {{ friend.email }}</span>
+            <span class="col s3 offset-s3">
+                <button class= "modal-close btn invite-btn" ng-click="inviteUsers(friend.email)">
+                  Invite
+                </button>
+            </span>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button  class="modal-close btn cancel-request-btn">Close</button>
+      </div>
+    </div>
+<!-- Notification Modal -->
+    <div id="notify" class="modal invite-modal" >
+        <div class="modal-content">
+              <div class="row" ng-repeat="info in notifications">
+                <div class="col s8">{{info.username}} has invited you to play the game as friends. Accept?</div>
+                  <div class="col s1 offset-s1"><button class="modal-close btn invite-btn" ng-click="addFriend({{$index}}, info)">YES</button></div>
+                  <div class="col s1 offset-s1"><button class="modal-close btn invite-btn" ng-click="addFriend({{$index}})")> NO</button></div>
+              </div>
+        </div>
+        <div class="modal-footer">
+            <button  class="modal-close btn cancel-request-btn">Close</button>
+          </div>
+    </div>
   <!-- footer -->
   <div class="footer">
     <p class="text-center">
@@ -255,5 +315,11 @@
       dismissible: false
     });
     $('#region-modal').modal('open');
+    $('#modal-anchor').click(function (event) {
+      event.preventDefault();
+    });
+    $('#modal-anchor2').click(function (event) {
+      event.preventDefault();
+    });
   });
 </script>

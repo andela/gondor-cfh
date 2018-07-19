@@ -898,6 +898,22 @@ body {
       }
     }
   }
+  .main .modal{
+    .bottom-margin{ 
+      margin-bottom: 10px
+    }
+    ul.typeahead li a{
+      margin-left: 65px;
+      cursor: pointer;
+      color: black;
+      display: inline-block;
+      z-index: 1;
+      width: 80%
+    }
+    .invitebutton{
+      margin-left: 65px;
+    }
+  }
 
 .header {
   margin: 0;

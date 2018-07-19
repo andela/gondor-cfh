@@ -19,6 +19,8 @@ export default (io) => {
   const gamesNeedingPlayers = [];
   const regionGamesNeedingPlayers = {};
   let gameID = 0;
+  const connectedUsers = [];
+
 
   io.sockets.on('connection', (socket) => {
     // console.log(`${socket.id} Connected`);
@@ -28,6 +30,34 @@ export default (io) => {
 
       currGame.setCurQuestion(questionIndex);
       currGame.stateChoosing();
+    });
+
+    socket.on('userConnected', (data) => {
+      const index = connectedUsers
+        .findIndex(value => value.username === data.username);
+      if (index !== -1) {
+        connectedUsers.splice(index, 1);
+      }
+      const user = {
+        userId: socket.id,
+        username: data.username,
+        email: data.email
+      };
+      return connectedUsers.push(user);
+    });
+
+    socket.on('displayConnectedUsers', () => {
+      io.sockets.emit('onlinePlayers', connectedUsers);
+    });
+
+    //  invite a player
+    socket.on('invitePlayer', (data) => {
+      const targetUser = connectedUsers
+        .find(user => user.username === data.target);
+      if (targetUser) {
+        const socketId = targetUser.userId;
+        socket.to(socketId).emit('onlineInvitation', data);
+      }
     });
 
     socket.on('pickCards', (data) => {
@@ -106,7 +136,7 @@ export default (io) => {
     });
 
     socket.on('disconnect', () => {
-      // console.log('Rooms on Disconnect ', io.sockets.manager.rooms);
+      // console.log('Rooms on Disconnect ', io.sockets.adapter.rooms);
       exitGame(socket);
     });
   });

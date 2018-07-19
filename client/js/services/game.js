@@ -219,7 +219,6 @@ angular.module('mean.system')
       socket.on('notification', function (data) {
         addToNotificationQueue(data.notification);
       });
-
       socket.on('saveData', function (gameDetails) {
         if (game.state === 'game ended' && window.localStorage.token) {
           $http.post('api/v1/games/save', {
@@ -233,6 +232,9 @@ angular.module('mean.system')
         }
       });
 
+      game.usersOnline = function () {
+        socket.emit('displayConnectedUsers');
+      };
       game.joinGame = function (mode, room, createPrivate, region) {
         mode = mode || 'joinGame';
         room = room || '';
