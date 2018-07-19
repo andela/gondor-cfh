@@ -91,7 +91,7 @@
   .invite-option {
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 50px 
+    margin-left: 50px
   }
   .modal-footer {
     margin-bottom: 10px;
@@ -104,3 +104,84 @@
     }
   }
 }
+#czar-question-selection > .modal-content {
+  .heading{
+    text-align: center;
+    font-size: 22px;
+  }
+}
+.question-cards{
+  height: 600px;
+  padding-top: 126px;
+
+  .question-card {
+    .front, .back {
+      position: absolute;
+      width: 163px;
+      height: 236px;
+      border-radius: 5px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      text-align: center;
+      display: flex;
+      padding: 5px;
+      cursor: pointer;
+
+      .content{
+        margin: auto;
+      }
+    }
+
+    .front{
+      background-color: white;
+      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+      color: black;
+      visibility: hidden;
+      bottom: 9em;
+
+      .trademark{
+        font-family: 'Tangerine', cursive;
+        position: absolute;
+        bottom: 0;
+        left: 6px;
+        font-size: 18px;
+        .icon{
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .back{
+      background-color: #4a4747;
+      color: white;
+      .icon {
+        font-size: 40px;
+      }
+
+      &:hover {
+        bottom: 8.5em;
+        border: 1px solid #eaa12c;
+        animation: flipX .5s ease-in;
+      }
+    }
+
+  }
+
+}
+
+@for $i from 1 through 10 {
+  .question-card:nth-child(#{$i}){
+    .front, .back {
+      left: #{11 + ($i * 1.1)}em;
+      @if $i <= 5{
+        @if $i == 1 {
+          transform: translate(10px, -27px) rotate(-23deg);
+        } @else {
+          transform: translate(#{10 * $i}px, #{-($i + 35)}px) rotate(#{-30 + ($i * 7)}deg)
+        }
+      } @else {
+        transform: translate(#{10 * $i}px, #{-50 + ($i + 8)}px) rotate(#{-30 + ($i * 7)}deg)
+      }
+    }
+  }
+}
+

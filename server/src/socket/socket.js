@@ -23,6 +23,12 @@ export default (io) => {
   io.sockets.on('connection', (socket) => {
     // console.log(`${socket.id} Connected`);
     socket.emit('id', { id: socket.id });
+    socket.on('czarSelectedQuestion', (questionIndex) => {
+      const currGame = allGames[socket.gameID];
+
+      currGame.setCurQuestion(questionIndex);
+      currGame.stateChoosing();
+    });
 
     socket.on('pickCards', (data) => {
       // console.log(socket.id, 'picked', data);
@@ -281,9 +287,9 @@ export default (io) => {
         game.removePlayer(socket.id);
       } else {
         game.stateDissolveGame();
-        for (let j = 0; j < game.players.length; j++) {
-          game.players[j].socket.leave(socket.gameID);
-        }
+        game.players.forEach((player) => {
+          player.socket.leave(socket.gameID);
+        });
         game.killGame();
         delete allGames[socket.gameID];
       }
