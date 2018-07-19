@@ -20,7 +20,7 @@ export default (io) => {
   const gamesNeedingPlayers = [];
   const regionGamesNeedingPlayers = {};
   const connectedUsers = [];
-  const gameID = random.integer(1, 10000000000);
+  let gameID = 0;
 
   io.sockets.on('connection', (socket) => {
     // console.log(`${socket.id} Connected`);
@@ -218,6 +218,7 @@ export default (io) => {
 
   const fireGame = (player, socket) => {
     let game;
+    gameID = random.integer(1, 10000000000);
     if (gamesNeedingPlayers.length <= 0) {
       const gameIDStr = gameID;
       game = new Game(gameIDStr, io, null);
@@ -251,7 +252,7 @@ export default (io) => {
 
   const fireRegionGame = (player, socket, region) => {
     let game;
-
+    gameID = random.integer(1, 10000000000);
     if (!regionGamesNeedingPlayers[region]
         || (regionGamesNeedingPlayers[region]
         && regionGamesNeedingPlayers[region].length <= 0)) {
