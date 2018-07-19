@@ -25,10 +25,11 @@
                   <h5>{{message.username}}</h5>
                   <span>{{message.date}} </span>
                 </div>
-                <input ng-disabled="disable" class="text-message" ng-model="message.text" ng-change="messages.$save(message)"/>
+                <p class="text-message" >
+                    {{message.text}}
+                </p>
               </div>
               <div ng-if="name == message.username" class="chat-s">
-                <!-- <i ng-click="edit()" class="material-icons">edit</i> -->
                 <i ng-click="messages.$remove(message)" class="material-icons">delete</i>
               </div>
             </li>
@@ -37,8 +38,8 @@
       </div>
       <!-- push a new message onto the array -->
       <div class="input-area">
-        <input class="inputs" ng-model="newMessageText" placeholder="send a message" ng-keypress="enterEvent($event)" />
-        <span ng-click="addMessage()" class="btn-send"><i class="material-icons">send</i></span>
+        <input class="inputs" ng-model="newMessageText" id="emoji" placeholder="send a message" ng-keypress="enterEvent($event)" />
+        <span id="submit" ng-click="addMessage()" class="btn-send"><i class="material-icons">send</i></span>
       </div>
     </div>
   </div>

@@ -72,4 +72,35 @@ angular.module('mean.system')
          !== '' ? $scope.sendMessage() : '');
       $scope.addMessage = () => ($scope.newMessageText !== ''
         ? $scope.sendMessage() : '');
+      $(document).ready(() => {
+        const emoji = $('#emoji').emojioneArea({
+          autoHideFilters: true,
+          hidePickerOnBlur: true,
+          pickerPosition: 'top',
+          recentEmojis: true,
+          search: true,
+          placeholder: 'Type a message',
+          hideSource: true,
+          inline: true,
+          events: {
+            keyup: (editor, event) => {
+              if (event.which === 13 && $scope.newMessageText !== '') {
+                editor.focus();
+                $('#submit').click();
+                $('html').click();
+                emoji.data('emojioneArea').hidePicker();
+              } else {
+                $scope.newMessageText = emoji.data('emojioneArea').getText();
+              }
+            }
+          }
+        });
+        $('#submit').on('click', () => {
+          $scope.newMessageText = emoji.data('emojioneArea').getText();
+          if ($scope.newMessageText !== '') {
+            emoji.data('emojioneArea').setText('');
+            $scope.sendMessage();
+          }
+        });
+      });
     }]);
