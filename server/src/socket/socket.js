@@ -162,7 +162,7 @@ export default (io) => {
           player.premium = user.premium || 0;
           player.avatar = user.profileImage;
         }
-        getGame(player, socket, data.room, data.createPrivate);
+        getGame(player, socket, data.room, data.createPrivate, data.region);
       });
     } else {
       // If the user isn't authenticated (guest)
