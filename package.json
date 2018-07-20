@@ -48,6 +48,7 @@
     "mean-logger": "^0.0.1",
     "migrate-mongo": "^3.0.2",
     "mongoose": "4.13.14",
+    "mongoose-findorcreate": "^3.0.0",
     "mongoose-unique-validator": "^2.0.1",
     "nodemailer": "^4.6.7",
     "passport": "^0.1.17",

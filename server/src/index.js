@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import socketSetup from './socket/socket';
 import expressSetup from './setup/expressSetup';
+import passportSetup from './setup/passportSetup';
 import config from './config';
 import routes from './routes/index';
 import auth from './middlewares/authorization';
@@ -24,6 +25,9 @@ const app = express();
 app.use((req, res, next) => {
   next();
 });
+
+// passport setup
+passportSetup(passport);
 
 // express setup
 expressSetup(app, passport, mongoose);

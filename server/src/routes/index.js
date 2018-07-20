@@ -13,8 +13,8 @@ const index = require('../controllers/index');
 
 export default (app, passport) => {
   // User Routes
-  app.get('/signin', UsersController.signin);
-  app.get('/signup', UsersController.signup);
+  app.get('/signin', UsersApiController.authCallback, ErrorHandler);
+  app.get('/signup', UsersApiController.authCallback, ErrorHandler);
   app.get('/chooseavatars', UsersController.checkAvatar);
   app.get('/signout', UsersController.signout);
 
@@ -62,17 +62,17 @@ export default (app, passport) => {
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: ['email'],
-    failureRedirect: '/signin'
-  }), UsersController.signin);
+    failureRedirect: '/signup'
+  }), UsersApiController.authCallback);
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    failureRedirect: '/signin'
-  }), UsersController.authCallback);
+    failureRedirect: '/signup'
+  }), UsersApiController.authCallback);
 
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), UsersController.signin);
+  }), UsersController.authCallback);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'
@@ -94,17 +94,18 @@ export default (app, passport) => {
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ]
-  }), UsersController.signin);
+  }), UsersApiController.authCallback);
 
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'
-  }), UsersController.authCallback);
+  }), UsersApiController.authCallback, ErrorHandler);
 
   // Finish with setting up the userId param
   app.param('userId', UsersController.user);
 
   // Answer Routes
   app.get('/answers', AnswerController.all);
+
   app.get('/answers/:answerId', AnswerController.show);
   // Finish with setting up the answerId param
   app.param('answerId', AnswerController.answer);
