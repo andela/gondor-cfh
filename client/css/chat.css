@@ -62,15 +62,17 @@ sup {
   height: 15rem;
   overflow-y: scroll; }
   .chat-messages ul {
-    padding: 0; }
+    padding: 0;
+    margin-top: 0px; }
 
 .chat-li {
   border-bottom: 1px dotted #b3a9a9;
   list-style: none;
-  margin: 5px;
+  padding: 6px 13px 5px 0px;
   overflow-x: hidden;
   overflow-y: hidden;
-  display: flex; }
+  display: flex;
+  word-break: break-all; }
   .chat-li .user-img {
     height: 42px;
     line-height: 32px;
@@ -79,12 +81,14 @@ sup {
     .chat-li .user-img img {
       flex: 1;
       height: 100%;
+      border-radius: 4px;
       line-height: 36px;
       vertical-align: middle;
       line-height: 36px; }
   .chat-li .chat-username {
-    flex: 3;
+    flex: 8;
     display: flex;
+    padding-right: 2px;
     flex-direction: column; }
     .chat-li .chat-username .name-date {
       display: flex;
@@ -112,23 +116,28 @@ sup {
       margin: 0; }
   .chat-li .chat-s {
     flex: 1;
-    display: flex; }
+    display: flex;
+    justify-content: flex-end; }
 
 .text-message {
   font-style: normal;
   font-weight: normal;
   line-height: normal;
-  font-size: 10px; }
+  font-size: 15px;
+  text-align: left;
+  width: 100%;
+  padding-right: 10px; }
 
 #chat-container .content {
   background: #fff; }
 
 .input-area {
   display: flex;
+  margin-bottom: 0.1rem;
   justify-content: center;
   align-items: center;
   background: #fff;
-  padding: 0 1rem; }
+  padding: 0.2rem 0.2rem; }
   .input-area input:not([type]) {
     border: none;
     margin: 0; }
@@ -141,6 +150,10 @@ sup {
 
 .btn-send {
   flex: 1;
+  display: flex;
+  margin: 0 0.3rem;
+  justify-content: center;
+  align-items: center;
   cursor: pointer; }
   .btn-send .material-icons {
-    font-size: 31px; }
+    font-size: 20px; }

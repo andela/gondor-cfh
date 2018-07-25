@@ -14,13 +14,13 @@ const link = '';
 
 export default (io) => {
   let game;
+  const random = new Random(Random.engines.mt19937().autoSeed());
   const allGames = {};
   const allPlayers = {};
   const gamesNeedingPlayers = [];
   const regionGamesNeedingPlayers = {};
-  let gameID = 0;
   const connectedUsers = [];
-
+  const gameID = random.integer(1, 10000000000);
 
   io.sockets.on('connection', (socket) => {
     // console.log(`${socket.id} Connected`);
@@ -251,13 +251,11 @@ export default (io) => {
 
   const fireRegionGame = (player, socket, region) => {
     let game;
-    const random = new Random(Random.engines.mt19937().autoSeed());
 
     if (!regionGamesNeedingPlayers[region]
         || (regionGamesNeedingPlayers[region]
         && regionGamesNeedingPlayers[region].length <= 0)) {
       // means a new game should be created for the region
-      gameID = random.integer(1, 10000000000);
       game = new Game(gameID, io, region);
       allPlayers[socket.id] = true;
       game.players.push(player);

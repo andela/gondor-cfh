@@ -37,6 +37,7 @@
     "console-stamp": "^0.1.1",
     "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
+    "emojionearea": "^3.4.1",
     "esm": "^3.0.55",
     "express": "~3.4.0",
     "firebase": "^5.2.0",
